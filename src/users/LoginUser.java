@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import misc.DBDetails;
 
 
 /**
@@ -36,16 +37,11 @@ public final class LoginUser extends User {
 		int ret = 0;           // Return code.
 
 		try {
-			String dbNames = "jship?useSSL=false"; // Database Name
-			String dbUName = "root";               // DBMS Username
-			String dbPsswd = "root";               // DBMS Password
+			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
+			Connection con = DriverManager.getConnection(DBDetails.DBURL + DBDetails.DBName, DBDetails.DBUName, DBDetails.DBPass); // Creates a connection to the MySQL Database
+			Statement stmnt = con.createStatement();                                                                               // Creates the SQL statement object
+			ResultSet rs = stmnt.executeQuery("SELECT UName, PassWrd FROM users;");                                                // Runs the query
 
-			Class.forName("com.mysql.jdbc.Driver");                                    // Creates the MySQL JDBC Driver class
-			Connection con = DriverManager.getConnection(
-							"jdbc:mysql://localhost:3306/".concat(dbNames), dbUName, dbPsswd); // Creates a connection to the MySQL Database
-			Statement stmnt = con.createStatement();                                   // Creates the SQL statement object
-
-			ResultSet rs = stmnt.executeQuery("SELECT UName, PassWrd FROM users;");    // Runs the query
 			// Verification of Username and Password
 			System.out.println("verification started!");
 

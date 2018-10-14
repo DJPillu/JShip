@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import misc.DBDetails;
 
 
 /**
@@ -41,13 +42,8 @@ public final class UpdateStats extends Stats {
 		int ret = 0; // Return code
 
 		try {
-			String dbNames = "jship?useSSL=false"; // Database Name
-			String dbUName = "root";               // DBMS Username
-			String dbPsswd = "root";               // DBMS Password
-
-			Class.forName("com.mysql.jdbc.Driver");                                    // Creates the MySQL JDBC Driver class
-			Connection con = DriverManager.getConnection(
-							"jdbc:mysql://localhost:3306/".concat(dbNames), dbUName, dbPsswd); // Creates a connection to the MySQL Database
+			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
+			Connection con = DriverManager.getConnection(DBDetails.DBURL + DBDetails.DBName, DBDetails.DBUName, DBDetails.DBPass); // Creates a connection to the MySQL Database
 
 			StringBuffer update = new StringBuffer(250);
 			update.append("UPDATE stats SET GP=").append(this.getStatsLists()[mdI][0]); // Base Statement with GP value

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import misc.DBDetails;
 
 
 /**
@@ -114,13 +115,8 @@ abstract class Stats {
 		int ret = 0; // Return code
 
 		try {
-			String dbNames = "jship?useSSL=false"; // Database Name
-			String dbUName = "root";               // DBMS Username
-			String dbPsswd = "root";               // DBMS Password
-
-			Class.forName("com.mysql.jdbc.Driver");                                    // Creates the MySQL JDBC Driver class
-			Connection con = DriverManager.getConnection(
-							"jdbc:mysql://localhost:3306/".concat(dbNames), dbUName, dbPsswd); // Creates a connection to the MySQL Database
+			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
+			Connection con = DriverManager.getConnection(DBDetails.DBURL + DBDetails.DBName, DBDetails.DBUName, DBDetails.DBPass); // Creates a connection to the MySQL Database
 
 			StringBuffer query = new StringBuffer(137);                                             // StringBuffer for holding the updates
 			query.append("SELECT * FROM stats WHERE UNo = (SELECT UNo FROM users WHERE UName = '"); // Base Query with Base Subquery
