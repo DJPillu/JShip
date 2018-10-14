@@ -176,30 +176,18 @@ public class Pre extends javax.swing.JFrame {
     ModeL.setLabelFor(ModeP);
     ModeL.setText("Game Mode:");
 
+    ModeP.setLayout(new java.awt.GridLayout(1, 2));
+
     ModeBG.add(ClassRB);
     ClassRB.setSelected(true);
     ClassRB.setText("Classic");
     ClassRB.setActionCommand("C");
+    ModeP.add(ClassRB);
 
     ModeBG.add(SalvoRB);
     SalvoRB.setText("Salvo");
     SalvoRB.setActionCommand("S");
-
-    javax.swing.GroupLayout ModePLayout = new javax.swing.GroupLayout(ModeP);
-    ModeP.setLayout(ModePLayout);
-    ModePLayout.setHorizontalGroup(
-      ModePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(ModePLayout.createSequentialGroup()
-        .addComponent(ClassRB, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(0, 0, 0)
-        .addComponent(SalvoRB, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-    );
-    ModePLayout.setVerticalGroup(
-      ModePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(ClassRB)
-      .addComponent(SalvoRB)
-    );
+    ModeP.add(SalvoRB);
 
     TypeL.setLabelFor(TypeP);
     TypeL.setText("Game Type:");
@@ -302,7 +290,7 @@ public class Pre extends javax.swing.JFrame {
             .addGap(18, 18, Short.MAX_VALUE)
             .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addComponent(ShipsP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(ModeP, javax.swing.GroupLayout.PREFERRED_SIZE, 465, Short.MAX_VALUE)
+              .addComponent(ModeP, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
               .addComponent(GridP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
               .addComponent(TypeP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         .addContainerGap())
