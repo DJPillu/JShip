@@ -15,8 +15,8 @@ It is also the investigatory project for 2 high school students (and hence the r
 ## Usage
 1. Requires a Java Runtime Environment and a local MySQL server.
 2. Run ```src/misc/create.sql``` before running the project for the 1st time.
-3. You may have to modify the JDBC connection variables in various classes (mainly within the users and stats packages) depending on your SQL setup.
-4. You know what to do after.
+3. You may have to modify the JDBC connection variables in the misc.DBDetails class depending on your SQL setup.
+4. Compile and run jship.JShip.
 
 ## TODO
 * Make the actual game part of it.
