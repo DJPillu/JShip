@@ -1,6 +1,6 @@
 package jship;
 
-import stats.UpdateStats;
+import stats.Stats;
 
 
 /**
@@ -10,7 +10,7 @@ import stats.UpdateStats;
 public class ViewStats extends javax.swing.JFrame {
 	private String UName;
 	private String mode;
-	private String diff;
+	private int diff;
 	private int mdI; // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
 
 	/**
@@ -18,9 +18,11 @@ public class ViewStats extends javax.swing.JFrame {
 	 */
 	public ViewStats() {
 		this.initComponents();
+
 		this.updateCurrentUser();
 		this.mode = this.ModeBG.getSelection().getActionCommand();
-		this.diff = this.DifficultyBG.getSelection().getActionCommand();
+		String difficulty = this.DifficultyBG.getSelection().getActionCommand();
+		this.diff = difficulty.equals("B") ? 2 : (difficulty.equals("R") ? 1 : 0);
 		this.userStatsSetter();
 	}
 
@@ -345,9 +347,9 @@ public class ViewStats extends javax.swing.JFrame {
 	 * Gets the current user's statistics and sets the TextFields to display them.
 	 */
 	private void userStatsSetter() {
-		this.mdI = (mode.equals("S") ? 3 : 0) + (diff.equals("B") ? 2 : (diff.equals("R") ? 1 : 0));
+		this.mdI = (this.mode.equals("S") ? 3 : 0) + this.diff;
 
-		UpdateStats stats = new UpdateStats(this.UName, this.mode, this.diff);
+		Stats stats = new Stats(this.UName);
 		int[][] userStats = stats.getStatsLists();
 		float[] Acc = stats.getAcc();
 
@@ -380,7 +382,8 @@ public class ViewStats extends javax.swing.JFrame {
 	 * @param evt
 	 */
   private void DifficultyChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DifficultyChanged
-		this.diff = this.DifficultyBG.getSelection().getActionCommand();
+		String difficulty = this.DifficultyBG.getSelection().getActionCommand();
+		this.diff = difficulty.equals("B") ? 2 : (difficulty.equals("R") ? 1 : 0);
 		this.userStatsSetter();
   }//GEN-LAST:event_DifficultyChanged
 

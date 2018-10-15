@@ -398,9 +398,9 @@ public class Pre extends javax.swing.JFrame {
 			}
 			if (this.type == -1 || this.type == 0 || this.type == 1) {
 				DiffSelector DiffSelector = new DiffSelector(this.initVars, this.type, this.mode); // Creates the DiffSelector form object
-				DiffSelector.setVisible(true);                                                             // Makes the DiffSelector form to be visible
+				DiffSelector.setVisible(true);                                                     // Makes the DiffSelector form to be visible
 
-				this.dispose();                                                                            // Destroys the current form object
+				this.dispose();                                                                    // Destroys the current form object
 			}
 		}
 

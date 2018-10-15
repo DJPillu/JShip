@@ -1,5 +1,6 @@
 package stats;
 
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,11 +10,11 @@ import misc.DBDetails;
 
 
 /**
- * The (not so) abstract class for dealing with User Statistics.
+ * Class for dealing with User Statistics.
  *
  * @author blackk100
  */
-abstract class Stats {
+public class Stats {
 	/**
 	 * <pre>
 	 * statsList & Acc Arrays:
@@ -60,7 +61,7 @@ abstract class Stats {
 	 *
 	 * @param UName
 	 */
-	Stats(String UName) {
+	public Stats(String UName) {
 		getStats(UName);
 	}
 
@@ -72,34 +73,10 @@ abstract class Stats {
 	}
 
 	/**
-	 * <pre>
-	 * public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
-	 *
-	 * src     − This is the source array.
-	 * srcPos  − This is the starting position in the source array.
-	 * dest    − This is the destination array.
-	 * destPos − This is the starting position in the destination data.
-	 * length  − This is the number of array elements to be copied.
-	 * </pre>
-	 *
-	 * @param statsLists the statsLists to set
-	 */
-	public final void setStatsLists(int[][] statsLists) {
-		System.arraycopy(statsLists, 0, this.statsLists, 0, statsLists.length);
-	}
-
-	/**
 	 * @return the Acc
 	 */
 	public final float[] getAcc() {
 		return Acc;
-	}
-
-	/**
-	 * @param Acc the Acc to set
-	 */
-	public final void setAcc(float[] Acc) {
-		this.Acc = Acc;
 	}
 
 	/**
@@ -149,6 +126,7 @@ abstract class Stats {
 			ret = -1;
 		} catch (SQLException e) {           // SQL Exception;             return -2
 			System.out.println("SQL Exception:\n" + e);
+			e.printStackTrace(new PrintStream(System.out));
 			ret = -2;
 		} catch (Exception e) {              // Unknown Exception;         return -3
 			System.out.println("Unknown Exception occured:\n" + e);
@@ -156,5 +134,33 @@ abstract class Stats {
 		}
 
 		return ret;
+	}
+
+	/**
+	 * <pre>
+	 * public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
+	 *
+	 * src     − This is the source array.
+	 * srcPos  − This is the starting position in the source array.
+	 * dest    − This is the destination array.
+	 * destPos − This is the starting position in the destination data.
+	 * length  − This is the number of array elements to be copied.
+	 * </pre>
+	 *
+	 * @param statsList the statsLists to set
+	 */
+	final void setStatsLists(int index, int[] statsList) {
+		System.arraycopy(statsList, 1, this.statsLists[index], 3, statsList.length - 1);
+
+		this.statsLists[index][0] += 1;                         // Games PLayed += 1
+		this.statsLists[index][1] += statsList[0] == 1 ? 1 : 0; // Games Won += 1 if Round Status is true
+		this.statsLists[index][2] += statsList[0] == 0 ? 1 : 0; // Games Lost += 1 if Round Status is false
+	}
+
+	/**
+	 * @param Acc the Acc to set
+	 */
+	final void setAcc(int index, float Acc) {
+		this.Acc[index] = Acc;
 	}
 }

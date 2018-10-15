@@ -85,18 +85,8 @@ public final class CreateUser extends User {
 			}
 
 			Statement stmnt = con.createStatement(); // Creates the SQL statement object
-			/**
-			 * Runs the insert statements
-			 *
-			 * Equivalent to the following code:
-			 * <code>
-			 *	for (int i = 0; i < inserts.length; i++) {
-			 *		stmnt.executeUpdate(inserts[i].toString());
-			 *	}
-			 * </code>
-			 */
-			for (StringBuffer i : inserts) {
-				stmnt.executeUpdate(i.toString());
+			for (int i = 0; i < inserts.length; i++) {
+				stmnt.executeUpdate(inserts[i].toString());
 			}
 
 			stmnt.close();

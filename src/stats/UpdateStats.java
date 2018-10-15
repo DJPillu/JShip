@@ -13,8 +13,26 @@ import misc.DBDetails;
  * @author blackk100
  */
 public final class UpdateStats extends Stats {
-	private final String mode, diff, UName;
-	private final int mdI; // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
+	private final String mode, UName;
+	private final int mdI, diff;   // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
+	/**
+	 * Round Statistics:
+	 *
+	 * <pre>
+	 * I-----------I-----------------------I
+	 * I Index No. I    Value Stored       I
+	 * I-----------I-----------------------I
+	 * I     0     I Round Status (status) I -> 1: Win ; 0: Lose
+	 * I     1     I Shots Fired  (SF)     I
+	 * I     2     I Hits landed  (Hits)   I
+	 * I     3     I Times Hit    (TH)     I
+	 * I     4     I Ships Sunk   (SS)     I
+	 * I     5     I Ships Lost   (SL)     I
+	 * I-----------I-----------------------I
+	 * </pre>
+	 */
+	private final int[] statsList;
+	private final float Acc;
 
 	/**
 	 * Constructor for the UpdateStats class. Calls the superclass's constructor.
@@ -22,13 +40,20 @@ public final class UpdateStats extends Stats {
 	 * @param UName
 	 * @param mode
 	 * @param diff
+	 * @param statsList
+	 * @param Acc
 	 */
-	public UpdateStats(String UName, String mode, String diff) {
+	public UpdateStats(String UName, String mode, int diff, int[] statsList, float Acc) {
 		super(UName);
+
 		this.UName = UName;
 		this.mode = mode;
 		this.diff = diff;
-		this.mdI = (mode.equals("S") ? 3 : 0) + (diff.equals("B") ? 2 : (diff.equals("R") ? 1 : 0));
+		this.mdI = (mode.equals("S") ? 3 : 0) + (diff == 1 ? 2 : (diff == 0 ? 1 : 0));
+		this.statsList = statsList;
+		this.Acc = Acc;
+
+		this.setLocalStats();
 	}
 
 	/**
@@ -38,7 +63,7 @@ public final class UpdateStats extends Stats {
 	 * &emsp; {-1, -2, -3} imply an error.<br>
 	 * &emsp; {0} implies successful update.
 	 */
-	public int setStats() {
+	public int update() {
 		int ret = 0; // Return code
 
 		try {
@@ -78,4 +103,13 @@ public final class UpdateStats extends Stats {
 		this.getStats(this.UName);
 		return ret;
 	}
+
+	/**
+	 * Updates Stats.statsList with this.statsList
+	 */
+	private void setLocalStats() {
+		this.setStatsLists(this.mdI, this.statsList);
+		this.setAcc(this.mdI, this.Acc);
+	}
+
 }

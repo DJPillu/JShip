@@ -7,8 +7,8 @@ package misc;
  * @author blackk100
  */
 public class DBDetails {
-	public static String DBURL = "jdbc://mysql://localost:3306/"; // Database URL
-	public static String DBName = "jship?useSSL=false";           // Database Name
-	public static String DBUName = "root";                        // DBMS Username
-	public static String DBPass = "root";                         // DBMS Password
+	public static String DBURL = "jdbc:mysql://localhost:3306/"; // Database URL
+	public static String DBName = "jship";                       // Database Name
+	public static String DBUName = "root";                       // DBMS Username
+	public static String DBPass = "root";                        // DBMS Password
 }

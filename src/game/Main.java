@@ -7,7 +7,11 @@ package game;
  */
 public class Main extends javax.swing.JFrame {
 
-	private boolean status = ((int) (Math.random() * 100)) % 2 == 0; // Match Status
+	private final boolean[] initVars;
+	private final int type;
+	private final String mode;
+	private final int AI1Diff;
+	private final int AI2Diff;
 
 	/**
 	 * Round Statistics:
@@ -16,7 +20,7 @@ public class Main extends javax.swing.JFrame {
 	 * I-----------I-----------------------I
 	 * I Index No. I    Value Stored       I
 	 * I-----------I-----------------------I
-	 * I     0     I Round Status (status) I
+	 * I     0     I Round Status (status) I -> 1: Win ; 0: Lose
 	 * I     1     I Shots Fired  (SF)     I
 	 * I     2     I Hits landed  (Hits)   I
 	 * I     3     I Times Hit    (TH)     I
@@ -25,13 +29,25 @@ public class Main extends javax.swing.JFrame {
 	 * I-----------I-----------------------I
 	 * </pre>
 	 */
-	private int[] statsList = {status ? 1 : 0, 10, 5, 4, 3, 1};
+	private int[] statsList = {((int) (Math.random() * 100)) % 2 == 0 ? 1 : 0, 0, 0, 0, 0, 0};
 
 	/**
-	 * Creates new form Settings
+	 * Creates new form Main
+	 *
+	 * @param gameInitVars
+	 * @param type
+	 * @param mode
+	 * @param AI1Diff
+	 * @param AI2Diff
 	 */
-	public Main() {
+	public Main(boolean[] gameInitVars, int type, String mode, int AI1Diff, int AI2Diff) {
 		initComponents();
+
+		this.initVars = gameInitVars;
+		this.type = type;
+		this.mode = mode;
+		this.AI1Diff = AI1Diff;
+		this.AI2Diff = AI2Diff;
 	}
 
 	/**
@@ -47,7 +63,7 @@ public class Main extends javax.swing.JFrame {
     SettingsP = new javax.swing.JPanel();
     SettingsL = new javax.swing.JLabel();
     GoBackB = new javax.swing.JButton();
-    jButton1 = new javax.swing.JButton();
+    FinishB = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,10 +77,10 @@ public class Main extends javax.swing.JFrame {
       }
     });
 
-    jButton1.setText("Go Ahead");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
+    FinishB.setText("Go Ahead");
+    FinishB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        GoAhead(evt);
+        Finish(evt);
       }
     });
 
@@ -79,19 +95,19 @@ public class Main extends javax.swing.JFrame {
           .addGroup(SettingsPLayout.createSequentialGroup()
             .addComponent(GoBackB)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton1)))
+            .addComponent(FinishB)))
         .addContainerGap())
     );
     SettingsPLayout.setVerticalGroup(
       SettingsPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(SettingsPLayout.createSequentialGroup()
-        .addContainerGap()
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPLayout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(SettingsL)
         .addGap(18, 18, 18)
         .addGroup(SettingsPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(GoBackB)
-          .addComponent(jButton1))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(FinishB))
+        .addContainerGap())
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -107,8 +123,8 @@ public class Main extends javax.swing.JFrame {
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(SettingsP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addContainerGap())
+        .addComponent(SettingsP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     pack();
@@ -120,35 +136,23 @@ public class Main extends javax.swing.JFrame {
 	 * @param evt
 	 */
   private void GoBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoBack
-		System.out.println("\nGoBack() started!");
-
 		Pre Pre = new Pre();  // Creates the Pre Form object
 		Pre.setVisible(true); // Makes the Pre Form to be visible
-		System.out.println("Pre frame created!");
 
 		this.dispose();       // Destroys the current form object
-		System.out.println("Settings frame destroyed!");
-
-		System.out.println("GoBack() ended!\n");
   }//GEN-LAST:event_GoBack
 
-  private void GoAhead(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoAhead
-		System.out.println("\nGoBack() started!");
+  private void Finish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Finish
+		Post Post = new Post(this.statsList, this.mode, this.AI1Diff); // Creates the Post Form object
+		Post.setVisible(true);                                         // Makes the Post Form to be visible
 
-		Post Post = new Post(this.statsList); // Creates the Post Form object
-		Post.setVisible(true);  // Makes the Post Form to be visible
-		System.out.println("Post frame created!");
-
-		this.dispose();         // Destroys the current form object
-		System.out.println("Settings frame destroyed!");
-
-		System.out.println("GoBack() ended!\n");
-  }//GEN-LAST:event_GoAhead
+		this.dispose();                                                // Destroys the current form object
+  }//GEN-LAST:event_Finish
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton FinishB;
   private javax.swing.JButton GoBackB;
   private javax.swing.JLabel SettingsL;
   private javax.swing.JPanel SettingsP;
-  private javax.swing.JButton jButton1;
   // End of variables declaration//GEN-END:variables
 }

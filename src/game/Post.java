@@ -1,6 +1,7 @@
 package game;
 
 import jship.JShip;
+import stats.UpdateStats;
 
 
 /**
@@ -8,49 +9,31 @@ import jship.JShip;
  * @author blackk100
  */
 public class Post extends javax.swing.JFrame {
-	/**
-	 * Round Statistics:
-	 *
-	 * <pre>
-	 * I-----------I-----------------------I
-	 * I Index No. I    Value Stored       I
-	 * I-----------I-----------------------I
-	 * I     0     I Round Status (status) I
-	 * I     1     I Shots Fired  (SF)     I
-	 * I     2     I Hits landed  (Hits)   I
-	 * I     3     I Times Hit    (TH)     I
-	 * I     4     I Ships Sunk   (SS)     I
-	 * I     5     I Ships Lost   (SL)     I
-	 * I-----------I-----------------------I
-	 * </pre>
-	 */
-	private int[] statsList;
-	private float Acc;       // Accuracy = (Hits Landed / Shots Fired) * 100
+
+	private final int[] statsList;
+	private final float Acc;       // Accuracy = (Hits Landed / Shots Fired) * 100 = (statsList[2] / statsList[1]) * 100
+	private final String mode;
+	private final int AIDiff;
 
 	/**
-	 * Creates new form PreGame
+	 * Creates new form Post
 	 *
-	 * @param stats
+	 * @param statsList
+	 * @param mode
+	 * @param AIDiff
 	 */
-	public Post(int[] stats) {
+	public Post(int[] statsList, String mode, int AIDiff) {
 		initComponents();
-		setTitleL(stats[0]);
-		statsList = new int[stats.length - 1];
 
-		/**
-		 * <pre>
-		 * public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
-		 *
-		 * src     − This is the source array.
-		 * srcPos  − This is the starting position in the source array.
-		 * dest    − This is the destination array.
-		 * destPos − This is the starting position in the destination data.
-		 * length  − This is the number of array elements to be copied.
-		 * </pre>
-		 */
-		System.arraycopy(stats, 1, this.statsList, 0, stats.length - 1);
+		this.statsList = new int[statsList.length - 1];
+		System.arraycopy(statsList, 1, this.statsList, 0, statsList.length - 1);
 
-		this.Acc = ((float) stats[2] * 100) / stats[1]; // Acc = (Hits / SF) * 100
+		this.Acc = ((float) statsList[2] * 100) / statsList[1];
+
+		this.mode = mode;
+		this.AIDiff = AIDiff;
+
+		setTitleL(statsList[0]);
 		userStatsSetter();
 	}
 
@@ -271,6 +254,7 @@ public class Post extends javax.swing.JFrame {
 
 	/**
 	 * Gets the current user's statistics and sets the TextFields to display them.
+	 * Also updates the user's statistics in the database.
 	 */
 	private void userStatsSetter() {
 		SFTF.setText("" + statsList[0]);
@@ -279,6 +263,9 @@ public class Post extends javax.swing.JFrame {
 		THTF.setText("" + statsList[2]);
 		SSTF.setText("" + statsList[3]);
 		SLTF.setText("" + statsList[4]);
+
+		UpdateStats stats = new UpdateStats(users.CurrentUser.GetCurrentUser(), this.mode, this.AIDiff, this.statsList, this.Acc);
+		stats.update();
 	}
 
 	/**

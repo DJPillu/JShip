@@ -12,26 +12,30 @@ public class DiffSelector extends javax.swing.JFrame {
 	private final String mode;
 
 	/**
-	 * AI 1 Difficulty (Not present during PvP, EvE):
+	 * AI 1 Difficulty (Not present during PvP):
 	 *
 	 * <pre>
-	 * -1 - Easy   (Sandbox)
-	 *  0 - Medium (Realistic)
-	 *  1 - Hard   (Brutal)
+	 * -3 - Unknown Value
+	 * -2 - Disabled
+	 * -1 - Sandbox       (Easy)
+	 *  0 - Realistic     (Medium)
+	 *  1 - Brutal        (Hard)
 	 * </pre>
 	 */
-	private int AI1Diff;
+	private int AI1Diff = -2;
 
 	/**
 	 * AI 2 Difficulty (Not present during PvP, PvE)
 	 *
 	 * <pre>
-	 * -1 - Easy   (Sandbox)
-	 *  0 - Medium (Realistic)
-	 *  1 - Hard   (Brutal)
+	 * -3 - Unknown Value
+	 * -2 - Disabled
+	 * -1 - Sandbox       (Easy)
+	 *  0 - Realistic     (Medium)
+	 *  1 - Brutal        (Hard)
 	 * </pre>
 	 */
-	private int AI2Diff;
+	private int AI2Diff = -2;
 
 	/**
 	 * Creates new form DiffSelector
@@ -41,21 +45,23 @@ public class DiffSelector extends javax.swing.JFrame {
 	 * @param mode
 	 */
 	public DiffSelector(boolean[] gameInitVars, int type, String mode) {
+		initComponents();
+
 		this.initVars = gameInitVars;
 		this.type = type;
 		this.mode = mode;
-		initComponents();
-		if (type == -1) {
+
+		if (type == -1 || type == 0) {
 			S1RB.setEnabled(true);
 			R1RB.setEnabled(true);
 			B1RB.setEnabled(true);
-			S2RB.setEnabled(true);
-			R2RB.setEnabled(true);
-			B2RB.setEnabled(true);
-		} else if (type == 0) {
-			S1RB.setEnabled(true);
-			R1RB.setEnabled(true);
-			B1RB.setEnabled(true);
+			if (type == -1) {
+				S2RB.setEnabled(true);
+				R2RB.setEnabled(true);
+				B2RB.setEnabled(true);
+			}
+		} else {
+			this.PlayB.doClick();
 		}
 	}
 
@@ -82,7 +88,9 @@ public class DiffSelector extends javax.swing.JFrame {
     S2RB = new javax.swing.JRadioButton();
     R2RB = new javax.swing.JRadioButton();
     B2RB = new javax.swing.JRadioButton();
+    ButtonsP = new javax.swing.JPanel();
     GoBackB = new javax.swing.JButton();
+    PlayB = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,12 +160,23 @@ public class DiffSelector extends javax.swing.JFrame {
     B2RB.setEnabled(false);
     Difficulty2P.add(B2RB);
 
+    ButtonsP.setLayout(new java.awt.GridLayout(1, 2, 100, 0));
+
     GoBackB.setText("Go Back");
     GoBackB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         GoBackBGoBack(evt);
       }
     });
+    ButtonsP.add(GoBackB);
+
+    PlayB.setText("Play");
+    PlayB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Play(evt);
+      }
+    });
+    ButtonsP.add(PlayB);
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -166,6 +185,7 @@ public class DiffSelector extends javax.swing.JFrame {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(ButtonsP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(Difficulty1L, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGap(18, 18, 18)
@@ -173,11 +193,7 @@ public class DiffSelector extends javax.swing.JFrame {
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(Difficulty2L, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGap(18, 18, 18)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(GoBackB, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-              .addComponent(Difficulty2P, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(Difficulty2P, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -192,7 +208,7 @@ public class DiffSelector extends javax.swing.JFrame {
           .addComponent(Difficulty2P, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(Difficulty2L, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
-        .addComponent(GoBackB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(ButtonsP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -209,8 +225,7 @@ public class DiffSelector extends javax.swing.JFrame {
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addContainerGap())
+        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     pack();
@@ -233,7 +248,7 @@ public class DiffSelector extends javax.swing.JFrame {
 				this.AI1Diff = 1;
 				break;
 			default:  // Unknown Return Value
-				this.AI1Diff = -2;
+				this.AI1Diff = -3;
 				break;
 		}
   }//GEN-LAST:event_Difficulty1Changed
@@ -255,7 +270,7 @@ public class DiffSelector extends javax.swing.JFrame {
 				this.AI2Diff = 1;
 				break;
 			default:  // Unknown Return Value
-				this.AI2Diff = -2;
+				this.AI2Diff = -3;
 				break;
 		}
   }//GEN-LAST:event_Difficulty2Changed
@@ -272,9 +287,23 @@ public class DiffSelector extends javax.swing.JFrame {
 		this.dispose();                                         // Destroys the current form object
   }//GEN-LAST:event_GoBackBGoBack
 
+	/**
+	 * Starts the game
+	 *
+	 * @param evt
+	 */
+  private void Play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Play
+		Main Main = new Main(
+						this.initVars, this.type, this.mode, this.AI1Diff, this.AI2Diff); // Creates the JShip Form object
+		Main.setVisible(true);                                                    // Makes the JShip Form to be visible
+
+		this.dispose();                                                           // Destroys the current form object
+  }//GEN-LAST:event_Play
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JRadioButton B1RB;
   private javax.swing.JRadioButton B2RB;
+  private javax.swing.JPanel ButtonsP;
   private javax.swing.ButtonGroup Difficulty1BG;
   private javax.swing.JLabel Difficulty1L;
   private javax.swing.JPanel Difficulty1P;
@@ -282,6 +311,7 @@ public class DiffSelector extends javax.swing.JFrame {
   private javax.swing.JLabel Difficulty2L;
   private javax.swing.JPanel Difficulty2P;
   private javax.swing.JButton GoBackB;
+  private javax.swing.JButton PlayB;
   private javax.swing.JRadioButton R1RB;
   private javax.swing.JRadioButton R2RB;
   private javax.swing.JRadioButton S1RB;
