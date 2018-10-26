@@ -68,7 +68,7 @@ public final class UpdateStats extends Stats {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
-			Connection con = DriverManager.getConnection(DBDetails.DBURL + DBDetails.DBName, DBDetails.DBUName, DBDetails.DBPass); // Creates a connection to the MySQL Database
+			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
 
 			StringBuffer update = new StringBuffer(250);
 			update.append("UPDATE stats SET GP=").append(this.getStatsLists()[mdI][0]); // Base Statement with GP value

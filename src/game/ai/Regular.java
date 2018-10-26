@@ -1,5 +1,6 @@
 package game.ai;
 
+import game.Location;
 import java.util.Random;
 
 
@@ -16,9 +17,10 @@ public final class Regular extends AI {
 	 *
 	 * @param initVars
 	 * @param mode
+	 * @param gridOpp
 	 */
-	public Regular(boolean[] initVars, String mode) {
-		super(initVars, mode);
+	public Regular(boolean[] initVars, String mode, Location[][] gridOpp) {
+		super(initVars, mode, gridOpp);
 	}
 
 	/**
@@ -53,12 +55,12 @@ public final class Regular extends AI {
 		int[] out = new int[2], temp = new int[2];
 		Random rand = new Random();
 
-		for (int i = 0; i < out.length; i++) {
+		for (int i = 0; i < 2; i++) {
 			out[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
 		}
 
-		while (this.gridShotSelf[out[0]][out[1]]) {
-			for (int i = 0; i < temp.length; i++) {
+		while (!this.gridSelf[out[0]][out[1]].isUnguessed()) {
+			for (int i = 0; i < 2; i++) {
 				temp[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
 			}
 

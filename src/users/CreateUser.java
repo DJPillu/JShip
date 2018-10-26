@@ -36,8 +36,8 @@ public final class CreateUser extends User {
 		int ret = 0; // Return code
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
-			Connection con = DriverManager.getConnection(DBDetails.DBURL + DBDetails.DBName, DBDetails.DBUName, DBDetails.DBPass); // Creates a connection to the MySQL Database
+			Class.forName("com.mysql.jdbc.Driver");                                                                                    // Creates the MySQL JDBC Driver class
+			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
 
 			/**
 			 * StringBuffers for holding the insert statements
@@ -82,6 +82,10 @@ public final class CreateUser extends User {
 				} else if (i % 3 == 0) {     // 3rd StringBuffer of either Mode is for Brutal Difficulty
 					inserts[i].append("B');");
 				}
+			}
+
+			for (int i = 0; i < inserts.length; i++) {
+				System.out.println(inserts[i].toString());
 			}
 
 			Statement stmnt = con.createStatement(); // Creates the SQL statement object

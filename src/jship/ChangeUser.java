@@ -7,6 +7,7 @@ import users.LoginUser;
 
 
 /**
+ * Form for registering users, logging in, and logging out.
  *
  * @author blackk100
  */

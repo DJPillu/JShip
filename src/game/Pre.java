@@ -2,10 +2,10 @@ package game;
 
 import javax.swing.JOptionPane;
 import jship.JShip;
-import shop.Shop;
 
 
 /**
+ * Form for starting the game round.
  *
  * @author blackk100
  */
@@ -20,15 +20,15 @@ public class Pre extends javax.swing.JFrame {
 	 * I-----------I-----------I-----------I
 	 * I     0     I  10 x 10  I  15 x 15  I
 	 * I-----------I-----------------------I
-	 * I     1     I    Aircraft Carrier   I
-	 * I     2     I       Battleship      I
-	 * I     3     I        Cruiser        I
-	 * I     4     I       Destroyer       I
-	 * I     5     I      Patrol Boat      I
+	 * I     1     I       Battleship      I
+	 * I     2     I        Cruiser        I
+	 * I     3     I       Destroyer       I
+	 * I     4     I      Patrol Boat      I
 	 * I-----------I-----------------------I
 	 * </pre>
 	 */
-	private boolean[] initVars = {false, false, false, false, false, false};
+	private boolean[] initVars = {false, false, false, false, false};
+
 	/**
 	 * Game Type:
 	 * <pre>
@@ -38,6 +38,7 @@ public class Pre extends javax.swing.JFrame {
 	 * </pre>
 	 */
 	private int type = 0;
+
 	/**
 	 * Game Mode:
 	 * <pre>
@@ -70,23 +71,18 @@ public class Pre extends javax.swing.JFrame {
 
 		if (initVars[0] == true) {
 			this.Grid15RB.setSelected(true);
-
-			if (initVars[5] == true) {
-				this.PatrolCB.setEnabled(true);
-				this.PatrolCB.setSelected(true);
-			}
 		}
 		if (initVars[1] == true) {
-			this.CarrierCB.setSelected(true);
-		}
-		if (initVars[2] == true) {
 			this.BattleshipCB.setSelected(true);
 		}
-		if (initVars[3] == true) {
+		if (initVars[2] == true) {
 			this.CruiserCB.setSelected(true);
 		}
-		if (initVars[4] == true) {
+		if (initVars[3] == true) {
 			this.DestroyerCB.setSelected(true);
+		}
+		if (initVars[4] == true) {
+			this.PatrolCB.setSelected(true);
 		}
 
 		if (type == -1) {
@@ -132,14 +128,12 @@ public class Pre extends javax.swing.JFrame {
     EvERB = new javax.swing.JRadioButton();
     ShipsL = new javax.swing.JLabel();
     ShipsP = new javax.swing.JPanel();
-    CarrierCB = new javax.swing.JCheckBox();
     BattleshipCB = new javax.swing.JCheckBox();
     CruiserCB = new javax.swing.JCheckBox();
     DestroyerCB = new javax.swing.JCheckBox();
     PatrolCB = new javax.swing.JCheckBox();
     ButtonsP = new javax.swing.JPanel();
     GoBackB = new javax.swing.JButton();
-    ShopB = new javax.swing.JButton();
     PlayB = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -166,6 +160,7 @@ public class Pre extends javax.swing.JFrame {
     SizeBG.add(Grid15RB);
     Grid15RB.setText("15 x 15");
     Grid15RB.setActionCommand("15");
+    Grid15RB.setEnabled(false);
     Grid15RB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         SizeChanged(evt);
@@ -187,6 +182,7 @@ public class Pre extends javax.swing.JFrame {
     ModeBG.add(SalvoRB);
     SalvoRB.setText("Salvo");
     SalvoRB.setActionCommand("S");
+    SalvoRB.setEnabled(false);
     ModeP.add(SalvoRB);
 
     TypeL.setLabelFor(TypeP);
@@ -208,6 +204,7 @@ public class Pre extends javax.swing.JFrame {
     TypeBG.add(PvPRB);
     PvPRB.setText("Player vs Player");
     PvPRB.setActionCommand("PvP");
+    PvPRB.setEnabled(false);
     PvPRB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         TypeChanged(evt);
@@ -230,20 +227,16 @@ public class Pre extends javax.swing.JFrame {
 
     ShipsP.setLayout(new java.awt.GridLayout(2, 3));
 
-    CarrierCB.setText("<html>Aircraft Carrier<br>5 Spaces; x1</html>");
-    ShipsP.add(CarrierCB);
-
-    BattleshipCB.setText("<html>Battleship<br>4 Spaces; x1</html>");
+    BattleshipCB.setText("<html>Battleship<br>5 Spaces; x2</html>");
     ShipsP.add(BattleshipCB);
 
-    CruiserCB.setText("<html>Cruiser<br>3 Spaces; x2</html>");
+    CruiserCB.setText("<html>Cruiser<br>4 Spaces; x2</html>");
     ShipsP.add(CruiserCB);
 
-    DestroyerCB.setText("<html>Destroyer<br>2 Spaces; x2</html>");
+    DestroyerCB.setText("<html>Destroyer<br>3 Spaces; x3</html>");
     ShipsP.add(DestroyerCB);
 
-    PatrolCB.setText("<html>Patrol Boat<br>1 Space; x5</html>");
-    PatrolCB.setEnabled(false);
+    PatrolCB.setText("<html>Patrol Boat<br>2 Spaces; x5</html>");
     ShipsP.add(PatrolCB);
 
     ButtonsP.setLayout(new java.awt.GridLayout(1, 3, 100, 0));
@@ -255,14 +248,6 @@ public class Pre extends javax.swing.JFrame {
       }
     });
     ButtonsP.add(GoBackB);
-
-    ShopB.setText("Shop");
-    ShopB.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        OpenShop(evt);
-      }
-    });
-    ButtonsP.add(ShopB);
 
     PlayB.setText("Next");
     PlayB.addActionListener(new java.awt.event.ActionListener() {
@@ -360,15 +345,14 @@ public class Pre extends javax.swing.JFrame {
 	 */
   private void Next(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Next
 		this.mode = this.ModeBG.getSelection().getActionCommand();
-		this.initVars[1] = this.CarrierCB.isSelected();
-		this.initVars[2] = this.BattleshipCB.isSelected();
-		this.initVars[3] = this.CruiserCB.isSelected();
-		this.initVars[4] = this.DestroyerCB.isSelected();
-		this.initVars[5] = this.PatrolCB.isSelected();
+		this.initVars[1] = this.BattleshipCB.isSelected();
+		this.initVars[2] = this.CruiserCB.isSelected();
+		this.initVars[3] = this.DestroyerCB.isSelected();
+		this.initVars[4] = this.PatrolCB.isSelected();
 		System.out.println("Game mode and ship type selections obtained!");
 
 		boolean flag = true;
-		for (int i = 1; i < 6; i++) {
+		for (int i = 1; i < 5; i++) {
 			if (this.initVars[i] == true) {
 				flag = false;
 			}
@@ -379,23 +363,17 @@ public class Pre extends javax.swing.JFrame {
 			System.out.println("No Ship Type is selected! Please select a ship type!");
 			JOptionPane.showMessageDialog(null, "No Ship Type is selected! Please select a ship type!", "No Ship Selected", JOptionPane.WARNING_MESSAGE);
 		} else {
-			switch (this.type) {
-				case -1: // EvE
-					System.out.println("Statistics will not be tracked for this EvE round.");
-					JOptionPane.showMessageDialog(null, "Statistics will not be tracked for this round.", "Stats not Counted", JOptionPane.INFORMATION_MESSAGE);
-					break;
-				case 0:  // PvE
-					break;
-				case 1:  // PvP
-					System.out.println("Statistics will not be tracked for this PvP round.");
-					JOptionPane.showMessageDialog(null, "Statistics will not be tracked for this round.", "Stats not Counted", JOptionPane.INFORMATION_MESSAGE);
-					break;
-				case -2: // Unknown Return Value
-				default:
-					System.out.println("An Error occurred! Please contact the developer!");
-					JOptionPane.showMessageDialog(null, "An Error occurred! Please contact the developer!", "An Error occured", JOptionPane.ERROR_MESSAGE);
-					break;
+			if (this.type == -1) {
+				System.out.println("Statistics will not be tracked for this EvE round.");
+				JOptionPane.showMessageDialog(null, "Statistics will not be tracked for this round.", "Stats not Counted", JOptionPane.INFORMATION_MESSAGE);
+			} else if (this.type == 1) {
+				System.out.println("Statistics will not be tracked for this PvP round.");
+				JOptionPane.showMessageDialog(null, "Statistics will not be tracked for this round.", "Stats not Counted", JOptionPane.INFORMATION_MESSAGE);
+			} else if (this.type != 0) {
+				System.out.println("An Error occurred! Please contact the developer!");
+				JOptionPane.showMessageDialog(null, "An Error occurred! Please contact the developer!", "An Error occured", JOptionPane.ERROR_MESSAGE);
 			}
+
 			if (this.type == -1 || this.type == 0 || this.type == 1) {
 				DiffSelector DiffSelector = new DiffSelector(this.initVars, this.type, this.mode); // Creates the DiffSelector form object
 				DiffSelector.setVisible(true);                                                     // Makes the DiffSelector form to be visible
@@ -408,16 +386,20 @@ public class Pre extends javax.swing.JFrame {
   }//GEN-LAST:event_Next
 
 	/**
-	 * Opens the in-game shop.
+	 * Sets the Game Type variable
 	 *
 	 * @param evt
 	 */
-  private void OpenShop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenShop
-		Shop Shop = new Shop(1); // Creates the Shop Form object
-		Shop.setVisible(true);   // Makes the Shop Form to be visible
-
-		this.dispose();          // Destroys the current form object
-  }//GEN-LAST:event_OpenShop
+  private void TypeChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TypeChanged
+		String diff = this.TypeBG.getSelection().getActionCommand();
+		if (diff.equals("EvE")) {
+			this.type = -1;
+		} else if (diff.equals("PvE")) {
+			this.type = 0;
+		} else if (diff.equals("PvP")) {
+			this.type = 1;
+		}
+  }//GEN-LAST:event_TypeChanged
 
 	/**
 	 * Sets the Grid Size variable
@@ -425,48 +407,12 @@ public class Pre extends javax.swing.JFrame {
 	 * @param evt
 	 */
   private void SizeChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SizeChanged
-		int size = Integer.parseInt(this.SizeBG.getSelection().getActionCommand());
-		switch (size) {
-			case 15:
-				this.PatrolCB.setEnabled(true);
-				this.initVars[0] = true;
-				break;
-			case 10:
-			default:
-				this.PatrolCB.setSelected(false);
-				this.PatrolCB.setEnabled(false);
-				this.initVars[0] = false;
-				break;
-		}
+		this.initVars[0] = Integer.parseInt(this.SizeBG.getSelection().getActionCommand()) == 15;
   }//GEN-LAST:event_SizeChanged
-
-	/**
-	 * Sets the Game Type variable
-	 *
-	 * @param evt
-	 */
-  private void TypeChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TypeChanged
-		String diff = this.TypeBG.getSelection().getActionCommand();
-		switch (diff) {
-			case "EvE":
-				this.type = -1;
-				break;
-			case "PvE":
-				this.type = 0;
-				break;
-			case "PvP":
-				this.type = 1;
-				break;
-			default:  // Unknown Return Value
-				this.type = -2;
-				break;
-		}
-  }//GEN-LAST:event_TypeChanged
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JCheckBox BattleshipCB;
   private javax.swing.JPanel ButtonsP;
-  private javax.swing.JCheckBox CarrierCB;
   private javax.swing.JRadioButton ClassRB;
   private javax.swing.JCheckBox CruiserCB;
   private javax.swing.JCheckBox DestroyerCB;
@@ -487,7 +433,6 @@ public class Pre extends javax.swing.JFrame {
   private javax.swing.JRadioButton SalvoRB;
   private javax.swing.JLabel ShipsL;
   private javax.swing.JPanel ShipsP;
-  private javax.swing.JButton ShopB;
   private javax.swing.ButtonGroup SizeBG;
   private javax.swing.JLabel TitleL;
   private javax.swing.ButtonGroup TypeBG;

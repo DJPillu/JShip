@@ -157,6 +157,7 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;15&quot;" type="code"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SizeChanged"/>
@@ -200,6 +201,7 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;S&quot;" type="code"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -243,6 +245,7 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;PvP&quot;" type="code"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
@@ -279,30 +282,24 @@
             <Property name="rows" type="int" value="2"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JCheckBox" name="CarrierCB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Aircraft Carrier&lt;br&gt;5 Spaces; x1&lt;/html&gt;"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JCheckBox" name="BattleshipCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleship&lt;br&gt;4 Spaces; x1&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleship&lt;br&gt;5 Spaces; x2&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="CruiserCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Cruiser&lt;br&gt;3 Spaces; x2&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Cruiser&lt;br&gt;4 Spaces; x2&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="DestroyerCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyer&lt;br&gt;2 Spaces; x2&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyer&lt;br&gt;3 Spaces; x3&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="PatrolCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Patrol Boat&lt;br&gt;1 Space; x5&lt;/html&gt;"/>
-                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Patrol Boat&lt;br&gt;2 Spaces; x5&lt;/html&gt;"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -321,14 +318,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoBack"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="ShopB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Shop"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenShop"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="PlayB">

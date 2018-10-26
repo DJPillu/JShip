@@ -1,5 +1,6 @@
 package game.ai;
 
+import game.Location;
 import java.util.Random;
 
 
@@ -16,28 +17,29 @@ public final class Sandbox extends AI {
 	 *
 	 * @param initVars
 	 * @param mode
+	 * @param gridOpp
 	 */
-	public Sandbox(boolean[] initVars, String mode) {
-		super(initVars, mode);
+	public Sandbox(boolean[] initVars, String mode, Location[][] gridOpp) {
+		super(initVars, mode, gridOpp);
 	}
 
 	/**
 	 * Function for the AI to fire at the player's ships.
-	 * The coordinates are always randomly generated.
+	 * The coordinates are always (psuedo-)randomly generated.
 	 *
-	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
+	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate.
 	 */
 	@Override
 	public int[] fire() {
 		int[] out = new int[2], temp = new int[2];
 		Random rand = new Random();
 
-		for (int i = 0; i < out.length; i++) {
+		for (int i = 0; i < 2; i++) {
 			out[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
 		}
 
-		while (this.gridShotSelf[out[0]][out[1]]) {
-			for (int i = 0; i < temp.length; i++) {
+		while (!this.gridSelf[out[0]][out[1]].isUnguessed()) {
+			for (int i = 0; i < 2; i++) {
 				temp[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
 			}
 

@@ -37,10 +37,10 @@ public final class LoginUser extends User {
 		int ret = 0;           // Return code.
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
-			Connection con = DriverManager.getConnection(DBDetails.DBURL + DBDetails.DBName, DBDetails.DBUName, DBDetails.DBPass); // Creates a connection to the MySQL Database
-			Statement stmnt = con.createStatement();                                                                               // Creates the SQL statement object
-			ResultSet rs = stmnt.executeQuery("SELECT UName, PassWrd FROM users;");                                                // Runs the query
+			Class.forName("com.mysql.jdbc.Driver");                                                                                    // Creates the MySQL JDBC Driver class
+			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
+			Statement stmnt = con.createStatement();                                                                                   // Creates the SQL statement object
+			ResultSet rs = stmnt.executeQuery("SELECT UName, PassWrd FROM users;");                                                    // Runs the query
 
 			// Verification of Username and Password
 			System.out.println("verification started!");

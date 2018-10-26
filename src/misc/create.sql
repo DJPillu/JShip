@@ -10,13 +10,6 @@ CREATE TABLE users (
 	PassWrd MEDIUMINT                                   # Password Hash
 );
 
-CREATE TABLE shop (
-	INo TINYINT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY, # Item ID
-	IName VARCHAR(64) UNIQUE,                           # Item Name
-	IDesc VARCHAR(128),                                 # Item Description
-	ICost MEDIUMINT UNSIGNED NOT NULL DEFAULT 0         # Item Cost
-);
-
 CREATE TABLE stats (
 	UNo TINYINT(2) UNSIGNED REFERENCES users (UNo) ON DELETE CASCADE ON UPDATE CASCADE, # User ID
 	Mode ENUM('C', 'S') NOT NULL,                     # Game Mode

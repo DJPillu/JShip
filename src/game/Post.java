@@ -5,6 +5,8 @@ import stats.UpdateStats;
 
 
 /**
+ * Form for showing post game round statistics.
+ * Also updates the current user's statistics.
  *
  * @author blackk100
  */
@@ -236,19 +238,12 @@ public class Post extends javax.swing.JFrame {
 	 * @param status
 	 */
 	private void setTitleL(int status) {
-		switch (status) {
-			case 1:
-				System.out.println("Match Won!");
-				TitleL.setText("Match Won!");
-				break;
-			case 0:
-				System.out.println("Match Lost!");
-				TitleL.setText("Match Lost!");
-				break;
-			default:
-				System.out.println("Match Ended!");
-				TitleL.setText("Match Ended!");
-				break;
+		if (status == 1) {
+			System.out.println("Match Won!");
+			TitleL.setText("Match Won!");
+		} else if (status == 0) {
+			System.out.println("Match Lost!");
+			TitleL.setText("Match Lost!");
 		}
 	}
 

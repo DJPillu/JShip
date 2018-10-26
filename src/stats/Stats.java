@@ -93,7 +93,7 @@ public class Stats {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
-			Connection con = DriverManager.getConnection(DBDetails.DBURL + DBDetails.DBName, DBDetails.DBUName, DBDetails.DBPass); // Creates a connection to the MySQL Database
+			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
 
 			StringBuffer query = new StringBuffer(137);                                             // StringBuffer for holding the updates
 			query.append("SELECT * FROM stats WHERE UNo = (SELECT UNo FROM users WHERE UName = '"); // Base Query with Base Subquery

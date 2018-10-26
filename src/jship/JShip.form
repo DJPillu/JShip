@@ -48,7 +48,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="ButtonP" alignment="0" pref="570" max="32767" attributes="0"/>
+                      <Component id="ButtonP" alignment="0" max="32767" attributes="0"/>
                       <Component id="TitleP" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -60,7 +60,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="TitleP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="ButtonP" pref="154" max="32767" attributes="0"/>
+                  <Component id="ButtonP" min="-2" pref="90" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -74,7 +75,6 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Spacer1L" max="32767" attributes="0"/>
                           <Component id="TitleL" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="UserL" min="-2" max="-2" attributes="0"/>
@@ -96,8 +96,6 @@
                           <Component id="UserL" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="UserTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="Spacer1L" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -123,12 +121,6 @@
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="Spacer1L">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value=" "/>
-              </Properties>
-            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="ButtonP">
@@ -136,8 +128,8 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="3"/>
             <Property name="horizontalGap" type="int" value="10"/>
-            <Property name="rows" type="int" value="3"/>
-            <Property name="verticalGap" type="int" value="10"/>
+            <Property name="rows" type="int" value="2"/>
+            <Property name="verticalGap" type="int" value="20"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JButton" name="ChangeB">
@@ -158,8 +150,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShowStats"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="Spacer3L">
-            </Component>
             <Component class="javax.swing.JButton" name="PlayB">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Play"/>
@@ -169,16 +159,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="Spacer4L">
-            </Component>
-            <Component class="javax.swing.JButton" name="SettingsB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Shop"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenShop"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="Spacer5L">
             </Component>
             <Component class="javax.swing.JButton" name="ExitB">
               <Properties>

@@ -2,10 +2,10 @@ package jship;
 
 import game.Pre;
 import javax.swing.JOptionPane;
-import shop.Shop;
 
 
 /**
+ * Main form that runs when the program is started
  *
  * @author blackk100
  */
@@ -32,16 +32,12 @@ public class JShip extends javax.swing.JFrame {
     TitleL = new javax.swing.JLabel();
     UserL = new javax.swing.JLabel();
     UserTF = new javax.swing.JTextField();
-    Spacer1L = new javax.swing.JLabel();
     ButtonP = new javax.swing.JPanel();
     ChangeB = new javax.swing.JButton();
     Spacer2L = new javax.swing.JLabel();
     StatsB = new javax.swing.JButton();
-    Spacer3L = new javax.swing.JLabel();
     PlayB = new javax.swing.JButton();
     Spacer4L = new javax.swing.JLabel();
-    SettingsB = new javax.swing.JButton();
-    Spacer5L = new javax.swing.JLabel();
     ExitB = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,9 +50,6 @@ public class JShip extends javax.swing.JFrame {
 
     UserTF.setEditable(false);
 
-    Spacer1L.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    Spacer1L.setText(" ");
-
     javax.swing.GroupLayout TitlePLayout = new javax.swing.GroupLayout(TitleP);
     TitleP.setLayout(TitlePLayout);
     TitlePLayout.setHorizontalGroup(
@@ -64,7 +57,6 @@ public class JShip extends javax.swing.JFrame {
       .addGroup(TitlePLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(TitlePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(Spacer1L, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(TitleL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(TitlePLayout.createSequentialGroup()
             .addComponent(UserL)
@@ -81,12 +73,10 @@ public class JShip extends javax.swing.JFrame {
         .addGroup(TitlePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(UserL)
           .addComponent(UserTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(18, 18, 18)
-        .addComponent(Spacer1L)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    ButtonP.setLayout(new java.awt.GridLayout(3, 3, 10, 10));
+    ButtonP.setLayout(new java.awt.GridLayout(2, 3, 10, 20));
 
     ChangeB.setText("Register/ Login / Logout");
     ChangeB.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +94,6 @@ public class JShip extends javax.swing.JFrame {
       }
     });
     ButtonP.add(StatsB);
-    ButtonP.add(Spacer3L);
 
     PlayB.setText("Play");
     PlayB.addActionListener(new java.awt.event.ActionListener() {
@@ -114,15 +103,6 @@ public class JShip extends javax.swing.JFrame {
     });
     ButtonP.add(PlayB);
     ButtonP.add(Spacer4L);
-
-    SettingsB.setText("Shop");
-    SettingsB.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        OpenShop(evt);
-      }
-    });
-    ButtonP.add(SettingsB);
-    ButtonP.add(Spacer5L);
 
     ExitB.setText("Exit");
     ExitB.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +118,7 @@ public class JShip extends javax.swing.JFrame {
       HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomePLayout.createSequentialGroup()
         .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(ButtonP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+          .addComponent(ButtonP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(TitleP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
@@ -147,7 +127,8 @@ public class JShip extends javax.swing.JFrame {
       .addGroup(HomePLayout.createSequentialGroup()
         .addComponent(TitleP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(ButtonP, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
+        .addComponent(ButtonP, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,18 +195,6 @@ public class JShip extends javax.swing.JFrame {
   }//GEN-LAST:event_Play
 
 	/**
-	 * Opens the in-game shop.
-	 *
-	 * @param evt
-	 */
-  private void OpenShop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenShop
-		Shop Shop = new Shop(0); // Creates the Shop Form object
-		Shop.setVisible(true);   // Makes the Shop Form to be visible
-
-		this.dispose();          // Destroys the current form object
-  }//GEN-LAST:event_OpenShop
-
-	/**
 	 * Exits the program.
 	 *
 	 * @param evt
@@ -281,12 +250,8 @@ public class JShip extends javax.swing.JFrame {
   private javax.swing.JButton ExitB;
   private javax.swing.JPanel HomeP;
   private javax.swing.JButton PlayB;
-  private javax.swing.JButton SettingsB;
-  private javax.swing.JLabel Spacer1L;
   private javax.swing.JLabel Spacer2L;
-  private javax.swing.JLabel Spacer3L;
   private javax.swing.JLabel Spacer4L;
-  private javax.swing.JLabel Spacer5L;
   private javax.swing.JButton StatsB;
   private javax.swing.JLabel TitleL;
   private javax.swing.JPanel TitleP;

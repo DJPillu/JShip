@@ -4,6 +4,7 @@ import stats.Stats;
 
 
 /**
+ * Form for viewing the statistics of the current user.
  *
  * @author blackk100
  */

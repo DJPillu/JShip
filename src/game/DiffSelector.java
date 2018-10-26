@@ -2,6 +2,8 @@ package game;
 
 
 /**
+ * Form for selecting the AI difficulty.
+ * The form is visually skipped if the game mode selected is PvP.
  *
  * @author blackk100
  */
@@ -40,14 +42,14 @@ public class DiffSelector extends javax.swing.JFrame {
 	/**
 	 * Creates new form DiffSelector
 	 *
-	 * @param gameInitVars
+	 * @param initVars
 	 * @param type
 	 * @param mode
 	 */
-	public DiffSelector(boolean[] gameInitVars, int type, String mode) {
+	public DiffSelector(boolean[] initVars, int type, String mode) {
 		initComponents();
 
-		this.initVars = gameInitVars;
+		this.initVars = initVars;
 		this.type = type;
 		this.mode = mode;
 
@@ -237,19 +239,13 @@ public class DiffSelector extends javax.swing.JFrame {
 	 * @param evt
 	 */
   private void Difficulty1Changed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Difficulty1Changed
-		switch (this.Difficulty1BG.getSelection().getActionCommand()) {
-			case "S":
-				this.AI1Diff = -1;
-				break;
-			case "R":
-				this.AI1Diff = 0;
-				break;
-			case "B":
-				this.AI1Diff = 1;
-				break;
-			default:  // Unknown Return Value
-				this.AI1Diff = -3;
-				break;
+		String diff = this.Difficulty1BG.getSelection().getActionCommand();
+		if (diff.equals("S")) {
+			this.AI1Diff = -1;
+		} else if (diff.equals("R")) {
+			this.AI1Diff = 0;
+		} else if (diff.equals("B")) {
+			this.AI1Diff = 1;
 		}
   }//GEN-LAST:event_Difficulty1Changed
 
@@ -259,19 +255,13 @@ public class DiffSelector extends javax.swing.JFrame {
 	 * @param evt
 	 */
   private void Difficulty2Changed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Difficulty2Changed
-		switch (this.Difficulty2BG.getSelection().getActionCommand()) {
-			case "S":
-				this.AI2Diff = -1;
-				break;
-			case "R":
-				this.AI2Diff = 0;
-				break;
-			case "B":
-				this.AI2Diff = 1;
-				break;
-			default:  // Unknown Return Value
-				this.AI2Diff = -3;
-				break;
+		String diff = this.Difficulty2BG.getSelection().getActionCommand();
+		if (diff.equals("S")) {
+			this.AI2Diff = -1;
+		} else if (diff.equals("R")) {
+			this.AI2Diff = 0;
+		} else if (diff.equals("B")) {
+			this.AI2Diff = 1;
 		}
   }//GEN-LAST:event_Difficulty2Changed
 
@@ -293,7 +283,7 @@ public class DiffSelector extends javax.swing.JFrame {
 	 * @param evt
 	 */
   private void Play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Play
-		Main Main = new Main(
+		MainTemp Main = new MainTemp(
 						this.initVars, this.type, this.mode, this.AI1Diff, this.AI2Diff); // Creates the JShip Form object
 		Main.setVisible(true);                                                    // Makes the JShip Form to be visible
 
