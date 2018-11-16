@@ -1,0 +1,36 @@
+Colors:
+	Basic							- Blue						- 5, 218, 255, 255
+		Shot fired at		- Dark/Dull Blue	- 5, 218, 229, 255
+		Ship Placed			- Steel Grey			- 176, 196, 222, 255
+			Ship damaged	- Red							- 205, 0, 0, 255
+
+Winning Song: ???
+In-game Song: Sabaton
+Losing Song : Evil Morty Song
+
+PvE:
+	1) Round 0:
+		i  ) User Places Ships
+		ii ) AI gets User's map
+		iii) AI places Ships
+	2) Round n:								[n >= 1]
+		i  ) User shoots
+		ii ) Game checks if all AI ships are sunk. If yes, WIN.
+		iii) AI shoots
+		iv ) Game checks if all User ships are sunk. If yes, LOSE.
+	3) Post Game:
+		i  ) JOption Pane showing that the game ended.
+
+EvE:
+	1) Round 0:
+		i  ) AI1 Places Ships
+		ii ) AI2 gets AI1's map
+		ii ) AI2 Places Ships
+		iii) AI1 gets AI2's map
+	2) Round n:								[n >= 1]
+		i  ) AI1 shoots
+		ii ) Game checks if all AI1 ships are sunk. If yes, WIN.
+		iii) AI2 shoots
+		iv ) Game checks if all AI2 ships are sunk. If yes, LOSE.
+	3) Post Game:
+		i  ) JOption Pane showing that the game ended.

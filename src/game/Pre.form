@@ -1,336 +1,310 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="SizeBG">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="ModeBG">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="TypeBG">
-    </Component>
-  </NonVisualComponents>
-  <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
-  </Properties>
-  <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
-  </SyntheticProperties>
-  <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
-    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
-    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
-    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
-    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-  </AuxValues>
-
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="PreP" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="PreP" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-  </Layout>
-  <SubComponents>
-    <Container class="javax.swing.JPanel" name="PreP">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="TitleL" alignment="0" max="32767" attributes="0"/>
-                      <Component id="ButtonsP" pref="558" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="ModeL" alignment="0" max="32767" attributes="0"/>
-                              <Component id="TypeL" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ShipsL" alignment="0" max="32767" attributes="0"/>
-                              <Component id="GridL" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="ShipsP" alignment="1" max="32767" attributes="0"/>
-                              <Component id="ModeP" pref="465" max="32767" attributes="0"/>
-                              <Component id="GridP" max="32767" attributes="0"/>
-                              <Component id="TypeP" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="TitleL" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="GridP" max="32767" attributes="0"/>
-                      <Component id="GridL" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="ModeP" max="32767" attributes="0"/>
-                      <Component id="ModeL" min="-2" pref="23" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="TypeL" max="32767" attributes="0"/>
-                      <Component id="TypeP" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="ShipsL" max="32767" attributes="0"/>
-                      <Component id="ShipsP" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="ButtonsP" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="TitleL">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Game Setup"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="GridL">
-          <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="GridL"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Grid Size:"/>
-          </Properties>
-        </Component>
-        <Container class="javax.swing.JPanel" name="GridP">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="2"/>
-            <Property name="rows" type="int" value="1"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="Grid10RB">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="SizeBG"/>
-                </Property>
-                <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="10 x 10"/>
-                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;10&quot;" type="code"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SizeChanged"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="Grid15RB">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="SizeBG"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="15 x 15"/>
-                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;15&quot;" type="code"/>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SizeChanged"/>
-              </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Component class="javax.swing.JLabel" name="ModeL">
-          <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="ModeP"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Game Mode:"/>
-          </Properties>
-        </Component>
-        <Container class="javax.swing.JPanel" name="ModeP">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="2"/>
-            <Property name="rows" type="int" value="1"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="ClassRB">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="ModeBG"/>
-                </Property>
-                <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Classic"/>
-                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;C&quot;" type="code"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="SalvoRB">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="ModeBG"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Salvo"/>
-                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;S&quot;" type="code"/>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Component class="javax.swing.JLabel" name="TypeL">
-          <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="TypeP"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Game Type:"/>
-          </Properties>
-        </Component>
-        <Container class="javax.swing.JPanel" name="TypeP">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="3"/>
-            <Property name="rows" type="int" value="1"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="PvERB">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="TypeBG"/>
-                </Property>
-                <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Player vs AI"/>
-                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;PvE&quot;" type="code"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="PvPRB">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="TypeBG"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Player vs Player"/>
-                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;PvP&quot;" type="code"/>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="EvERB">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="TypeBG"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="AI vs AI"/>
-                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;EvE&quot;" type="code"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
-              </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Component class="javax.swing.JLabel" name="ShipsL">
-          <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="ShipsP"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Ships Available:"/>
-          </Properties>
-        </Component>
-        <Container class="javax.swing.JPanel" name="ShipsP">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="3"/>
-            <Property name="rows" type="int" value="2"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JCheckBox" name="BattleshipCB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleship&lt;br&gt;5 Spaces; x2&lt;/html&gt;"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="CruiserCB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Cruiser&lt;br&gt;4 Spaces; x2&lt;/html&gt;"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="DestroyerCB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyer&lt;br&gt;3 Spaces; x3&lt;/html&gt;"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="PatrolCB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Patrol Boat&lt;br&gt;2 Spaces; x5&lt;/html&gt;"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="ButtonsP">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="3"/>
-            <Property name="horizontalGap" type="int" value="100"/>
-            <Property name="rows" type="int" value="1"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="GoBackB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Go Back"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoBack"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="PlayB">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Next"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Next"/>
-              </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-      </SubComponents>
-    </Container>
-  </SubComponents>
+	<NonVisualComponents>
+		<Component class="javax.swing.ButtonGroup" name="SizeBG"></Component>
+		<Component class="javax.swing.ButtonGroup" name="ModeBG"></Component>
+		<Component class="javax.swing.ButtonGroup" name="TypeBG"></Component>
+	</NonVisualComponents>
+	<Properties>
+		<Property name="defaultCloseOperation" type="int" value="3"/>
+		<Property name="resizable" type="boolean" value="false"/>
+	</Properties>
+	<SyntheticProperties>
+		<SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+		<SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+	</SyntheticProperties>
+	<AuxValues>
+		<AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+		<AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+		<AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+		<AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+		<AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+	</AuxValues>
+	<Layout>
+		<DimensionLayout dim="0">
+			<Group type="103" groupAlignment="0" attributes="0">
+				<Group type="102" alignment="0" attributes="0">
+					<EmptySpace max="-2" attributes="0"/>
+					<Component id="PreP" max="32767" attributes="0"/>
+				</Group>
+			</Group>
+		</DimensionLayout>
+		<DimensionLayout dim="1">
+			<Group type="103" groupAlignment="0" attributes="0">
+				<Group type="102" alignment="0" attributes="0">
+					<EmptySpace max="-2" attributes="0"/>
+					<Component id="PreP" max="32767" attributes="0"/>
+					<EmptySpace max="-2" attributes="0"/>
+				</Group>
+			</Group>
+		</DimensionLayout>
+	</Layout>
+	<SubComponents>
+		<Container class="javax.swing.JPanel" name="PreP">
+			<Layout>
+				<DimensionLayout dim="0">
+					<Group type="103" groupAlignment="0" attributes="0">
+						<Group type="102" attributes="0">
+							<EmptySpace max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="0" attributes="0">
+								<Component id="TitleL" alignment="0" max="32767" attributes="0"/>
+								<Component id="ButtonsP" pref="558" max="32767" attributes="0"/>
+								<Group type="102" alignment="0" attributes="0">
+									<Group type="103" groupAlignment="1" attributes="0">
+										<Component id="ModeL" alignment="0" max="32767" attributes="0"/>
+										<Component id="TypeL" alignment="0" max="32767" attributes="0"/>
+										<Component id="ShipsL" alignment="0" max="32767" attributes="0"/>
+										<Component id="GridL" max="32767" attributes="0"/>
+									</Group>
+									<EmptySpace type="separate" max="32767" attributes="0"/>
+									<Group type="103" groupAlignment="0" max="-2" attributes="0">
+										<Component id="ShipsP" alignment="1" max="32767" attributes="0"/>
+										<Component id="ModeP" pref="465" max="32767" attributes="0"/>
+										<Component id="GridP" max="32767" attributes="0"/>
+										<Component id="TypeP" max="32767" attributes="0"/>
+									</Group>
+								</Group>
+							</Group>
+							<EmptySpace max="-2" attributes="0"/>
+						</Group>
+					</Group>
+				</DimensionLayout>
+				<DimensionLayout dim="1">
+					<Group type="103" groupAlignment="0" attributes="0">
+						<Group type="102" alignment="0" attributes="0">
+							<EmptySpace max="-2" attributes="0"/>
+							<Component id="TitleL" min="-2" max="-2" attributes="0"/>
+							<EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="0" max="-2" attributes="0">
+								<Component id="GridP" max="32767" attributes="0"/>
+								<Component id="GridL" max="32767" attributes="0"/>
+							</Group>
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="0" max="-2" attributes="0">
+								<Component id="ModeP" max="32767" attributes="0"/>
+								<Component id="ModeL" min="-2" pref="23" max="-2" attributes="0"/>
+							</Group>
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="0" max="-2" attributes="0">
+								<Component id="TypeL" max="32767" attributes="0"/>
+								<Component id="TypeP" min="-2" max="-2" attributes="0"/>
+							</Group>
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="0" max="-2" attributes="0">
+								<Component id="ShipsL" max="32767" attributes="0"/>
+								<Component id="ShipsP" min="-2" max="-2" attributes="0"/>
+							</Group>
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Component id="ButtonsP" min="-2" pref="40" max="-2" attributes="0"/>
+							<EmptySpace max="32767" attributes="0"/>
+						</Group>
+					</Group>
+				</DimensionLayout>
+			</Layout>
+			<SubComponents>
+				<Component class="javax.swing.JLabel" name="TitleL">
+					<Properties>
+						<Property name="horizontalAlignment" type="int" value="0"/>
+						<Property name="text" type="java.lang.String" value="Game Setup"/>
+					</Properties>
+				</Component>
+				<Component class="javax.swing.JLabel" name="GridL">
+					<Properties>
+						<Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+							<ComponentRef name="GridL"/>
+						</Property>
+						<Property name="text" type="java.lang.String" value="Grid Size:"/>
+					</Properties>
+				</Component>
+				<Container class="javax.swing.JPanel" name="GridP">
+					<Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+						<Property name="columns" type="int" value="2"/>
+						<Property name="rows" type="int" value="1"/>
+					</Layout>
+					<SubComponents>
+						<Component class="javax.swing.JRadioButton" name="Grid10RB">
+							<Properties>
+								<Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+									<ComponentRef name="SizeBG"/>
+								</Property>
+								<Property name="selected" type="boolean" value="true"/>
+								<Property name="text" type="java.lang.String" value="10 x 10"/>
+								<Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+									<Connection code="&quot;10&quot;" type="code"/>
+								</Property>
+							</Properties>
+							<Events>
+								<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SizeChanged"/>
+							</Events>
+						</Component>
+						<Component class="javax.swing.JRadioButton" name="Grid15RB">
+							<Properties>
+								<Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+									<ComponentRef name="SizeBG"/>
+								</Property>
+								<Property name="text" type="java.lang.String" value="15 x 15"/>
+								<Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+									<Connection code="&quot;15&quot;" type="code"/>
+								</Property>
+							</Properties>
+							<Events>
+								<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SizeChanged"/>
+							</Events>
+						</Component>
+					</SubComponents>
+				</Container>
+				<Component class="javax.swing.JLabel" name="ModeL">
+					<Properties>
+						<Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+							<ComponentRef name="ModeP"/>
+						</Property>
+						<Property name="text" type="java.lang.String" value="Game Mode:"/>
+					</Properties>
+				</Component>
+				<Container class="javax.swing.JPanel" name="ModeP">
+					<Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+						<Property name="columns" type="int" value="2"/>
+						<Property name="rows" type="int" value="1"/>
+					</Layout>
+					<SubComponents>
+						<Component class="javax.swing.JRadioButton" name="ClassRB">
+							<Properties>
+								<Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+									<ComponentRef name="ModeBG"/>
+								</Property>
+								<Property name="selected" type="boolean" value="true"/>
+								<Property name="text" type="java.lang.String" value="Classic"/>
+								<Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+									<Connection code="&quot;C&quot;" type="code"/>
+								</Property>
+							</Properties>
+						</Component>
+						<Component class="javax.swing.JRadioButton" name="SalvoRB">
+							<Properties>
+								<Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+									<ComponentRef name="ModeBG"/>
+								</Property>
+								<Property name="text" type="java.lang.String" value="Salvo"/>
+								<Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+									<Connection code="&quot;S&quot;" type="code"/>
+								</Property>
+								<Property name="enabled" type="boolean" value="false"/>
+							</Properties>
+						</Component>
+					</SubComponents>
+				</Container>
+				<Component class="javax.swing.JLabel" name="TypeL">
+					<Properties>
+						<Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+							<ComponentRef name="TypeP"/>
+						</Property>
+						<Property name="text" type="java.lang.String" value="Game Type:"/>
+					</Properties>
+				</Component>
+				<Container class="javax.swing.JPanel" name="TypeP">
+					<Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+						<Property name="columns" type="int" value="3"/>
+						<Property name="rows" type="int" value="1"/>
+					</Layout>
+					<SubComponents>
+						<Component class="javax.swing.JRadioButton" name="PvERB">
+							<Properties>
+								<Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+									<ComponentRef name="TypeBG"/>
+								</Property>
+								<Property name="selected" type="boolean" value="true"/>
+								<Property name="text" type="java.lang.String" value="Player vs AI"/>
+								<Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+									<Connection code="&quot;PvE&quot;" type="code"/>
+								</Property>
+							</Properties>
+							<Events>
+								<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
+							</Events>
+						</Component>
+						<Component class="javax.swing.JRadioButton" name="EvERB">
+							<Properties>
+								<Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+									<ComponentRef name="TypeBG"/>
+								</Property>
+								<Property name="text" type="java.lang.String" value="AI vs AI"/>
+								<Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+									<Connection code="&quot;EvE&quot;" type="code"/>
+								</Property>
+							</Properties>
+							<Events>
+								<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
+							</Events>
+						</Component>
+					</SubComponents>
+				</Container>
+				<Component class="javax.swing.JLabel" name="ShipsL">
+					<Properties>
+						<Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+							<ComponentRef name="ShipsP"/>
+						</Property>
+						<Property name="text" type="java.lang.String" value="Ships Available:"/>
+					</Properties>
+				</Component>
+				<Container class="javax.swing.JPanel" name="ShipsP">
+					<Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+						<Property name="columns" type="int" value="3"/>
+						<Property name="rows" type="int" value="2"/>
+					</Layout>
+					<SubComponents>
+						<Component class="javax.swing.JCheckBox" name="BattleshipCB">
+							<Properties>
+								<Property name="text" type="java.lang.String" value="&lt;html&gt;Battleship&lt;br&gt;5 Spaces; x2&lt;/html&gt;"/>
+							</Properties>
+						</Component>
+						<Component class="javax.swing.JCheckBox" name="CruiserCB">
+							<Properties>
+								<Property name="text" type="java.lang.String" value="&lt;html&gt;Cruiser&lt;br&gt;4 Spaces; x2&lt;/html&gt;"/>
+							</Properties>
+						</Component>
+						<Component class="javax.swing.JCheckBox" name="DestroyerCB">
+							<Properties>
+								<Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyer&lt;br&gt;3 Spaces; x3&lt;/html&gt;"/>
+							</Properties>
+						</Component>
+						<Component class="javax.swing.JCheckBox" name="PatrolCB">
+							<Properties>
+								<Property name="text" type="java.lang.String" value="&lt;html&gt;Patrol Boat&lt;br&gt;2 Spaces; x5&lt;/html&gt;"/>
+							</Properties>
+						</Component>
+					</SubComponents>
+				</Container>
+				<Container class="javax.swing.JPanel" name="ButtonsP">
+					<Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+						<Property name="columns" type="int" value="3"/>
+						<Property name="horizontalGap" type="int" value="100"/>
+						<Property name="rows" type="int" value="1"/>
+					</Layout>
+					<SubComponents>
+						<Component class="javax.swing.JButton" name="GoBackB">
+							<Properties>
+								<Property name="text" type="java.lang.String" value="Go Back"/>
+							</Properties>
+							<Events>
+								<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoBack"/>
+							</Events>
+						</Component>
+						<Component class="javax.swing.JButton" name="PlayB">
+							<Properties>
+								<Property name="text" type="java.lang.String" value="Next"/>
+							</Properties>
+							<Events>
+								<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Next"/>
+							</Events>
+						</Component>
+					</SubComponents>
+				</Container>
+			</SubComponents>
+		</Container>
+	</SubComponents>
 </Form>

@@ -27,6 +27,16 @@ abstract class AI {
 	}
 
 	/**
+	 * Used when a EvE round is running.
+	 * Used by the 1st AI after AI2 places its ships.
+	 *
+	 * @param gridOpp
+	 */
+	private void EvE(Location[][] gridOpp) {
+		this.gridOpp = gridOpp;
+	}
+
+	/**
 	 * A getter for gridSelf
 	 *
 	 * @return gridSelf

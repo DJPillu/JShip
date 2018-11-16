@@ -1,191 +1,185 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
-  </Properties>
-  <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
-  </SyntheticProperties>
-  <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
-    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
-    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
-    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
-    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-  </AuxValues>
-
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="ButtonsP" pref="480" max="32767" attributes="0"/>
-                  <Component id="InputP" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="InputP" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="ButtonsP" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-  </Layout>
-  <SubComponents>
-    <Container class="javax.swing.JPanel" name="InputP">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="TitleL" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="CurrentUserL" alignment="0" max="32767" attributes="0"/>
-                              <Component id="UserL" alignment="0" max="32767" attributes="0"/>
-                              <Component id="PassL" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="PassTF" max="32767" attributes="0"/>
-                              <Component id="UserTF" max="32767" attributes="0"/>
-                              <Component id="CurrentUserTF" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="TitleL" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="CurrentUserL" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="CurrentUserTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="UserL" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="UserTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="PassL" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="PassTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="TitleL">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Login"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="CurrentUserL">
-          <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="CurrentUserTF"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Current User:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="CurrentUserTF">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="UserL">
-          <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="UserTF"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Username:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="UserTF">
-        </Component>
-        <Component class="javax.swing.JLabel" name="PassL">
-          <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="PassTF"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Password:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="PassTF">
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="ButtonsP">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-        <Property name="columns" type="int" value="3"/>
-        <Property name="horizontalGap" type="int" value="30"/>
-        <Property name="rows" type="int" value="2"/>
-        <Property name="verticalGap" type="int" value="10"/>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="LoginB">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Login"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Login"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="Spacer1L">
-        </Component>
-        <Component class="javax.swing.JButton" name="LogoutB">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Logout"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Logout"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="RegisterB">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Register"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Register"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="Spacer2L">
-        </Component>
-        <Component class="javax.swing.JButton" name="CancelB">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cancel"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoBack"/>
-          </Events>
-        </Component>
-      </SubComponents>
-    </Container>
-  </SubComponents>
+	<Properties>
+		<Property name="defaultCloseOperation" type="int" value="3"/>
+		<Property name="resizable" type="boolean" value="false"/>
+	</Properties>
+	<SyntheticProperties>
+		<SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+		<SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+	</SyntheticProperties>
+	<AuxValues>
+		<AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+		<AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+		<AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+		<AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+		<AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+		<AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+	</AuxValues>
+	<Layout>
+		<DimensionLayout dim="0">
+			<Group type="103" groupAlignment="0" attributes="0">
+				<Group type="102" attributes="0">
+					<EmptySpace max="-2" attributes="0"/>
+					<Group type="103" groupAlignment="0" attributes="0">
+						<Component id="ButtonsP" pref="480" max="32767" attributes="0"/>
+						<Component id="InputP" max="32767" attributes="0"/>
+					</Group>
+					<EmptySpace max="-2" attributes="0"/>
+				</Group>
+			</Group>
+		</DimensionLayout>
+		<DimensionLayout dim="1">
+			<Group type="103" groupAlignment="0" attributes="0">
+				<Group type="102" alignment="0" attributes="0">
+					<EmptySpace max="-2" attributes="0"/>
+					<Component id="InputP" min="-2" max="-2" attributes="0"/>
+					<EmptySpace type="separate" max="-2" attributes="0"/>
+					<Component id="ButtonsP" min="-2" max="-2" attributes="0"/>
+					<EmptySpace max="32767" attributes="0"/>
+				</Group>
+			</Group>
+		</DimensionLayout>
+	</Layout>
+	<SubComponents>
+		<Container class="javax.swing.JPanel" name="InputP">
+			<Layout>
+				<DimensionLayout dim="0">
+					<Group type="103" groupAlignment="0" attributes="0">
+						<Group type="102" attributes="0">
+							<EmptySpace max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="0" attributes="0">
+								<Component id="TitleL" max="32767" attributes="0"/>
+								<Group type="102" attributes="0">
+									<Group type="103" groupAlignment="0" max="-2" attributes="0">
+										<Component id="CurrentUserL" alignment="0" max="32767" attributes="0"/>
+										<Component id="UserL" alignment="0" max="32767" attributes="0"/>
+										<Component id="PassL" alignment="0" max="32767" attributes="0"/>
+									</Group>
+									<EmptySpace type="separate" max="-2" attributes="0"/>
+									<Group type="103" groupAlignment="0" attributes="0">
+										<Component id="PassTF" max="32767" attributes="0"/>
+										<Component id="UserTF" max="32767" attributes="0"/>
+										<Component id="CurrentUserTF" max="32767" attributes="0"/>
+									</Group>
+								</Group>
+							</Group>
+							<EmptySpace max="-2" attributes="0"/>
+						</Group>
+					</Group>
+				</DimensionLayout>
+				<DimensionLayout dim="1">
+					<Group type="103" groupAlignment="0" attributes="0">
+						<Group type="102" alignment="0" attributes="0">
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Component id="TitleL" min="-2" max="-2" attributes="0"/>
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="3" attributes="0">
+								<Component id="CurrentUserL" alignment="3" min="-2" max="-2" attributes="0"/>
+								<Component id="CurrentUserTF" alignment="3" min="-2" max="-2" attributes="0"/>
+							</Group>
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="3" attributes="0">
+								<Component id="UserL" alignment="3" min="-2" max="-2" attributes="0"/>
+								<Component id="UserTF" alignment="3" min="-2" max="-2" attributes="0"/>
+							</Group>
+							<EmptySpace type="separate" max="-2" attributes="0"/>
+							<Group type="103" groupAlignment="3" attributes="0">
+								<Component id="PassL" alignment="3" min="-2" max="-2" attributes="0"/>
+								<Component id="PassTF" alignment="3" min="-2" max="-2" attributes="0"/>
+							</Group>
+							<EmptySpace max="32767" attributes="0"/>
+						</Group>
+					</Group>
+				</DimensionLayout>
+			</Layout>
+			<SubComponents>
+				<Component class="javax.swing.JLabel" name="TitleL">
+					<Properties>
+						<Property name="horizontalAlignment" type="int" value="0"/>
+						<Property name="text" type="java.lang.String" value="Login"/>
+					</Properties>
+				</Component>
+				<Component class="javax.swing.JLabel" name="CurrentUserL">
+					<Properties>
+						<Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+							<ComponentRef name="CurrentUserTF"/>
+						</Property>
+						<Property name="text" type="java.lang.String" value="Current User:"/>
+					</Properties>
+				</Component>
+				<Component class="javax.swing.JTextField" name="CurrentUserTF">
+					<Properties>
+						<Property name="editable" type="boolean" value="false"/>
+					</Properties>
+				</Component>
+				<Component class="javax.swing.JLabel" name="UserL">
+					<Properties>
+						<Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+							<ComponentRef name="UserTF"/>
+						</Property>
+						<Property name="text" type="java.lang.String" value="Username:"/>
+					</Properties>
+				</Component>
+				<Component class="javax.swing.JTextField" name="UserTF"></Component>
+				<Component class="javax.swing.JLabel" name="PassL">
+					<Properties>
+						<Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+							<ComponentRef name="PassTF"/>
+						</Property>
+						<Property name="text" type="java.lang.String" value="Password:"/>
+					</Properties>
+				</Component>
+				<Component class="javax.swing.JPasswordField" name="PassTF"></Component>
+			</SubComponents>
+		</Container>
+		<Container class="javax.swing.JPanel" name="ButtonsP">
+			<Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+				<Property name="columns" type="int" value="3"/>
+				<Property name="horizontalGap" type="int" value="30"/>
+				<Property name="rows" type="int" value="2"/>
+				<Property name="verticalGap" type="int" value="10"/>
+			</Layout>
+			<SubComponents>
+				<Component class="javax.swing.JButton" name="LoginB">
+					<Properties>
+						<Property name="text" type="java.lang.String" value="Login"/>
+					</Properties>
+					<Events>
+						<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Login"/>
+					</Events>
+				</Component>
+				<Component class="javax.swing.JLabel" name="Spacer1L"></Component>
+				<Component class="javax.swing.JButton" name="LogoutB">
+					<Properties>
+						<Property name="text" type="java.lang.String" value="Logout"/>
+					</Properties>
+					<Events>
+						<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Logout"/>
+					</Events>
+				</Component>
+				<Component class="javax.swing.JButton" name="RegisterB">
+					<Properties>
+						<Property name="text" type="java.lang.String" value="Register"/>
+					</Properties>
+					<Events>
+						<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Register"/>
+					</Events>
+				</Component>
+				<Component class="javax.swing.JLabel" name="Spacer2L"></Component>
+				<Component class="javax.swing.JButton" name="CancelB">
+					<Properties>
+						<Property name="text" type="java.lang.String" value="Cancel"/>
+					</Properties>
+					<Events>
+						<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoBack"/>
+					</Events>
+				</Component>
+			</SubComponents>
+		</Container>
+	</SubComponents>
 </Form>

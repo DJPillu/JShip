@@ -1,7 +1,9 @@
 package jship;
 
 import game.Pre;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.GridLayout;
 
 
 /**
@@ -9,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author blackk100
  */
-public class JShip extends javax.swing.JFrame {
+public class JShip extends JFrame {
 
 	/**
 	 * Creates new form JShip
@@ -27,22 +29,23 @@ public class JShip extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    HomeP = new javax.swing.JPanel();
-    TitleP = new javax.swing.JPanel();
-    TitleL = new javax.swing.JLabel();
-    UserL = new javax.swing.JLabel();
-    UserTF = new javax.swing.JTextField();
-    ButtonP = new javax.swing.JPanel();
-    ChangeB = new javax.swing.JButton();
-    Spacer2L = new javax.swing.JLabel();
-    StatsB = new javax.swing.JButton();
-    PlayB = new javax.swing.JButton();
-    Spacer4L = new javax.swing.JLabel();
-    ExitB = new javax.swing.JButton();
+    HomeP = new JPanel();
+    TitleP = new JPanel();
+    TitleL = new JLabel();
+    UserL = new JLabel();
+    UserTF = new JTextField();
+    ButtonP = new JPanel();
+    ChangeB = new JButton();
+    Spacer2L = new JLabel();
+    StatsB = new JButton();
+    PlayB = new JButton();
+    Spacer4L = new JLabel();
+    ExitB = new JButton();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
 
-    TitleL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    TitleL.setHorizontalAlignment(SwingConstants.CENTER);
     TitleL.setText("JShip");
 
     UserL.setLabelFor(UserTF);
@@ -50,14 +53,14 @@ public class JShip extends javax.swing.JFrame {
 
     UserTF.setEditable(false);
 
-    javax.swing.GroupLayout TitlePLayout = new javax.swing.GroupLayout(TitleP);
+    GroupLayout TitlePLayout = new GroupLayout(TitleP);
     TitleP.setLayout(TitlePLayout);
     TitlePLayout.setHorizontalGroup(
-      TitlePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(TitlePLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(TitlePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(TitleL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+          .addComponent(TitleL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(TitlePLayout.createSequentialGroup()
             .addComponent(UserL)
             .addGap(18, 18, 18)
@@ -65,22 +68,22 @@ public class JShip extends javax.swing.JFrame {
         .addContainerGap())
     );
     TitlePLayout.setVerticalGroup(
-      TitlePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(TitlePLayout.createSequentialGroup()
         .addContainerGap()
         .addComponent(TitleL)
         .addGap(18, 18, 18)
-        .addGroup(TitlePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
           .addComponent(UserL)
-          .addComponent(UserTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(UserTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    ButtonP.setLayout(new java.awt.GridLayout(2, 3, 10, 20));
+    ButtonP.setLayout(new GridLayout(2, 3, 10, 20));
 
     ChangeB.setText("Register/ Login / Logout");
-    ChangeB.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    ChangeB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
         ChangeUser(evt);
       }
     });
@@ -88,16 +91,16 @@ public class JShip extends javax.swing.JFrame {
     ButtonP.add(Spacer2L);
 
     StatsB.setText("Statistics");
-    StatsB.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    StatsB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
         ShowStats(evt);
       }
     });
     ButtonP.add(StatsB);
 
     PlayB.setText("Play");
-    PlayB.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    PlayB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
         Play(evt);
       }
     });
@@ -105,46 +108,46 @@ public class JShip extends javax.swing.JFrame {
     ButtonP.add(Spacer4L);
 
     ExitB.setText("Exit");
-    ExitB.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    ExitB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
         Exit(evt);
       }
     });
     ButtonP.add(ExitB);
 
-    javax.swing.GroupLayout HomePLayout = new javax.swing.GroupLayout(HomeP);
+    GroupLayout HomePLayout = new GroupLayout(HomeP);
     HomeP.setLayout(HomePLayout);
     HomePLayout.setHorizontalGroup(
-      HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomePLayout.createSequentialGroup()
-        .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(ButtonP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(TitleP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      HomePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(GroupLayout.Alignment.TRAILING, HomePLayout.createSequentialGroup()
+        .addGroup(HomePLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+          .addComponent(ButtonP, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(TitleP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
     HomePLayout.setVerticalGroup(
-      HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      HomePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(HomePLayout.createSequentialGroup()
-        .addComponent(TitleP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(TitleP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(ButtonP, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(ButtonP, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    GroupLayout layout = new GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      layout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(HomeP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(HomeP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
     layout.setVerticalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      layout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(HomeP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(HomeP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -163,54 +166,47 @@ public class JShip extends javax.swing.JFrame {
 	 *
 	 * @param evt
 	 */
-  private void ChangeUser(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeUser
+	private void ChangeUser(ActionEvent evt) {//GEN-FIRST:event_ChangeUser
 		ChangeUser ChangeUser = new ChangeUser(); // Creates the ChangeUser Form object
 		ChangeUser.setVisible(true);              // Makes the ChangeUser Form to be visible
 
 		this.dispose();                           // Destroys the current form object
-  }//GEN-LAST:event_ChangeUser
+	}//GEN-LAST:event_ChangeUser
 
 	/**
 	 * Shows the statistics for the current user.
 	 *
 	 * @param evt
 	 */
-  private void ShowStats(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowStats
+	private void ShowStats(ActionEvent evt) {//GEN-FIRST:event_ShowStats
 		ViewStats ViewStats = new ViewStats(); // Creates the ViewStats Form object
 		ViewStats.setVisible(true);            // Makes the ViewStats Form to be visible
 
 		this.dispose();                        // Destroys the current form object
-  }//GEN-LAST:event_ShowStats
+	}//GEN-LAST:event_ShowStats
 
 	/**
 	 * Starts the game.
 	 *
 	 * @param evt
 	 */
-  private void Play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Play
+	private void Play(ActionEvent evt) {//GEN-FIRST:event_Play
 		Pre Pre = new Pre();  // Creates the Pre Form object
 		Pre.setVisible(true); // Makes the Pre Form to be visible
 
 		this.dispose();       // Destroys the current form object
-  }//GEN-LAST:event_Play
+	}//GEN-LAST:event_Play
 
 	/**
 	 * Exits the program.
 	 *
 	 * @param evt
 	 */
-  private void Exit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Exit
-		int response = JOptionPane.showConfirmDialog(null, "Are you a wuss?", "Abandon Ship?", JOptionPane.YES_NO_OPTION);
-		switch (response) {
-			case 0:  // Yes
+	private void Exit(ActionEvent evt) {//GEN-FIRST:event_Exit
+		if (JOptionPane.showConfirmDialog(null, "Are you a wuss?", "Abandon Ship?", JOptionPane.YES_NO_OPTION) == 0) {
 				System.exit(0);
-				break;
-			case 1:  // No
-				break;
-			default: // Unknown Return value
-				break;
 		}
-  }//GEN-LAST:event_Exit
+	}//GEN-LAST:event_Exit
 
 	/**
 	 * @param args the command line arguments
@@ -225,13 +221,13 @@ public class JShip extends javax.swing.JFrame {
 		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 		 */
 		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					UIManager.setLookAndFeel(info.getClassName());
 					break;
 				}
 			}
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			java.util.logging.Logger.getLogger(JShip.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
 		}
 		//</editor-fold>
@@ -245,17 +241,17 @@ public class JShip extends javax.swing.JFrame {
 	}
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JPanel ButtonP;
-  private javax.swing.JButton ChangeB;
-  private javax.swing.JButton ExitB;
-  private javax.swing.JPanel HomeP;
-  private javax.swing.JButton PlayB;
-  private javax.swing.JLabel Spacer2L;
-  private javax.swing.JLabel Spacer4L;
-  private javax.swing.JButton StatsB;
-  private javax.swing.JLabel TitleL;
-  private javax.swing.JPanel TitleP;
-  private javax.swing.JLabel UserL;
-  private javax.swing.JTextField UserTF;
+  private JPanel ButtonP;
+  private JButton ChangeB;
+  private JButton ExitB;
+  private JPanel HomeP;
+  private JButton PlayB;
+  private JLabel Spacer2L;
+  private JLabel Spacer4L;
+  private JButton StatsB;
+  private JLabel TitleL;
+  private JPanel TitleP;
+  private JLabel UserL;
+  private JTextField UserTF;
   // End of variables declaration//GEN-END:variables
 }
