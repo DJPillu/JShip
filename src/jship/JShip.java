@@ -1,9 +1,9 @@
 package jship;
 
 import game.Pre;
-import javax.swing.*;
-import java.awt.event.*;
 import java.awt.GridLayout;
+import java.awt.event.*;
+import javax.swing.*;
 
 
 /**
@@ -43,6 +43,7 @@ public class JShip extends JFrame {
     ExitB = new JButton();
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setTitle("JShip");
     setResizable(false);
 
     TitleL.setHorizontalAlignment(SwingConstants.CENTER);
@@ -55,8 +56,7 @@ public class JShip extends JFrame {
 
     GroupLayout TitlePLayout = new GroupLayout(TitleP);
     TitleP.setLayout(TitlePLayout);
-    TitlePLayout.setHorizontalGroup(
-      TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    TitlePLayout.setHorizontalGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(TitlePLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -67,8 +67,7 @@ public class JShip extends JFrame {
             .addComponent(UserTF)))
         .addContainerGap())
     );
-    TitlePLayout.setVerticalGroup(
-      TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    TitlePLayout.setVerticalGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(TitlePLayout.createSequentialGroup()
         .addContainerGap()
         .addComponent(TitleL)
@@ -117,16 +116,14 @@ public class JShip extends JFrame {
 
     GroupLayout HomePLayout = new GroupLayout(HomeP);
     HomeP.setLayout(HomePLayout);
-    HomePLayout.setHorizontalGroup(
-      HomePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    HomePLayout.setHorizontalGroup(HomePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(GroupLayout.Alignment.TRAILING, HomePLayout.createSequentialGroup()
         .addGroup(HomePLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
           .addComponent(ButtonP, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(TitleP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
-    HomePLayout.setVerticalGroup(
-      HomePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    HomePLayout.setVerticalGroup(HomePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(HomePLayout.createSequentialGroup()
         .addComponent(TitleP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
@@ -136,15 +133,13 @@ public class JShip extends JFrame {
 
     GroupLayout layout = new GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-      layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(HomeP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
-    layout.setVerticalGroup(
-      layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(HomeP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -204,7 +199,7 @@ public class JShip extends JFrame {
 	 */
 	private void Exit(ActionEvent evt) {//GEN-FIRST:event_Exit
 		if (JOptionPane.showConfirmDialog(null, "Are you a wuss?", "Abandon Ship?", JOptionPane.YES_NO_OPTION) == 0) {
-				System.exit(0);
+			System.exit(0);
 		}
 	}//GEN-LAST:event_Exit
 

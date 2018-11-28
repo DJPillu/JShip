@@ -1,265 +1,268 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-	<Properties>
-		<Property name="defaultCloseOperation" type="int" value="3"/>
-		<Property name="resizable" type="boolean" value="false"/>
-	</Properties>
-	<SyntheticProperties>
-		<SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-		<SyntheticProperty name="generateCenter" type="boolean" value="false"/>
-	</SyntheticProperties>
-	<AuxValues>
-		<AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
-		<AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
-		<AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
-		<AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-		<AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
-		<AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
-		<AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
-		<AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
-		<AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-	</AuxValues>
-	<Layout>
-		<DimensionLayout dim="0">
-			<Group type="103" groupAlignment="0" attributes="0">
-				<Group type="102" attributes="0">
-					<EmptySpace max="-2" attributes="0"/>
-					<Group type="103" groupAlignment="0" attributes="0">
-						<Component id="TitleP" max="32767" attributes="0"/>
-						<Component id="StatsP" max="32767" attributes="0"/>
-					</Group>
-					<EmptySpace max="-2" attributes="0"/>
-				</Group>
-			</Group>
-		</DimensionLayout>
-		<DimensionLayout dim="1">
-			<Group type="103" groupAlignment="0" attributes="0">
-				<Group type="102" alignment="0" attributes="0">
-					<EmptySpace max="-2" attributes="0"/>
-					<Component id="TitleP" min="-2" max="-2" attributes="0"/>
-					<EmptySpace type="separate" max="-2" attributes="0"/>
-					<Component id="StatsP" max="32767" attributes="0"/>
-					<EmptySpace max="-2" attributes="0"/>
-				</Group>
-			</Group>
-		</DimensionLayout>
-	</Layout>
-	<SubComponents>
-		<Container class="javax.swing.JPanel" name="TitleP">
-			<Layout>
-				<DimensionLayout dim="0">
-					<Group type="103" groupAlignment="0" attributes="0">
-						<Group type="102" attributes="0">
-							<EmptySpace max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="0" attributes="0">
-								<Component id="TitleL" alignment="0" max="32767" attributes="0"/>
-								<Group type="102" alignment="0" attributes="0">
-									<Component id="PlayL" min="-2" max="-2" attributes="0"/>
-									<EmptySpace type="separate" max="-2" attributes="0"/>
-									<Component id="PlayB" min="-2" max="-2" attributes="0"/>
-									<EmptySpace pref="36" max="32767" attributes="0"/>
-									<Component id="GoBackL" min="-2" max="-2" attributes="0"/>
-									<EmptySpace type="separate" max="-2" attributes="0"/>
-									<Component id="GoBackB" min="-2" max="-2" attributes="0"/>
-								</Group>
-							</Group>
-							<EmptySpace max="-2" attributes="0"/>
-						</Group>
-					</Group>
-				</DimensionLayout>
-				<DimensionLayout dim="1">
-					<Group type="103" groupAlignment="0" attributes="0">
-						<Group type="102" alignment="0" attributes="0">
-							<EmptySpace max="-2" attributes="0"/>
-							<Component id="TitleL" min="-2" max="-2" attributes="0"/>
-							<EmptySpace type="separate" max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="3" attributes="0">
-								<Component id="PlayL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="PlayB" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="GoBackL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="GoBackB" alignment="3" min="-2" max="-2" attributes="0"/>
-							</Group>
-							<EmptySpace max="32767" attributes="0"/>
-						</Group>
-					</Group>
-				</DimensionLayout>
-			</Layout>
-			<SubComponents>
-				<Component class="javax.swing.JLabel" name="TitleL">
-					<Properties>
-						<Property name="horizontalAlignment" type="int" value="0"/>
-						<Property name="text" type="java.lang.String" value="Title Label"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JLabel" name="PlayL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Play Another Round:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JButton" name="PlayB">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Play"/>
-					</Properties>
-					<Events>
-						<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Play"/>
-					</Events>
-				</Component>
-				<Component class="javax.swing.JLabel" name="GoBackL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Exit to Menu:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JButton" name="GoBackB">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Go Back"/>
-					</Properties>
-					<Events>
-						<EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoBack"/>
-					</Events>
-				</Component>
-			</SubComponents>
-		</Container>
-		<Container class="javax.swing.JPanel" name="StatsP">
-			<Layout>
-				<DimensionLayout dim="0">
-					<Group type="103" groupAlignment="0" attributes="0">
-						<Group type="102" alignment="0" attributes="0">
-							<EmptySpace max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="0" attributes="0">
-								<Component id="StatsTitleL" max="32767" attributes="0"/>
-								<Group type="102" alignment="0" attributes="0">
-									<Group type="103" groupAlignment="0" max="-2" attributes="0">
-										<Component id="SFL" alignment="0" max="32767" attributes="0"/>
-										<Component id="HitsL" alignment="0" max="32767" attributes="0"/>
-										<Component id="AccL" alignment="0" max="32767" attributes="0"/>
-										<Component id="THL" alignment="0" max="32767" attributes="0"/>
-										<Component id="SSL" alignment="0" max="32767" attributes="0"/>
-										<Component id="SLL" alignment="0" max="32767" attributes="0"/>
-									</Group>
-									<EmptySpace type="separate" max="-2" attributes="0"/>
-									<Group type="103" groupAlignment="0" attributes="0">
-										<Component id="SFTF" max="32767" attributes="0"/>
-										<Component id="HitsTF" max="32767" attributes="0"/>
-										<Component id="AccTF" alignment="0" max="32767" attributes="0"/>
-										<Component id="THTF" alignment="0" max="32767" attributes="0"/>
-										<Component id="SSTF" alignment="0" max="32767" attributes="0"/>
-										<Component id="SLTF" alignment="0" max="32767" attributes="0"/>
-									</Group>
-								</Group>
-							</Group>
-							<EmptySpace max="-2" attributes="0"/>
-						</Group>
-					</Group>
-				</DimensionLayout>
-				<DimensionLayout dim="1">
-					<Group type="103" groupAlignment="0" attributes="0">
-						<Group type="102" alignment="0" attributes="0">
-							<EmptySpace max="-2" attributes="0"/>
-							<Component id="StatsTitleL" min="-2" max="-2" attributes="0"/>
-							<EmptySpace type="separate" max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="3" attributes="0">
-								<Component id="SFL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="SFTF" alignment="3" min="-2" max="-2" attributes="0"/>
-							</Group>
-							<EmptySpace type="separate" max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="3" attributes="0">
-								<Component id="HitsL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="HitsTF" alignment="3" min="-2" max="-2" attributes="0"/>
-							</Group>
-							<EmptySpace type="separate" max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="3" attributes="0">
-								<Component id="AccL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="AccTF" alignment="3" min="-2" max="-2" attributes="0"/>
-							</Group>
-							<EmptySpace type="separate" max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="3" attributes="0">
-								<Component id="THL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="THTF" alignment="3" min="-2" max="-2" attributes="0"/>
-							</Group>
-							<EmptySpace type="separate" max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="3" attributes="0">
-								<Component id="SSL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="SSTF" alignment="3" min="-2" max="-2" attributes="0"/>
-							</Group>
-							<EmptySpace type="separate" max="-2" attributes="0"/>
-							<Group type="103" groupAlignment="3" attributes="0">
-								<Component id="SLL" alignment="3" min="-2" max="-2" attributes="0"/>
-								<Component id="SLTF" alignment="3" min="-2" max="-2" attributes="0"/>
-							</Group>
-							<EmptySpace max="32767" attributes="0"/>
-						</Group>
-					</Group>
-				</DimensionLayout>
-			</Layout>
-			<SubComponents>
-				<Component class="javax.swing.JLabel" name="StatsTitleL">
-					<Properties>
-						<Property name="horizontalAlignment" type="int" value="0"/>
-						<Property name="text" type="java.lang.String" value="Match Statistics"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JLabel" name="SFL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Shots Fired:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JLabel" name="HitsL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Hits:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JLabel" name="AccL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Accuracy:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JLabel" name="THL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Times Hit:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JLabel" name="SSL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Ships Sunk:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JLabel" name="SLL">
-					<Properties>
-						<Property name="text" type="java.lang.String" value="Ships Lost:"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JTextField" name="SFTF">
-					<Properties>
-						<Property name="editable" type="boolean" value="false"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JTextField" name="HitsTF">
-					<Properties>
-						<Property name="editable" type="boolean" value="false"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JTextField" name="AccTF">
-					<Properties>
-						<Property name="editable" type="boolean" value="false"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JTextField" name="THTF">
-					<Properties>
-						<Property name="editable" type="boolean" value="false"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JTextField" name="SSTF">
-					<Properties>
-						<Property name="editable" type="boolean" value="false"/>
-					</Properties>
-				</Component>
-				<Component class="javax.swing.JTextField" name="SLTF">
-					<Properties>
-						<Property name="editable" type="boolean" value="false"/>
-					</Properties>
-				</Component>
-			</SubComponents>
-		</Container>
-	</SubComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="TitleP" max="32767" attributes="0"/>
+                  <Component id="StatsP" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="TitleP" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="StatsP" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="TitleP">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="TitleL" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="PlayL" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="PlayB" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="36" max="32767" attributes="0"/>
+                          <Component id="GoBackL" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="GoBackB" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="TitleL" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="PlayL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="PlayB" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="GoBackL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="GoBackB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="TitleL">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Title Label"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="PlayL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Play Another Round:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="PlayB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Play"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Play"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="GoBackL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Exit to Menu:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="GoBackB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Go Back"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoBack"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="StatsP">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="StatsTitleL" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="SFL" alignment="0" max="32767" attributes="0"/>
+                              <Component id="HitsL" alignment="0" max="32767" attributes="0"/>
+                              <Component id="AccL" alignment="0" max="32767" attributes="0"/>
+                              <Component id="THL" alignment="0" max="32767" attributes="0"/>
+                              <Component id="SSL" alignment="0" max="32767" attributes="0"/>
+                              <Component id="SLL" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="SFTF" max="32767" attributes="0"/>
+                              <Component id="HitsTF" max="32767" attributes="0"/>
+                              <Component id="AccTF" alignment="0" max="32767" attributes="0"/>
+                              <Component id="THTF" alignment="0" max="32767" attributes="0"/>
+                              <Component id="SSTF" alignment="0" max="32767" attributes="0"/>
+                              <Component id="SLTF" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="StatsTitleL" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="SFL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="SFTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="HitsL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="HitsTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="AccL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="AccTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="THL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="THTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="SSL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="SSTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="SLL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="SLTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="StatsTitleL">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Match Statistics"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="SFL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Shots Fired:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="HitsL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Hits:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="AccL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Accuracy:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="THL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Times Hit:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="SSL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ships Sunk:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="SLL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ships Lost:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="SFTF">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="HitsTF">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="AccTF">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="THTF">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="SSTF">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="SLTF">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
 </Form>
