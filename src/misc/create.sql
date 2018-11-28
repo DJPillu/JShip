@@ -8,7 +8,7 @@ CREATE TABLE users (
 	UNo TINYINT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY, # User ID
 	UName VARCHAR(64) UNIQUE,                           # Username
 	PassWrd MEDIUMINT                                   # Password Hash
-);
+) ENGINE = 'InnoDB';
 
 CREATE TABLE stats (
 	UNo TINYINT(2) UNSIGNED REFERENCES users (UNo) ON DELETE CASCADE ON UPDATE CASCADE, # User ID
@@ -23,9 +23,10 @@ CREATE TABLE stats (
 	TH MEDIUMINT(6) UNSIGNED NOT NULL DEFAULT 0,      # Times Hit
 	SS MEDIUMINT(6) UNSIGNED NOT NULL DEFAULT 0,      # Ships Sunk
 	SL MEDIUMINT(6) UNSIGNED NOT NULL DEFAULT 0       # Ships Lost
-);
+) ENGINE = 'InnoDB';
 
 INSERT INTO users (UName, PassWrd) VALUES ('guest', 0);
+
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'C', 'S', 1, 0, 1, 10, 5, 50.00, 9, 10, 11);
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'C', 'R', 1, 0, 1, 11, 6, 54.55, 10, 11, 12);
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'C', 'B', 1, 0, 1, 12, 7, 58.33, 11, 12, 13);

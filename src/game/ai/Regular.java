@@ -36,7 +36,6 @@ public final class Regular extends AI {
 	 *
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
-	@Override
 	public int[] fire() {
 		int[] out = new int[2];
 		// TODO: Do something.

@@ -9,13 +9,17 @@ package game;
 public final class Location {
 
 	/**
-	 * Takes the constants UNGUESSED, HIT & MISS
+	 * Stores whether or not this location has been guessed.
+	 * Takes the constants UNGUESSED, HIT and MISS
 	 */
 	private int status;
 	public static final int UNGUESSED = 0;
 	public static final int MISS = -1;
 	public static final int HIT = 1;
 
+	/**
+	 * Used to store whether or not this location has a ship part.
+	 */
 	private boolean hasShip;
 
 	/**

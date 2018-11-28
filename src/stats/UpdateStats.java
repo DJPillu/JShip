@@ -14,7 +14,22 @@ import misc.DBDetails;
  */
 public final class UpdateStats extends Stats {
 	private final String mode, UName;
-	private final int mdI, diff;   // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
+
+	/**
+	 * Mode:<br>
+	 * &emsp; 0 - Classic<br>
+	 * &emsp; 1 - Salvo<br>
+	 */
+	private final int mdI;
+
+	/**
+	 * AIDiff:<br>
+	 * &emsp; 0 - Sandbox<br>
+	 * &emsp; 1 - Regular<br>
+	 * &emsp; 2 - Brutal
+	 */
+	private final int diff;
+
 	/**
 	 * Round Statistics:
 	 *
@@ -32,6 +47,10 @@ public final class UpdateStats extends Stats {
 	 * </pre>
 	 */
 	private final int[] statsList;
+
+	/**
+	 * Accuracy = (Hits Landed / Shots Fired) * 100 = (statsList[2] / statsList[1]) * 100
+	 */
 	private final float Acc;
 
 	/**

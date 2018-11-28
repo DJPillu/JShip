@@ -9,7 +9,7 @@ import game.Location;
  *
  * @author blackk100
  */
-abstract class AI {
+public class AI {
 	Location[][] gridSelf, gridOpp;
 	boolean[] initVars;
 
@@ -21,8 +21,11 @@ abstract class AI {
 	 * @param gridOpp
 	 */
 	AI(boolean[] initVars, String mode, Location[][] gridOpp) {
+		this.initVars = initVars;
+
 		this.gridSelf = new Location[initVars[0] ? 15 : 10][initVars[0] ? 15 : 10];
 		this.gridOpp = gridOpp;
+
 		this.place();
 	}
 
@@ -30,7 +33,7 @@ abstract class AI {
 	 * Used when a EvE round is running.
 	 * Used by the 1st AI after AI2 places its ships.
 	 *
-	 * @param gridOpp
+	 * @param gridOpp Enemy Grid
 	 */
 	private void EvE(Location[][] gridOpp) {
 		this.gridOpp = gridOpp;
@@ -39,7 +42,7 @@ abstract class AI {
 	/**
 	 * A getter for gridSelf
 	 *
-	 * @return gridSelf
+	 * @return gridSelf Self Grid
 	 */
 	public Location[][] getGrid() {
 		return this.gridSelf;
@@ -49,30 +52,30 @@ abstract class AI {
 	 * Places ships in gridSelf.
 	 */
 	private void place() {
-		int[] shipLengths = new int[12];
+		int[] shipLengths = new int[38];
 		Random rand = new Random();
 
-		for (int i = 0; i < 13; i++) {
-			if (i < 2) {
-				shipLengths[i] = this.initVars[1] ? 5 : 0;
-			} else if (i < 4) {
-				shipLengths[i] = this.initVars[2] ? 4 : 0;
-			} else if (i < 7) {
-				shipLengths[i] = this.initVars[3] ? 3 : 0;
+		for (int i = 0; i < 37; i++) {
+			if (i < 5) {
+				shipLengths[i] = this.initVars[1] ? 1 : 0;
+			} else if (i < 13) {
+				shipLengths[i] = this.initVars[2] ? 1 : 0;
+			} else if (i < 23) {
+				shipLengths[i] = this.initVars[3] ? 1 : 0;
 			} else {
-				shipLengths[i] = this.initVars[4] ? 2 : 0;
+				shipLengths[i] = this.initVars[4] ? 1 : 0;
 			}
 		}
 
-		for (int i = 0; i < 13; i++) {
+		for (int i = 0; i < 37; i++) {
 			int shipLength = shipLengths[i];
 			System.out.println(i + ": " + shipLength);
 
-			if (shipLength > 0) {
+			if (shipLength > 0) {                           // Checks if the current ship is being used
 				int[] randLoc = random(shipLength);           // 0   : Y-Coordinate ; 1: X-Coordinate
 				boolean randomDirection = rand.nextBoolean(); // True: Vertical     ; False: Horizontal
 
-				top:
+				top: // outer loop label
 				while (true) {
 					if (this.gridSelf[randLoc[0]][randLoc[1]].hasShip()) { // Checks if the initial location has a ship part
 						System.out.println("Ship exists at initial point");
@@ -81,32 +84,33 @@ abstract class AI {
 					}
 
 					// Checks if the ship will intersect any other ship
-					if (randomDirection) {
-						for (int j = 0; i < shipLength; i++) {
-							if (this.gridSelf[randLoc[0] + j][randLoc[1]].hasShip()) { // Y-Coordinate is incremented if vertical
-								System.out.println("Ship exists at vertical length: " + (j + 1));
+					if (randomDirection) {                                         // Vertical Orientation
+						for (int l = 0; l < shipLength; l++) {
+							if (this.gridSelf[randLoc[0] + l][randLoc[1]].hasShip()) { // Y-Coordinate is incremented if vertical
+								System.out.println("Ship exists at vertical length: " + (l + 1));
 								continue top;
 							}
 						}
-					} else {
-						for (int j = 0; i < shipLength; i++) {
-							if (this.gridSelf[randLoc[0]][randLoc[1] + j].hasShip()) { // X-Coordinate is incremented if horizontal
-								System.out.println("Ship exists at horizontal length: " + (j + 1));
+					} else {                                                       // Horizontal Orientation
+						for (int l = 0; l < shipLength; l++) {
+							if (this.gridSelf[randLoc[0]][randLoc[1] + l].hasShip()) { // X-Coordinate is incremented if horizontal
+								System.out.println("Ship exists at horizontal length: " + (l + 1));
 								continue top;
 							}
 						}
 					}
 
-					break;
+					break; // No intersections. Continue to placement.
 				}
 
-				if (randomDirection) {
-					for (int j = 0; i < shipLength; i++) {
-						this.gridSelf[randLoc[0] + j][randLoc[1]].shipPresent(); // Y-Coordinate is incremented if vertical
+				// Sets the location values
+				if (randomDirection) {                                       // Verical Orientation
+					for (int l = 0; l < shipLength; l++) {
+						this.gridSelf[randLoc[0] + l][randLoc[1]].shipPresent(); // Y-Coordinate is incremented if vertical
 					}
-				} else {
-					for (int j = 0; i < shipLength; i++) {
-						this.gridSelf[randLoc[0]][randLoc[1] + j].shipPresent(); // X-Coordinate is incremented if horizontal
+				} else {                                                     // Horizontal Orientation
+					for (int l = 0; l < shipLength; l++) {
+						this.gridSelf[randLoc[0]][randLoc[1] + l].shipPresent(); // X-Coordinate is incremented if horizontal
 					}
 				}
 
@@ -122,23 +126,16 @@ abstract class AI {
 	/**
 	 * (Psuedo-)Randomiser for the place() function
 	 *
-	 * @return
+	 * @return A 1-Dimensional array storing the X- and Y-Coordinates. 1st Integer is the Y-Coordinate. 2nd Integer is the X-Coordinate
 	 */
-	private int[] random(int limit) {
+	private int[] random(int length) {
 		int[] out = new int[2];
 		Random rand = new Random();
 
 		for (int i = 0; i < 2; i++) {
-			out[i] = rand.nextInt(this.initVars[0] ? 11 - limit : 16 - limit);
+			out[i] = rand.nextInt(this.initVars[0] ? 11 - length : 16 - length);
 		}
 
 		return out;
 	}
-
-	/**
-	 * Abstract Function for the AI to fire at the player's ships
-	 *
-	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
-	 */
-	public abstract int[] fire();
 }

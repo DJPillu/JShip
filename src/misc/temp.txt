@@ -1,4 +1,5 @@
 Colors:
+	Selection					- Yellow					- 242, 236, 0, 255
 	Basic							- Blue						- 5, 218, 255, 255
 		Shot fired at		- Dark/Dull Blue	- 5, 218, 229, 255
 		Ship Placed			- Steel Grey			- 176, 196, 222, 255
@@ -6,7 +7,7 @@ Colors:
 
 Winning Song: ???
 In-game Song: Sabaton
-Losing Song : Evil Morty Song
+Losing Song : Evil Morty Song (For the Damaged Coda - Blonde Redhead)
 
 PvE:
 	1) Round 0:

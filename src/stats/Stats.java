@@ -15,9 +15,10 @@ import misc.DBDetails;
  * @author blackk100
  */
 public class Stats {
+
 	/**
 	 * <pre>
-	 * statsList & Acc Arrays:
+	 * statsList 1st Dimensional Array:
 	 * I-----------I----------------------I
 	 * I Index No. I     Stats Stored     I
 	 * I-----------I----------------------I
@@ -54,6 +55,31 @@ public class Stats {
 	 * &emsp; 2 - Brutal
 	 */
 	private int[][] statsLists = new int[6][10];
+
+	/**
+	 * <pre>
+	 * Acc 1st Dimensional Array:
+	 * I-----------I----------------------I
+	 * I Index No. I     Stats Stored     I
+	 * I-----------I----------------------I
+	 * I     0     I Classic - Sandbox    I
+	 * I     1     I Classic - Regular    I
+	 * I     2     I Classic - Brutal     I
+	 * I     3     I Salvo   - Sandbox    I
+	 * I     4     I Salvo   - Regular    I
+	 * I     5     I Salvo   - Brutal     I
+	 * I-----------I----------------------I
+	 * </pre>
+	 *
+	 * Mode:<br>
+	 * &emsp; 0 - Classic<br>
+	 * &emsp; 1 - Salvo<br>
+	 * <br>
+	 * AIDiff:<br>
+	 * &emsp; 0 - Sandbox<br>
+	 * &emsp; 1 - Regular<br>
+	 * &emsp; 2 - Brutal
+	 */
 	private float[] Acc = new float[6];
 
 	/**
