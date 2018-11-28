@@ -15,9 +15,9 @@ public final class Sandbox extends AI {
 	/**
 	 * Constructor for the Sandbox AI
 	 *
-	 * @param initVars
-	 * @param mode
-	 * @param gridOpp
+	 * @param initVars Initialization Variables
+	 * @param mode     Game Mode
+	 * @param gridOpp  Enemy Grid
 	 */
 	public Sandbox(boolean[] initVars, String mode, Location[][] gridOpp) {
 		super(initVars, mode, gridOpp);

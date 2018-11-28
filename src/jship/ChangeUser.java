@@ -171,7 +171,7 @@ public class ChangeUser extends JFrame {
 	/**
 	 * Logs the user into the program.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void Login(ActionEvent evt) {//GEN-FIRST:event_Login
 		if (UserTF.getText().isEmpty()) {              // Checks if a username is entered
@@ -208,7 +208,7 @@ public class ChangeUser extends JFrame {
 	/**
 	 * Logs the current user out.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void Logout(ActionEvent evt) {//GEN-FIRST:event_Logout
 		if (CurrentUser.GetCurrentUser().equals("guest")) { // No User is logged in
@@ -226,7 +226,7 @@ public class ChangeUser extends JFrame {
 	/**
 	 * Registers the user.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void Register(ActionEvent evt) {//GEN-FIRST:event_Register
 		if (UserTF.getText().isEmpty()) {               // Checks if a username is entered
@@ -266,7 +266,7 @@ public class ChangeUser extends JFrame {
 	/**
 	 * Goes back to the main frame.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void GoBack(ActionEvent evt) {//GEN-FIRST:event_GoBack
 		JShip JShip = new JShip(); // Creates the JShip Form object

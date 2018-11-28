@@ -159,7 +159,7 @@ public class JShip extends JFrame {
 	/**
 	 * Changes the current user.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void ChangeUser(ActionEvent evt) {//GEN-FIRST:event_ChangeUser
 		ChangeUser ChangeUser = new ChangeUser(); // Creates the ChangeUser Form object
@@ -171,7 +171,7 @@ public class JShip extends JFrame {
 	/**
 	 * Shows the statistics for the current user.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void ShowStats(ActionEvent evt) {//GEN-FIRST:event_ShowStats
 		ViewStats ViewStats = new ViewStats(); // Creates the ViewStats Form object
@@ -183,7 +183,7 @@ public class JShip extends JFrame {
 	/**
 	 * Starts the game.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void Play(ActionEvent evt) {//GEN-FIRST:event_Play
 		Pre Pre = new Pre();  // Creates the Pre Form object
@@ -195,7 +195,7 @@ public class JShip extends JFrame {
 	/**
 	 * Exits the program.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void Exit(ActionEvent evt) {//GEN-FIRST:event_Exit
 		if (JOptionPane.showConfirmDialog(null, "Are you a wuss?", "Abandon Ship?", JOptionPane.YES_NO_OPTION) == 0) {

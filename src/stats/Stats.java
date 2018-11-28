@@ -85,7 +85,7 @@ public class Stats {
 	/**
 	 * Constructor for the Stats class.
 	 *
-	 * @param UName
+	 * @param UName Username
 	 */
 	public Stats(String UName) {
 		getStats(UName);
@@ -173,6 +173,7 @@ public class Stats {
 	 * length  − This is the number of array elements to be copied.
 	 * </pre>
 	 *
+	 * @param index     Index number of the statistics record
 	 * @param statsList the statsLists to set
 	 */
 	final void setStatsLists(int index, int[] statsList) {
@@ -184,7 +185,10 @@ public class Stats {
 	}
 
 	/**
-	 * @param Acc the Acc to set
+	 * Setter for Acc
+	 *
+	 * @param index Index number of the statistics record
+	 * @param Acc   the Acc to set
 	 */
 	final void setAcc(int index, float Acc) {
 		this.Acc[index] = Acc;

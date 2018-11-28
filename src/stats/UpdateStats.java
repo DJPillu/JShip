@@ -37,7 +37,7 @@ public final class UpdateStats extends Stats {
 	 * I-----------I-----------------------I
 	 * I Index No. I    Value Stored       I
 	 * I-----------I-----------------------I
-	 * I     0     I Round Status (status) I -> 1: Win ; 0: Lose
+	 * I     0     I Round Status (status) I -- 1: Win ; 0: Lose
 	 * I     1     I Shots Fired  (SF)     I
 	 * I     2     I Hits landed  (Hits)   I
 	 * I     3     I Times Hit    (TH)     I
@@ -56,19 +56,19 @@ public final class UpdateStats extends Stats {
 	/**
 	 * Constructor for the UpdateStats class. Calls the superclass's constructor.
 	 *
-	 * @param UName
-	 * @param mode
-	 * @param diff
-	 * @param statsList
-	 * @param Acc
+	 * @param UName     Username
+	 * @param mode      Game Mode
+	 * @param AIDiff    AI Difficulty
+	 * @param statsList Statistics List
+	 * @param Acc       Accuracy
 	 */
-	public UpdateStats(String UName, String mode, int diff, int[] statsList, float Acc) {
+	public UpdateStats(String UName, String mode, int AIDiff, int[] statsList, float Acc) {
 		super(UName);
 
 		this.UName = UName;
 		this.mode = mode;
-		this.diff = diff;
-		this.mdI = (mode.equals("S") ? 3 : 0) + (diff == 1 ? 2 : (diff == 0 ? 1 : 0));
+		this.diff = AIDiff;
+		this.mdI = (mode.equals("S") ? 3 : 0) + (AIDiff == 1 ? 2 : (AIDiff == 0 ? 1 : 0));
 		this.statsList = statsList;
 		this.Acc = Acc;
 

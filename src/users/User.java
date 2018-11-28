@@ -1,5 +1,7 @@
 package users;
 
+import java.util.Arrays;
+
 
 /**
  * User Abstract Class
@@ -13,11 +15,11 @@ abstract class User {
 	/**
 	 * Constructor for the User class
 	 *
-	 * @param name
-	 * @param psswrd
+	 * @param UName  Username
+	 * @param psswrd Password
 	 */
-	User(String name, char[] psswrd) {
-		this.UName = name;
+	User(String UName, char[] psswrd) {
+		this.UName = UName;
 		this.Hash = hash(psswrd);
 	}
 
@@ -38,7 +40,7 @@ abstract class User {
 	/**
 	 * The password hashing algorithm
 	 *
-	 * @param psswrd
+	 * @param psswrd Original Password as a character array
 	 *
 	 * @return Generates and returns the Hashed Password
 	 */
@@ -50,6 +52,8 @@ abstract class User {
 			} else {                                // If odd, subtract hash value
 				hash -= Character.hashCode(psswrd[i]);
 			}
+
+			Arrays.fill(psswrd, '0');               // Security measure
 		}
 
 		hash = ~hash;                 // Binary Flip of the Hash Value

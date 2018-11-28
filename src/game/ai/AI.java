@@ -1,7 +1,7 @@
 package game.ai;
 
-import java.util.Random;
 import game.Location;
+import java.util.Random;
 
 
 /**
@@ -14,11 +14,11 @@ public class AI {
 	boolean[] initVars;
 
 	/**
-	 * Constructor for the abstract AI.
+	 * Constructor for the AI.
 	 *
-	 * @param initVars
-	 * @param mode
-	 * @param gridOpp
+	 * @param initVars Initialization Variables
+	 * @param mode     Game Mode
+	 * @param gridOpp  Enemy Grid
 	 */
 	AI(boolean[] initVars, String mode, Location[][] gridOpp) {
 		this.initVars = initVars;
@@ -126,7 +126,10 @@ public class AI {
 	/**
 	 * (Psuedo-)Randomiser for the place() function
 	 *
-	 * @return A 1-Dimensional array storing the X- and Y-Coordinates. 1st Integer is the Y-Coordinate. 2nd Integer is the X-Coordinate
+	 * @param length Length of the Ship
+	 *
+	 * @return A 1-Dimensional array storing the X- and Y-Coordinates. 1st Integer is the Y-Coordinate. 2nd Integer is the
+	 *         X-Coordinate
 	 */
 	private int[] random(int length) {
 		int[] out = new int[2];

@@ -17,11 +17,11 @@ public final class LoginUser extends User {
 	/**
 	 * Constructor for the LoginUser class
 	 *
-	 * @param name
-	 * @param psswrd
+	 * @param UName  Username
+	 * @param psswrd Password
 	 */
-	public LoginUser(String name, char[] psswrd) {
-		super(name, psswrd);
+	public LoginUser(String UName, char[] psswrd) {
+		super(UName, psswrd);
 	}
 
 	/**

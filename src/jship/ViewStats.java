@@ -367,7 +367,7 @@ public class ViewStats extends JFrame {
 	/**
 	 * Goes back to the main frame.
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void GoBack(ActionEvent evt) {//GEN-FIRST:event_GoBack
 		JShip JShip = new JShip(); // Creates the JShip Form object
@@ -379,7 +379,7 @@ public class ViewStats extends JFrame {
 	/**
 	 * Changes the Statistics display on changing the difficulty level
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void DifficultyChanged(ActionEvent evt) {//GEN-FIRST:event_DifficultyChanged
 		String difficulty = this.DifficultyBG.getSelection().getActionCommand();
@@ -390,7 +390,7 @@ public class ViewStats extends JFrame {
 	/**
 	 * Changes the Statistics display on changing the game mode level
 	 *
-	 * @param evt
+	 * @param evt Button Click
 	 */
 	private void ModeChanged(ActionEvent evt) {//GEN-FIRST:event_ModeChanged
 		this.mode = this.ModeBG.getSelection().getActionCommand();
