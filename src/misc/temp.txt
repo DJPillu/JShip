@@ -1,9 +1,9 @@
 Colors:
-	Selection					- Yellow					- 242, 236, 0, 255
-	Basic							- Blue						- 5, 218, 255, 255
-		Shot fired at		- Dark/Dull Blue	- 5, 218, 229, 255
-		Ship Placed			- Steel Grey			- 176, 196, 222, 255
-			Ship damaged	- Red							- 205, 0, 0, 255
+	Selection        - Yellow     - 242, 236, 0, 255
+	Basic            - Blue       - 5, 218, 255, 255
+		Shot fired at  - Navy Blue  - 0, 0, 128, 255
+		Ship Placed    - Steel Grey - 176, 196, 222, 255
+			Ship damaged - Red        - 205, 0, 0, 255
 
 Winning Song: ???
 In-game Song: Sabaton

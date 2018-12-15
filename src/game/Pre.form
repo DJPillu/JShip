@@ -244,6 +244,7 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;R&quot;" type="code"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AIDiffChanged"/>
@@ -258,6 +259,7 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;B&quot;" type="code"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AIDiffChanged"/>
@@ -295,9 +297,9 @@
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyer&lt;br&gt;1 Space; x10&lt;/html&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="PatrolCB">
+            <Component class="javax.swing.JCheckBox" name="CorvetteCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Patrol Boat&lt;br&gt;1 Space; x15&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Corvette&lt;br&gt;1 Space; x15&lt;/html&gt;"/>
               </Properties>
             </Component>
           </SubComponents>

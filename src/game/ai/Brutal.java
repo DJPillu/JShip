@@ -13,20 +13,13 @@ import java.util.Random;
 public final class Brutal extends AI {
 
 	/**
-	 * 2-Dimensional Location Grid representing the user's grid
-	 */
-	Location[][] gridOpp;
-
-	/**
-	 * Constructor for the Sandbox AI
+	 * Constructor for the Brutal AI
 	 *
 	 * @param initVars Initialization Variables
 	 * @param gridOpp  Enemy Grid
 	 */
 	public Brutal(boolean[] initVars, Location[][] gridOpp) {
-		super(initVars);
-
-		this.gridOpp = gridOpp;
+		super(initVars, gridOpp);
 	}
 
 	/**
@@ -43,8 +36,9 @@ public final class Brutal extends AI {
 	 *
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
+	@Override
 	public int[] fire() {
-		int[] out = new int[2];
+		int[] out = {-1, -1};
 		// TODO: Do something.
 		return out;
 	}

@@ -1,5 +1,6 @@
 package game.ai;
 
+import game.Location;
 import java.util.Random;
 
 
@@ -12,12 +13,13 @@ import java.util.Random;
 public final class Regular extends AI {
 
 	/**
-	 * Constructor for the Sandbox AI
+	 * Constructor for the Regular AI
 	 *
 	 * @param initVars Initialization Variables
+	 * @param gridOpp  Enemy Grid
 	 */
-	public Regular(boolean[] initVars) {
-		super(initVars);
+	public Regular(boolean[] initVars, Location[][] gridOpp) {
+		super(initVars, gridOpp);
 	}
 
 	/**
@@ -33,8 +35,9 @@ public final class Regular extends AI {
 	 *
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
+	@Override
 	public int[] fire() {
-		int[] out = new int[2];
+		int[] out = {-1, -1};
 		// TODO: Do something.
 		return out;
 	}

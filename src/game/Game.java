@@ -29,7 +29,7 @@ public class Game extends JFrame {
 	 * I     1     I       Battleship      I
 	 * I     2     I        Cruiser        I
 	 * I     3     I       Destroyer       I
-	 * I     4     I      Patrol Boat      I
+	 * I     4     I        Corvette       I
 	 * I-----------I-----------------------I
 	 * </pre>
 	 */
@@ -249,15 +249,7 @@ public class Game extends JFrame {
 
 		this.buttonsClicked = new boolean[this.boardSize][this.boardSize];
 
-		// Sleeps for 0 seconds.
-		// Do I need this?
-		try {
-			java.util.concurrent.TimeUnit.SECONDS.sleep(0);
-		} catch (InterruptedException ex) {
-			System.out.println(ex);
-		} finally {
-			this.setLocationRelativeTo(null);
-		}
+		this.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -266,7 +258,6 @@ public class Game extends JFrame {
 	 * @param AIDiff The AI Difficulty
 	 */
 	private void setTitleL(int AIDiff) {
-		System.out.println(AIDiff);
 		System.out.println("PvE - " + (AIDiff == -1 ? "Sandbox" : (AIDiff == 0 ? "Realistic" : "Brutal")));
 		TitleL.setText("PvE - " + (AIDiff == -1 ? "Sandbox" : (AIDiff == 0 ? "Realistic" : "Brutal")));
 		setTitle("PvE - " + (AIDiff == -1 ? "Sandbox" : (AIDiff == 0 ? "Realistic" : "Brutal")));
@@ -353,7 +344,7 @@ public class Game extends JFrame {
     BattleshipCB = new JCheckBox();
     CruiserCB = new JCheckBox();
     DestroyerCB = new JCheckBox();
-    PatrolCB = new JCheckBox();
+    CorvetteCB = new JCheckBox();
     ModeL = new JLabel();
     GirdL = new JLabel();
     GridTF = new JTextField();
@@ -364,6 +355,7 @@ public class Game extends JFrame {
     HelpB = new JButton();
     Spacer1L = new JLabel();
     NextB = new JButton();
+    jButton1 = new JButton();
     Spacer2L = new JLabel();
     ExitB = new JButton();
     ModeTF = new JTextField();
@@ -390,7 +382,6 @@ public class Game extends JFrame {
     AIHitsTF = new JTextField();
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    setBackground(new Color(255, 255, 0));
     setResizable(false);
 
     TitleL.setHorizontalAlignment(SwingConstants.CENTER);
@@ -458,13 +449,13 @@ public class Game extends JFrame {
     });
     ShipsP.add(DestroyerCB);
 
-    PatrolCB.setText("Patrol Boat");
-    PatrolCB.addActionListener(new ActionListener() {
+    CorvetteCB.setText("Corvette");
+    CorvetteCB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         ShipCBClicked(evt);
       }
     });
-    ShipsP.add(PatrolCB);
+    ShipsP.add(CorvetteCB);
 
     ModeL.setLabelFor(ModeTF);
     ModeL.setText("Mode:");
@@ -486,7 +477,7 @@ public class Game extends JFrame {
     AlertsTA.setToolTipText("");
     AlertsSP.setViewportView(AlertsTA);
 
-    ButtonsP.setLayout(new GridLayout(2, 3, 10, 10));
+    ButtonsP.setLayout(new GridLayout(2, 3, 0, 10));
 
     HelpB.setText("Help");
     HelpB.addActionListener(new ActionListener() {
@@ -504,6 +495,14 @@ public class Game extends JFrame {
       }
     });
     ButtonsP.add(NextB);
+
+    jButton1.setText("<html><center>Clear<br/>Notifications</center></html>");
+    jButton1.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        Clear(evt);
+      }
+    });
+    ButtonsP.add(jButton1);
     ButtonsP.add(Spacer2L);
 
     ExitB.setText("Exit");
@@ -823,9 +822,9 @@ public class Game extends JFrame {
 				 *	if (shipNo == 0) {         // Checks if no ship has been placed yet.
 				 *		if (timesClicked == 0) { // Checks if it the first click
 				 *			AlertsTA.append("Ship Placement:\n");
-				 *			AlertsTA.append("\tPlace the initial point of the current ship first.\n");
-				 *			AlertsTA.append("\tThen place the final point.\n");
-				 *			AlertsTA.append("\tThe final point must be vertically or horizontally aligned, and must be as long as the ship's length.\n");
+				 *			AlertsTA.append("Place the initial point of the current ship first.\n");
+				 *			AlertsTA.append("Then place the final point.\n");
+				 *			AlertsTA.append("The final point must be vertically or horizontally aligned, and must be as long as the ship's length.\n");
 				 *
 				 *			int shipLength = shipLengths[shipNo];
 				 *
@@ -835,7 +834,7 @@ public class Game extends JFrame {
 				 *			}
 				 *
 				 *			System.out.println("Placing ship no. " + shipsPlaced + " - " + shipLength);
-				 *			AlertsTA.append("\tPlacing ship no. " + shipsPlaced + " of length " + shipLength);
+				 *			AlertsTA.append("Placing ship no. " + shipsPlaced + " of length " + shipLength);
 				 *		} else {                         // Not the first click
 				 *			if (true) {
 				 *				// TODO: Do something
@@ -848,7 +847,7 @@ public class Game extends JFrame {
 				for (int y = 0; y < this.boardSize; y++) {
 					for (int x = 0; x < this.boardSize; x++) {
 						if (this.buttonsClicked[y][x]) { // Ship is placed here.
-							this.PlayerGridL[y][x].hasShip();
+							this.PlayerGridL[y][x].shipPresent();
 							this.PlayerGridB[y][x].setBackground(new Color(176, 196, 222, 255));
 						}
 						this.buttonsClicked[y][x] = false;
@@ -857,15 +856,15 @@ public class Game extends JFrame {
 
 				this.shipsPlaced = 0;
 
-				if (this.AIDiff == -1) {             // Initializes the AI to Sandbox
-					this.AI = new Sandbox(this.initVars);
-				} else if (this.AIDiff == 0) {       // Initializes the AI to Regular
-					this.AI = new Regular(this.initVars);
-				} else {                             // Initializes the AI to Brutal
+				if (this.AIDiff == -1) {       // Initializes the AI to Sandbox
+					this.AI = new Sandbox(this.initVars, this.PlayerGridL);
+				} else if (this.AIDiff == 0) { // Initializes the AI to Regular
+					this.AI = new Regular(this.initVars, this.PlayerGridL);
+				} else {                       // Initializes the AI to Brutal
 					this.AI = new Brutal(this.initVars, this.PlayerGridL);
 				}
 
-				this.AIGridL = this.AI.getGrid();
+				this.AIGridL = this.AI.getGridSelf();
 				System.out.println("Debug start!"); // Debug start
 				for (int y = 0; y < this.boardSize; y++) {
 					for (int x = 0; x < this.boardSize; x++) {
@@ -884,59 +883,42 @@ public class Game extends JFrame {
 				this.P2StatsUpdate(true);
 
 				this.NextB.setText("<html><center>Next<br/>Round</center></html>");
-			} else {                                // Not all ships placed.
-				this.AlertsTA.append("\tNot all ships placed! " + this.shipsPlaced + " ships left!\n");
+			} else {                                  // Not all ships placed.
+				this.AlertsTA.append("Not all ships placed! " + (this.shipNos - this.shipsPlaced) + " ships left!\n");
 			}
-		} else {                                  // Normal Rounds
+		} else {                                    // Normal Rounds
 			if ((this.mode.equals("C") && (this.shotsSelected == 1)) || (this.mode.equals("S") && (this.shotsSelected == (this.shipNos - this.PlayerStats[2])))) { // Checks if the required number of selections have been made
-
 				for (int y = 0; y < this.boardSize; y++) {
 					for (int x = 0; x < this.boardSize; x++) {
-						if (this.buttonsClicked[y][x]) {   // Shot was placed here.
+						if (this.buttonsClicked[y][x]) {    // Shot was placed here.
+							this.buttonsClicked[y][x] = false;
 							this.AIGridL[y][x].markShot();
 							this.PlayerStats[0]++;
+
 							if (this.AIGridL[y][x].isHit()) { // A Ship was hit
 								this.AIGridB[y][x].setBackground(new Color(205, 0, 0, 255));
 								this.PlayerStats[1]++;
 								this.AIStats[2]++;
 							} else {
-								this.AIGridB[y][x].setBackground(new Color(5, 218, 229, 255));
+								this.AIGridB[y][x].setBackground(new Color(0, 0, 128, 255));
 							}
-
 						}
-						this.buttonsClicked[y][x] = false;
 					}
 				}
 
 				this.shotsSelected = 0;
 				this.P1StatsUpdate(false);
 
-				if (this.shipNos - this.AIStats[2] == 0) {   // Checks if the user won.
+				if (this.shipNos - this.AIStats[2] == 0) {       // Checks if the user won.
 					this.goToPost(1);
-				} else {                                     // User did not win. AI shoots.
-					// TODO: Make AI shoot.
-					for (int y = 0; y < this.boardSize; y++) {
-						for (int x = 0; x < this.boardSize; x++) {
-							if (this.buttonsClicked[y][x]) {   // Shot was placed here.
-								this.PlayerGridL[y][x].markShot();
-								this.AIStats[0]++;
-								if (this.PlayerGridL[y][x].isHit()) { // A Ship was hit
-									this.PlayerGridB[y][x].setBackground(new Color(205, 0, 0, 255));
-									this.AIStats[1]++;
-									this.PlayerStats[2]++;
-								} else {
-									this.PlayerGridB[y][x].setBackground(new Color(5, 218, 229, 255));
-								}
-
-							}
-							this.buttonsClicked[y][x] = false;
-						}
-					}
+				} else {                                         // User did not win.
+					this.AI.updateGridSelf(this.AIGridL);          // Updates the AI's self grid
+					this.fireAI();                                 // AI Shoots.
 					this.P2StatsUpdate(false);
 
 					if (this.shipNos - this.PlayerStats[2] == 0) { // Checks if the AI won.
 						this.goToPost(0);
-					} else {                                   // AI did not win. Next round.
+					} else {                                       // AI did not win. Next round.
 						this.roundNo++;
 						this.RoundTF.setText("" + this.roundNo);
 
@@ -946,7 +928,7 @@ public class Game extends JFrame {
 				}
 
 			} else {                                // Not enough selections made
-				this.AlertsTA.append("\tNot all selections made! " + (this.mode.equals("C") ? 1 : (this.shipNos - this.shipsPlaced)) + " selections left!\n");
+				this.AlertsTA.append("Not all selections made! " + (this.mode.equals("C") ? 1 : (this.shipNos - this.shotsSelected)) + " selections left!\n");
 			}
 
 		}
@@ -973,9 +955,18 @@ public class Game extends JFrame {
 		this.BattleshipCB.setSelected(this.initVars[1]);
 		this.CruiserCB.setSelected(this.initVars[2]);
 		this.DestroyerCB.setSelected(this.initVars[3]);
-		this.PatrolCB.setSelected(this.initVars[4]);
+		this.CorvetteCB.setSelected(this.initVars[4]);
 		this.ShipNoTF.setText("" + this.shipNos);
 	}//GEN-LAST:event_ShipCBClicked
+
+	/**
+	 * Clears the alerts/notifications text area.
+	 *
+	 * @param evt Button Click
+	 */
+  private void Clear(ActionEvent evt) {//GEN-FIRST:event_Clear
+		AlertsTA.setText("Alerts:\n");
+  }//GEN-LAST:event_Clear
 
 	/**
 	 * TODO: Need to fix. Used for multi-tile ships.
@@ -989,7 +980,7 @@ public class Game extends JFrame {
 		} else if (this.initLoc[1] == this.finalLoc[1]) { // Checks for vertical alignment.
 			this.direction = true;
 		} else {                                          // Ships aren't aligned.
-			this.AlertsTA.append("\tThe initial and final points of the ship aren't in the same row/coloumn!\n");
+			this.AlertsTA.append("The initial and final points of the ship aren't in the same row/coloumn!\n");
 			return;
 		}
 
@@ -999,7 +990,7 @@ public class Game extends JFrame {
 		} else if (!this.direction && (Math.abs(this.finalLoc[1] - this.initLoc[1]) + 2 == shipLength)) {
 
 		} else {
-			this.AlertsTA.append("\tThe initial and final points of the ship don't correspond to its length!\n");
+			this.AlertsTA.append("The initial and final points of the ship don't correspond to its length!\n");
 			return;
 		}
 
@@ -1008,7 +999,7 @@ public class Game extends JFrame {
 			for (int l = 0; l < shipLength; l++) {
 				if (this.PlayerGridL[this.initLoc[0] + l][this.initLoc[1]].hasShip()) { // Y-Coordinate is incremented if vertical
 					System.out.println("Ship exists at vertical length: " + (l + 1));
-					this.AlertsTA.append("\t\tA Ship exists at vertical length " + (l + 1) + " from the initial point!\n");
+					this.AlertsTA.append("\tA Ship exists at vertical length " + (l + 1) + " from the initial point!\n");
 					return;
 				}
 			}
@@ -1016,7 +1007,7 @@ public class Game extends JFrame {
 			for (int l = 0; l < shipLength; l++) {
 				if (this.PlayerGridL[this.initLoc[0]][this.initLoc[1] + l].hasShip()) { // X-Coordinate is incremented if horizontal
 					System.out.println("Ship exists at horizontal length: " + (l + 1));
-					this.AlertsTA.append("\t\tA Ship exists at horizontal length " + (l + 1) + " from the initial point!\n");
+					this.AlertsTA.append("\tA Ship exists at horizontal length " + (l + 1) + " from the initial point!\n");
 					return;
 				}
 			}
@@ -1034,7 +1025,7 @@ public class Game extends JFrame {
 		}
 
 		System.out.println("Ship no. " + this.shipsPlaced + " placed");
-		this.AlertsTA.append("\tShip no. " + this.shipsPlaced + " placed");
+		this.AlertsTA.append("Ship no. " + this.shipsPlaced + " placed");
 
 	}
 
@@ -1046,73 +1037,69 @@ public class Game extends JFrame {
 	 */
 	private void buttonClick(JButton button, boolean userClick) {
 		String coords = button.getActionCommand();
+		int[] xy = this.extractCoordinates(coords);
+		System.out.println((userClick ? "User: " : "AI: ") + coords);
 
-		System.out.println(coords);
-
-		if (userClick) {                                     // User Clicked the button
-			int[] xy = this.extractCoordinates(coords);
-
-			if (this.roundNo == 0) {                           // Checks if it is the Ship Placement Round.
-				if (coords.charAt(0) == '1') {                   // Checks if the button clicked is from Grid 1.
-					if (this.buttonsClicked[xy[1]][xy[0]]) {       // Checks if the button has already been clicked.
+		if (userClick) {                                      // Checks if the user clicked the button.
+			if (this.roundNo == 0) {                            // Checks if it is the Ship Placement Round.
+				if (coords.charAt(0) == '1') {                    // Checks if the button clicked is from Grid 1.
+					if (this.buttonsClicked[xy[1]][xy[0]]) {        // Checks if the button has already been clicked.
 						button.setBackground(new Color(5, 218, 255, 255));
 						this.buttonsClicked[xy[1]][xy[0]] = false;
 						this.shipsPlaced--;
-					} else {                                       // Button hasn't been clicked.
-						if (this.shipsPlaced < this.shipNos) {       // Checks if the number of ships placed is less than the max ships available.
+					} else {                                        // Button hasn't been clicked.
+						if (this.shipsPlaced < this.shipNos) {        // Checks if the number of ships placed is less than the max ships available.
 							button.setBackground(new Color(242, 236, 0, 255));
 							this.buttonsClicked[xy[1]][xy[0]] = true;
 							this.shipsPlaced++;
 
 							if (this.shipsPlaced == this.shipNos) {
-								this.AlertsTA.append("\tAll ships placed!\n");
+								this.AlertsTA.append("All ships placed!\n");
 							}
-						} else {                                     // More ships than limit allowed added.
-							this.AlertsTA.append("\tShip limit reached!\n");
+						} else {                                      // More ships than limit allowed added.
+							this.AlertsTA.append("Ship limit reached!\n");
 						}
 					}
-				} else {                                         // Grid 2.
-					this.AlertsTA.append("\tWrong grid!\n");
+				} else {                                          // Grid 2.
+					this.AlertsTA.append("Wrong grid!\n");
 				}
-			} else {                                           // Not Ship Placement Round. Has to be from Grid 2 in this case.
-				if (coords.charAt(0) == '2') {                   // Checks if the button clicked is from Grid 2
+			} else {                                            // Not Ship Placement Round. Has to be from Grid 2 in this case.
+				if (coords.charAt(0) == '2') {                    // Checks if the button clicked is from Grid 2.
 					if (this.AIGridL[xy[1]][xy[0]].isUnguessed()) { // Checks if the location is unguessed.
-						if (this.buttonsClicked[xy[1]][xy[0]]) {     // Checks if the button has already been clicked.
+						if (this.buttonsClicked[xy[1]][xy[0]]) {      // Checks if the button has already been clicked.
 							button.setBackground(new Color(5, 218, 255, 255));
 							this.buttonsClicked[xy[1]][xy[0]] = false;
 							this.shotsSelected--;
-						} else {                                     // Button hasn't been clicked.
-							if (this.mode.equals("C")) {               // Checks if the match is in Classic Mode.
-								if (this.shotsSelected == 0) {           // Checks if another location hasn't been selected.
+						} else {                                      // Button hasn't been clicked.
+							if (this.mode.equals("C")) {                // Checks if the match is in Classic Mode.
+								if (this.shotsSelected == 0) {            // Checks if another location hasn't been selected.
 									button.setBackground(new Color(242, 236, 0, 255));
 									this.buttonsClicked[xy[1]][xy[0]] = true;
 									this.shotsSelected++;
-								} else {                                 // Another location has been selected.
-									this.AlertsTA.append("\tMaximum locations selected!\n");
+								} else {                                  // Another location has been selected.
+									this.AlertsTA.append("Maximum locations selected!\n");
 								}
-							} else {                                   // Salvo Mode.
+							} else {                                    // Salvo Mode.
 								if (this.shotsSelected < (this.shipNos - this.PlayerStats[2])) { // Checks if max locations haven't been selected.
 									button.setBackground(new Color(242, 236, 0, 255));
 									this.buttonsClicked[xy[1]][xy[0]] = true;
 									this.shotsSelected++;
 
-									if (this.shipNos == this.PlayerStats[2]) {
-										this.AlertsTA.append("\tAll locations selected!\n");
+									if (this.shotsSelected == (this.shipNos - this.PlayerStats[2])) {
+										this.AlertsTA.append("All firing locations selected!\n");
 									}
-								} else {                                 // Max locations have been selected.
-									this.AlertsTA.append("\tMaximum locations selected!\n");
+								} else {                                  // Max locations have been selected.
+									this.AlertsTA.append("Maximum firing locations selected!\n");
 								}
 							}
 						}
-					} else {                                       // Already guessed.
-						this.AlertsTA.append("\tThis location is already guessed!\n");
+					} else {                                        // Already guessed.
+						this.AlertsTA.append("This location is already guessed!\n");
 					}
-				} else {                                         // Grid 1
-					this.AlertsTA.append("\tWrong grid!\n");
+				} else {                                          // Grid 1.
+					this.AlertsTA.append("Wrong grid!\n");
 				}
 			}
-		} else {                                             // AI Clicked the button
-			// TODO: Do stuff.
 		}
 	}
 
@@ -1152,14 +1139,33 @@ public class Game extends JFrame {
 	}
 
 	/**
-	 * Function for handling the AI input in Grid 2 for PvE matches
-	 * Also handles the AI input in Grids 1, 2 for EvE matches.
-	 *
-	 * @param button JButton to be clicked. May be removed?
+	 * Function for handling the AI input.
 	 */
-	private void buttonClickAI(JButton button) {
-		// TODO: Do stuff.
-		this.buttonClick(button, false);
+	private void fireAI() {
+		int[] xy = this.AI.fire();
+
+		if (xy[1] == -1 || xy[0] == -1) {                 // Method overriding doesn't work properly.
+			System.out.println("TODO: Figure out what's wrong. This shouldn't happen.");
+		} else {                                          // Everything's fine, I guess.
+			for (int i = 0; i < (this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2])); i++) {
+				this.buttonClick(this.PlayerGridB[xy[1]][xy[0]], false);
+
+				this.PlayerGridL[xy[1]][xy[0]].markShot();
+				this.AIStats[0]++;
+
+				if (this.PlayerGridL[xy[1]][xy[0]].isHit()) { // A Ship was hit.
+					this.PlayerGridB[xy[1]][xy[0]].setBackground(new Color(205, 0, 0, 255));
+					this.AIStats[1]++;
+					this.PlayerStats[2]++;
+				} else {
+					this.PlayerGridB[xy[1]][xy[0]].setBackground(new Color(0, 0, 128, 255));
+				}
+
+				this.AI.updateGridOpp(this.PlayerGridL);      // Updates the AI's hostile grid.
+
+				xy = this.AI.fire();
+			}
+		}
 	}
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1178,6 +1184,7 @@ public class Game extends JFrame {
   private JTextArea AlertsTA;
   private JCheckBox BattleshipCB;
   private JPanel ButtonsP;
+  private JCheckBox CorvetteCB;
   private JCheckBox CruiserCB;
   private JCheckBox DestroyerCB;
   private JButton ExitB;
@@ -1188,7 +1195,6 @@ public class Game extends JFrame {
   private JLabel ModeL;
   private JTextField ModeTF;
   private JButton NextB;
-  private JCheckBox PatrolCB;
   private JLabel PlayerAccL;
   private JTextField PlayerAccTF;
   private JPanel PlayerGridP;
@@ -1213,6 +1219,7 @@ public class Game extends JFrame {
   private JPanel StatusP;
   private JLabel TitleL;
   private JPanel TitleP;
+  private JButton jButton1;
   // End of variables declaration//GEN-END:variables
 	// Start of special variables declaration
 	private JButton[][] PlayerGridB;

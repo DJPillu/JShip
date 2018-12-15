@@ -3,9 +3,6 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="0" green="ff" red="ff" type="rgb"/>
-    </Property>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -316,9 +313,9 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShipCBClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="PatrolCB">
+                <Component class="javax.swing.JCheckBox" name="CorvetteCB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Patrol Boat"/>
+                    <Property name="text" type="java.lang.String" value="Corvette"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShipCBClicked"/>
@@ -379,7 +376,6 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                 <Property name="columns" type="int" value="3"/>
-                <Property name="horizontalGap" type="int" value="10"/>
                 <Property name="rows" type="int" value="2"/>
                 <Property name="verticalGap" type="int" value="10"/>
               </Layout>
@@ -400,6 +396,14 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NextRound"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Clear&lt;br/&gt;Notifications&lt;/center&gt;&lt;/html&gt;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Clear"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Spacer2L">

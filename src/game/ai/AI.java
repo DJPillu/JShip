@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * Base AI Class.
- * Only decides ship placement.
+ * Only decides ship placement, with a placeholder for shot placement.
  *
  * @author blackk100
  */
@@ -16,6 +16,11 @@ public class AI {
 	 * 2-Dimensional Location Grid representing the AI's grid
 	 */
 	Location[][] gridSelf;
+
+	/**
+	 * 2-Dimensional Location Grid representing the user's grid
+	 */
+	Location[][] gridOpp;
 
 	/**
 	 * An integer show the length of the grid.
@@ -35,7 +40,7 @@ public class AI {
 	 * I     1     I       Battleship      I
 	 * I     2     I        Cruiser        I
 	 * I     3     I       Destroyer       I
-	 * I     4     I      Patrol Boat      I
+	 * I     4     I       Corvette        I
 	 * I-----------I-----------------------I
 	 * </pre>
 	 */
@@ -46,9 +51,10 @@ public class AI {
 	 *
 	 * @param initVars Initialization VariablesW
 	 */
-	AI(boolean[] initVars) {
+	AI(boolean[] initVars, Location[][] gridOpp) {
 		this.initVars = initVars;
 		this.boardSize = initVars[0] ? 15 : 10;
+		this.gridOpp = gridOpp;
 
 		this.gridSelf = new Location[this.boardSize][this.boardSize];
 		for (int y = 0; y < this.boardSize; y++) {
@@ -65,8 +71,35 @@ public class AI {
 	 *
 	 * @return gridSelf Self Grid
 	 */
-	public Location[][] getGrid() {
+	public Location[][] getGridSelf() {
 		return this.gridSelf;
+	}
+
+	/**
+	 * A setter for gridSelf
+	 *
+	 * @param gridSelf Self Self
+	 */
+	public void updateGridSelf(Location[][] gridSelf) {
+		this.gridSelf = gridSelf;
+	}
+
+	/**
+	 * A setter for gridOpp
+	 *
+	 * @param gridOpp Self Opp
+	 */
+	public void updateGridOpp(Location[][] gridOpp) {
+		this.gridOpp = gridOpp;
+	}
+
+	/**
+	 * Placeholder function for the AI to fire at the player's ships.
+	 *
+	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate.
+	 */
+	public int[] fire() {
+		return new int[] {-1, -1};
 	}
 
 	/**
@@ -83,7 +116,7 @@ public class AI {
 				shipLengths[i] = this.initVars[2] ? 1 : 0;
 			} else if (i < 23) { // Destroyers
 				shipLengths[i] = this.initVars[3] ? 1 : 0;
-			} else {             // Patrol Boats
+			} else {             // Corvettes
 				shipLengths[i] = this.initVars[4] ? 1 : 0;
 			}
 		}
@@ -162,4 +195,5 @@ public class AI {
 
 		return out;
 	}
+
 }
