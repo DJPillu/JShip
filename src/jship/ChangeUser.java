@@ -21,6 +21,7 @@ public class ChangeUser extends JFrame {
 	public ChangeUser() {
 		this.initComponents();
 		this.updateCurrentUser();
+		this.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -184,7 +185,7 @@ public class ChangeUser extends JFrame {
 			LoginUser lu = new LoginUser(UserTF.getText(), PassTF.getPassword()); // Created the LoginUser object
 			int res = lu.login(); // User logged in. res holds the return value.
 
-			updateCurrentUser();
+			this.updateCurrentUser();
 			if (res == -3) {                     // Unknown Exception
 				System.out.println("Fatal Error Occured! Contact Developer!");
 				JOptionPane.showMessageDialog(null, "Fatal Error Occured! Contact Developer!");
@@ -216,7 +217,7 @@ public class ChangeUser extends JFrame {
 			JOptionPane.showMessageDialog(null, "No User is logged in!");
 		} else {                                            // A User is logged in. Logging out.
 			users.CurrentUser.Logout();
-			updateCurrentUser();
+			this.updateCurrentUser();
 			System.out.println("User logged out!");
 			JOptionPane.showMessageDialog(null, "User logged out!");
 			this.CancelB.doClick();
@@ -239,7 +240,7 @@ public class ChangeUser extends JFrame {
 			CreateUser cu = new CreateUser(UserTF.getText(), PassTF.getPassword()); // Created the CreateUser object
 			int res = cu.create(); // User created. res holds the return value.
 
-			updateCurrentUser();
+			this.updateCurrentUser();
 			if (res == -4) {                     // User Already Registered Exception
 				System.out.println("This Username is not available!");
 				JOptionPane.showMessageDialog(null, "This Username is not available!");
@@ -255,7 +256,6 @@ public class ChangeUser extends JFrame {
 			} else if (res == 1) {               // ChangeUser Successful
 				System.out.println("Registered! Please login in!");
 				JOptionPane.showMessageDialog(null, "Registered! Please login in!");
-				this.CancelB.doClick();
 			} else {                             // Unknown Return Value
 				System.out.println("Unknown Return Value! Contact Developer");
 				JOptionPane.showMessageDialog(null, "Unknown Return Value! Contact Developer!");

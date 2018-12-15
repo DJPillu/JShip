@@ -60,7 +60,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="TypeL" max="32767" attributes="0"/>
+                  <Component id="TitleL" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -69,14 +69,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="TypeL" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="TitleL" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="TypeL">
+        <Component class="javax.swing.JLabel" name="TitleL">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="PvE - Sandbox"/>
@@ -91,11 +91,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Grid1" min="-2" pref="450" max="-2" attributes="0"/>
+                  <Component id="PlayerGridP" min="-2" pref="450" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="RoundStatusP" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Grid2" min="-2" pref="450" max="-2" attributes="0"/>
+                  <Component id="AIGridP" min="-2" pref="450" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -108,8 +108,8 @@
                       <Component id="RoundStatusP" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="Grid2" pref="450" max="32767" attributes="0"/>
-                              <Component id="Grid1" alignment="0" pref="450" max="32767" attributes="0"/>
+                              <Component id="AIGridP" pref="450" max="32767" attributes="0"/>
+                              <Component id="PlayerGridP" alignment="0" pref="450" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -120,7 +120,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="Grid1">
+        <Container class="javax.swing.JPanel" name="PlayerGridP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -144,7 +144,7 @@
             </Property>
           </Layout>
         </Container>
-        <Container class="javax.swing.JPanel" name="Grid2">
+        <Container class="javax.swing.JPanel" name="AIGridP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -173,7 +173,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="AlertsSP" max="32767" attributes="0"/>
@@ -181,26 +181,26 @@
                           <Component id="ShipsP" alignment="0" max="32767" attributes="0"/>
                           <Component id="RoundStatusL" alignment="1" max="32767" attributes="0"/>
                           <Component id="ShipsL" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="GirdL" pref="75" max="32767" attributes="0"/>
                                   <Component id="ModeL" max="32767" attributes="0"/>
-                                  <Component id="GirdL" alignment="1" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="GridTF" max="32767" attributes="0"/>
                                   <Component id="ModeTF" max="32767" attributes="0"/>
-                                  <Component id="GridTF" pref="190" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="ShipsNoL" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="RoundL" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="ShipsNoL" max="32767" attributes="0"/>
+                                  <Component id="RoundL" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="RoundTF" max="32767" attributes="0"/>
                                   <Component id="ShipNoTF" max="32767" attributes="0"/>
+                                  <Component id="RoundTF" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -218,10 +218,10 @@
                           <Component id="GirdL" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="GridTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="ModeL" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="ModeTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ModeL" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ShipsL" min="-2" max="-2" attributes="0"/>
@@ -237,11 +237,11 @@
                           <Component id="RoundL" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
                           <Component id="RoundTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                      <Component id="AlertsSP" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="AlertsSP" pref="131" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="ButtonsP" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -342,12 +342,6 @@
                 <Property name="text" type="java.lang.String" value="Grid Size:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="ModeTF">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" value="Classic"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JTextField" name="GridTF">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
@@ -405,7 +399,7 @@
                     <Property name="text" type="java.lang.String" value="Start"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextRound"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NextRound"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Spacer2L">
@@ -420,6 +414,12 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JTextField" name="ModeTF">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Classic"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
@@ -431,9 +431,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="P1StatusP" min="-2" max="-2" attributes="0"/>
+                  <Component id="PlayerStatusP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="P2StatusP" min="-2" max="-2" attributes="0"/>
+                  <Component id="AIStatusP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -443,8 +443,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="P2StatusP" min="-2" max="-2" attributes="0"/>
-                      <Component id="P1StatusP" min="-2" max="-2" attributes="0"/>
+                      <Component id="AIStatusP" min="-2" max="-2" attributes="0"/>
+                      <Component id="PlayerStatusP" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -452,122 +452,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="P2StatusP">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
-          </Properties>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="P2StatusTitleL" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="P2SLL" max="32767" attributes="0"/>
-                                  <Component id="P2AccL" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="P2SLTF" pref="180" max="32767" attributes="0"/>
-                                  <Component id="P2AccTF" pref="180" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="23" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="P2HitsL" max="32767" attributes="0"/>
-                                  <Component id="P2SFL" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="P2HitsTF" pref="180" max="32767" attributes="0"/>
-                                  <Component id="P2SFTF" pref="180" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="P2StatusTitleL" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="P2SLL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2SLTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2SFL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2SFTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="P2AccL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2HitsTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2HitsL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2AccTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="P2StatusTitleL">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Player 2 Status"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="P2SLL">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ships Left:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="P2SLTF">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="P2SFL">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Shots Fired:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="P2SFTF">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="P2AccL">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Accuracy:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="P2AccTF">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="P2HitsL">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Hits Landed:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="P2HitsTF">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="P1StatusP">
+        <Container class="javax.swing.JPanel" name="PlayerStatusP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -582,26 +467,26 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="P1StatusTitleL" alignment="0" max="32767" attributes="0"/>
+                          <Component id="PlayerStatusTitleL" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="P1SLL" max="32767" attributes="0"/>
-                                  <Component id="P1AccL" max="32767" attributes="0"/>
+                                  <Component id="PlayerrSLL" max="32767" attributes="0"/>
+                                  <Component id="PlayerAccL" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="P1SLTF" pref="180" max="32767" attributes="0"/>
-                                  <Component id="P1AccTF" pref="180" max="32767" attributes="0"/>
+                                  <Component id="PlayerSLTF" pref="180" max="32767" attributes="0"/>
+                                  <Component id="PlayerAccTF" pref="180" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace pref="23" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="P1HitsL" max="32767" attributes="0"/>
-                                  <Component id="P1SFL" max="32767" attributes="0"/>
+                                  <Component id="PlayerHitsL" max="32767" attributes="0"/>
+                                  <Component id="PlayerSFL" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="P1HitsTF" pref="180" max="32767" attributes="0"/>
-                                  <Component id="P1SFTF" pref="180" max="32767" attributes="0"/>
+                                  <Component id="PlayerHitsTF" pref="180" max="32767" attributes="0"/>
+                                  <Component id="PlayerSFTF" pref="180" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -613,20 +498,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="P1StatusTitleL" min="-2" max="-2" attributes="0"/>
+                      <Component id="PlayerStatusTitleL" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="P1SLL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P1SLTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P1SFTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P1SFL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerrSLL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerSLTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerSFTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerSFL" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="P1AccL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P1AccTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P1HitsL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P1HitsTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerAccL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerAccTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerHitsL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="PlayerHitsTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -634,48 +519,163 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="P1StatusTitleL">
+            <Component class="javax.swing.JLabel" name="PlayerStatusTitleL">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Player 1 Status"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="P1SLL">
+            <Component class="javax.swing.JLabel" name="PlayerrSLL">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ships Left:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="P1SLTF">
+            <Component class="javax.swing.JTextField" name="PlayerSLTF">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="P1SFL">
+            <Component class="javax.swing.JLabel" name="PlayerSFL">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Shots Fired:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="P1SFTF">
+            <Component class="javax.swing.JTextField" name="PlayerSFTF">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="P1AccL">
+            <Component class="javax.swing.JLabel" name="PlayerAccL">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Accuracy:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="P1AccTF">
+            <Component class="javax.swing.JTextField" name="PlayerAccTF">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="P1HitsL">
+            <Component class="javax.swing.JLabel" name="PlayerHitsL">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hits Landed:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="P1HitsTF">
+            <Component class="javax.swing.JTextField" name="PlayerHitsTF">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="AIStatusP">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="AIStatusTitleL" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="AISLL" max="32767" attributes="0"/>
+                                  <Component id="AIAccL" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="AISLTF" pref="180" max="32767" attributes="0"/>
+                                  <Component id="AIAccTF" pref="180" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="AIHitsL" max="32767" attributes="0"/>
+                                  <Component id="AISFL" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="AIHitsTF" pref="180" max="32767" attributes="0"/>
+                                  <Component id="AISFTF" pref="180" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="AIStatusTitleL" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="AISLL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AISLTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AISFL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AISFTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="AIAccL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AIHitsTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AIHitsL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AIAccTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="AIStatusTitleL">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Player 2 Status"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="AISLL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ships Left:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="AISLTF">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="AISFL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Shots Fired:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="AISFTF">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="AIAccL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Accuracy:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="AIAccTF">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="AIHitsL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Hits Landed:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="AIHitsTF">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>

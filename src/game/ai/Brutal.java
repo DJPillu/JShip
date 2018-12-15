@@ -6,21 +6,27 @@ import java.util.Random;
 
 /**
  * The Brutal AI, i.e., the "Hard" AI
- * Knows EVERYTHING (about the game board)
+ * Knows the enemy's ship's locations.
  *
  * @author blackk100
  */
 public final class Brutal extends AI {
 
 	/**
+	 * 2-Dimensional Location Grid representing the user's grid
+	 */
+	Location[][] gridOpp;
+
+	/**
 	 * Constructor for the Sandbox AI
 	 *
 	 * @param initVars Initialization Variables
-	 * @param mode     Game Mode
 	 * @param gridOpp  Enemy Grid
 	 */
-	public Brutal(boolean[] initVars, String mode, Location[][] gridOpp) {
-		super(initVars, mode, gridOpp);
+	public Brutal(boolean[] initVars, Location[][] gridOpp) {
+		super(initVars);
+
+		this.gridOpp = gridOpp;
 	}
 
 	/**
@@ -30,7 +36,10 @@ public final class Brutal extends AI {
 	 *
 	 * The AI fires at random coordinates where no ships are located, until one of it's ship is hit, or no more
 	 * coordinates remain.
-	 * Then, the AI is guaranteed to hit a ship (however, these coordinates are selected randomly again)
+	 * Then, the AI is guaranteed to hit a ship (however, these coordinates are selected randomly again).
+	 *
+	 * TODO: Make it slightly easier (later, after implementing the above version) by randomizing whether the shot
+	 * lands or not by weighing in how many of it's ships aren't sunk.
 	 *
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */

@@ -18,6 +18,7 @@ public class JShip extends JFrame {
 	 */
 	public JShip() {
 		this.initComponents();
+		this.setLocationRelativeTo(null);
 		this.updateCurrentUser();
 	}
 
@@ -188,6 +189,7 @@ public class JShip extends JFrame {
 	private void Play(ActionEvent evt) {//GEN-FIRST:event_Play
 		Pre Pre = new Pre();  // Creates the Pre Form object
 		Pre.setVisible(true); // Makes the Pre Form to be visible
+		Pre.setLocationRelativeTo(null); // TODO: Figure out why Pre doesn't screen-centre without this.
 
 		this.dispose();       // Destroys the current form object
 	}//GEN-LAST:event_Play

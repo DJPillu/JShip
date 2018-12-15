@@ -9,13 +9,25 @@ package game;
 public final class Location {
 
 	/**
+	 * Constant value of '0' indicating that the position is unguessed.
+	 */
+	public static final int UNGUESSED = 0;
+
+	/**
+	 * Constant value of '-1' indicating that the shot missed.
+	 */
+	public static final int MISS = -1;
+
+	/**
+	 * Constant value of '1' indicating that the shot hit a target.
+	 */
+	public static final int HIT = 1;
+
+	/**
 	 * Stores whether or not this location has been guessed.
 	 * Takes the constants UNGUESSED, HIT and MISS
 	 */
 	private int status;
-	public static final int UNGUESSED = 0;
-	public static final int MISS = -1;
-	public static final int HIT = 1;
 
 	/**
 	 * Used to store whether or not this location has a ship part.
@@ -27,7 +39,7 @@ public final class Location {
 	 */
 	public Location() {
 		this.status = Location.UNGUESSED;
-		this.shipAbsent();
+		this.hasShip = false;
 	}
 
 	/**
@@ -47,13 +59,6 @@ public final class Location {
 	}
 
 	/**
-	 * This location doesn't have a ship.
-	 */
-	public void shipAbsent() {
-		this.hasShip = false;
-	}
-
-	/**
 	 * Checks if the location hasn't been guessed yet.
 	 *
 	 * @return true if unguessed. false if guessed.
@@ -67,21 +72,15 @@ public final class Location {
 	 *
 	 * @return true if hit. false if not hit.
 	 */
-	public boolean checkHit() {
+	public boolean isHit() {
 		return this.status == Location.HIT;
 	}
 
 	/**
-	 * Marks the location as a hit.
+	 * Marks the location as a hit or a miss depending on whether this location has a ship.
 	 */
-	public void markHit() {
-		this.status = Location.HIT;
+	public void markShot() {
+		this.status = this.hasShip() ? Location.HIT : Location.MISS;
 	}
 
-	/**
-	 * Marks the location as a miss.
-	 */
-	public void markMiss() {
-		this.status = Location.MISS;
-	}
 }

@@ -8,6 +8,8 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="TypeBG">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="DifficultyBG">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -56,24 +58,24 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="ButtonsP" max="32767" attributes="0"/>
-                      <Component id="TitleL" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="ButtonsP" alignment="0" max="32767" attributes="0"/>
+                      <Component id="TitleL" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="DifficultyL" alignment="0" max="32767" attributes="0"/>
                               <Component id="ModeL" alignment="0" max="32767" attributes="0"/>
-                              <Component id="TypeL" alignment="0" max="32767" attributes="0"/>
                               <Component id="ShipsL" alignment="0" max="32767" attributes="0"/>
                               <Component id="GridL" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="TypeP" alignment="0" max="32767" attributes="0"/>
                               <Component id="ModeP" alignment="0" max="32767" attributes="0"/>
                               <Component id="GridP" max="32767" attributes="0"/>
                               <Component id="ShipsP" pref="455" max="32767" attributes="0"/>
+                              <Component id="DifficultyP" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -98,13 +100,13 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="TypeL" max="32767" attributes="0"/>
-                      <Component id="TypeP" min="-2" max="-2" attributes="0"/>
+                      <Component id="DifficultyL" max="32767" attributes="0"/>
+                      <Component id="DifficultyP" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="ShipsL" max="32767" attributes="0"/>
-                      <Component id="ShipsP" min="-2" max="-2" attributes="0"/>
+                      <Component id="ShipsP" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="ButtonsP" min="-2" pref="40" max="-2" attributes="0"/>
@@ -202,54 +204,63 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;S&quot;" type="code"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="TypeL">
+        <Component class="javax.swing.JLabel" name="DifficultyL">
           <Properties>
-            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="TypeP"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Game Type:"/>
+            <Property name="text" type="java.lang.String" value="AI Difficulty:"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="TypeP">
+        <Container class="javax.swing.JPanel" name="DifficultyP">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="3"/>
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="PvERB">
+            <Component class="javax.swing.JRadioButton" name="SRB">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="TypeBG"/>
+                  <ComponentRef name="DifficultyBG"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Player vs AI"/>
+                <Property name="text" type="java.lang.String" value="Sandbox"/>
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;PvE&quot;" type="code"/>
+                  <Connection code="&quot;S&quot;" type="code"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AIDiffChanged"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="EvERB">
+            <Component class="javax.swing.JRadioButton" name="RRB">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="TypeBG"/>
+                  <ComponentRef name="DifficultyBG"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="AI vs AI"/>
+                <Property name="text" type="java.lang.String" value="Realistic"/>
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;EvE&quot;" type="code"/>
+                  <Connection code="&quot;R&quot;" type="code"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TypeChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AIDiffChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="BRB">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="DifficultyBG"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Brutal"/>
+                <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;B&quot;" type="code"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AIDiffChanged"/>
               </Events>
             </Component>
           </SubComponents>
@@ -309,10 +320,10 @@
             </Component>
             <Component class="javax.swing.JButton" name="PlayB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Next"/>
+                <Property name="text" type="java.lang.String" value="Start"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Next"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Start"/>
               </Events>
             </Component>
           </SubComponents>

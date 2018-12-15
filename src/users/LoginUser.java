@@ -14,6 +14,7 @@ import misc.DBDetails;
  * @author blackk100
  */
 public final class LoginUser extends User {
+
 	/**
 	 * Constructor for the LoginUser class
 	 *

@@ -5,38 +5,59 @@ import java.util.Random;
 
 
 /**
- * Abstract Class dealing with board generation and shot placement.
+ * Base AI Class.
+ * Only decides ship placement.
  *
  * @author blackk100
  */
 public class AI {
-	Location[][] gridSelf, gridOpp;
+
+	/**
+	 * 2-Dimensional Location Grid representing the AI's grid
+	 */
+	Location[][] gridSelf;
+
+	/**
+	 * An integer show the length of the grid.
+	 * if initVars[0] is true, boardSize is 15. Else 10.
+	 */
+	final int boardSize;
+
+	/**
+	 * Round Initialization Variables:
+	 *
+	 * <pre>
+	 * I-----------I-----------I-----------I
+	 * I Index No. I   false   I    true   I
+	 * I-----------I-----------I-----------I
+	 * I     0     I  10 x 10  I  15 x 15  I
+	 * I-----------I-----------------------I
+	 * I     1     I       Battleship      I
+	 * I     2     I        Cruiser        I
+	 * I     3     I       Destroyer       I
+	 * I     4     I      Patrol Boat      I
+	 * I-----------I-----------------------I
+	 * </pre>
+	 */
 	boolean[] initVars;
 
 	/**
 	 * Constructor for the AI.
 	 *
-	 * @param initVars Initialization Variables
-	 * @param mode     Game Mode
-	 * @param gridOpp  Enemy Grid
+	 * @param initVars Initialization VariablesW
 	 */
-	AI(boolean[] initVars, String mode, Location[][] gridOpp) {
+	AI(boolean[] initVars) {
 		this.initVars = initVars;
+		this.boardSize = initVars[0] ? 15 : 10;
 
-		this.gridSelf = new Location[initVars[0] ? 15 : 10][initVars[0] ? 15 : 10];
-		this.gridOpp = gridOpp;
+		this.gridSelf = new Location[this.boardSize][this.boardSize];
+		for (int y = 0; y < this.boardSize; y++) {
+			for (int x = 0; x < this.boardSize; x++) {
+				this.gridSelf[y][x] = new Location();
+			}
+		}
 
 		this.place();
-	}
-
-	/**
-	 * Used when a EvE round is running.
-	 * Used by the 1st AI after AI2 places its ships.
-	 *
-	 * @param gridOpp Enemy Grid
-	 */
-	private void EvE(Location[][] gridOpp) {
-		this.gridOpp = gridOpp;
 	}
 
 	/**
@@ -55,19 +76,19 @@ public class AI {
 		int[] shipLengths = new int[38];
 		Random rand = new Random();
 
-		for (int i = 0; i < 37; i++) {
-			if (i < 5) {
+		for (int i = 0; i < 38; i++) {
+			if (i < 5) {         // Battleships
 				shipLengths[i] = this.initVars[1] ? 1 : 0;
-			} else if (i < 13) {
+			} else if (i < 13) { // Cruisers
 				shipLengths[i] = this.initVars[2] ? 1 : 0;
-			} else if (i < 23) {
+			} else if (i < 23) { // Destroyers
 				shipLengths[i] = this.initVars[3] ? 1 : 0;
-			} else {
+			} else {             // Patrol Boats
 				shipLengths[i] = this.initVars[4] ? 1 : 0;
 			}
 		}
 
-		for (int i = 0; i < 37; i++) {
+		for (int i = 0; i < 38; i++) {
 			int shipLength = shipLengths[i];
 			System.out.println(i + ": " + shipLength);
 
@@ -115,7 +136,7 @@ public class AI {
 				}
 
 				System.out.println("Ship " + i + " placed");
-			} else {
+			} else {                                        // Ship is not being used
 				System.out.println("Ship " + i + " is not being used");
 			}
 		}
@@ -136,7 +157,7 @@ public class AI {
 		Random rand = new Random();
 
 		for (int i = 0; i < 2; i++) {
-			out[i] = rand.nextInt(this.initVars[0] ? 11 - length : 16 - length);
+			out[i] = rand.nextInt(this.initVars[0] ? 16 - length : 11 - length);
 		}
 
 		return out;

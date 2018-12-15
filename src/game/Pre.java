@@ -1,6 +1,5 @@
 package game;
 
-import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 import jship.JShip;
@@ -32,15 +31,6 @@ public class Pre extends JFrame {
 	private boolean[] initVars = {false, false, false, false, false};
 
 	/**
-	 * Game Type:
-	 * <pre>
-	 *  1 - PvE
-	 *  0 - EvE
-	 * </pre>
-	 */
-	private int type = 1;
-
-	/**
 	 * Game Mode:
 	 * <pre>
 	 * C - Classic
@@ -48,6 +38,17 @@ public class Pre extends JFrame {
 	 * </pre>
 	 */
 	private String mode = "C";
+
+	/**
+	 * AI Difficulty:
+	 *
+	 * <pre>
+	 * -1 - Sandbox   (Easy)
+	 *  0 - Realistic (Medium)
+	 *  1 - Brutal    (Hard)
+	 * </pre>
+	 */
+	private int AIDiff = -1;
 
 	/**
 	 * Creates a new form Pre
@@ -68,7 +69,7 @@ public class Pre extends JFrame {
 	 * @param mode     Game Mode
 	 */
 	public Pre(boolean[] initVars, int type, String mode) {
-		initComponents();
+		this.initComponents();
 
 		if (initVars[0] == true) {
 			this.Grid15RB.setSelected(true);
@@ -86,17 +87,13 @@ public class Pre extends JFrame {
 			this.PatrolCB.setSelected(true);
 		}
 
-		if (type == 0) {
-			this.EvERB.setSelected(true);
-		} else if (type == 1) {
-			this.PvERB.setSelected(true);
-		}
-
 		if (mode.equals("C")) {
 			this.ClassRB.setSelected(true);
 		} else if (mode.equals("S")) {
 			this.SalvoRB.setSelected(true);
 		}
+
+		this.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -107,51 +104,53 @@ public class Pre extends JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    SizeBG = new ButtonGroup();
-    ModeBG = new ButtonGroup();
-    TypeBG = new ButtonGroup();
-    PreP = new JPanel();
-    TitleL = new JLabel();
-    GridL = new JLabel();
-    GridP = new JPanel();
-    Grid10RB = new JRadioButton();
-    Grid15RB = new JRadioButton();
-    ModeL = new JLabel();
-    ModeP = new JPanel();
-    ClassRB = new JRadioButton();
-    SalvoRB = new JRadioButton();
-    TypeL = new JLabel();
-    TypeP = new JPanel();
-    PvERB = new JRadioButton();
-    EvERB = new JRadioButton();
-    ShipsL = new JLabel();
-    ShipsP = new JPanel();
-    BattleshipCB = new JCheckBox();
-    CruiserCB = new JCheckBox();
-    DestroyerCB = new JCheckBox();
-    PatrolCB = new JCheckBox();
-    ButtonsP = new JPanel();
-    GoBackB = new JButton();
-    PlayB = new JButton();
+    SizeBG = new javax.swing.ButtonGroup();
+    ModeBG = new javax.swing.ButtonGroup();
+    TypeBG = new javax.swing.ButtonGroup();
+    DifficultyBG = new javax.swing.ButtonGroup();
+    PreP = new javax.swing.JPanel();
+    TitleL = new javax.swing.JLabel();
+    GridL = new javax.swing.JLabel();
+    GridP = new javax.swing.JPanel();
+    Grid10RB = new javax.swing.JRadioButton();
+    Grid15RB = new javax.swing.JRadioButton();
+    ModeL = new javax.swing.JLabel();
+    ModeP = new javax.swing.JPanel();
+    ClassRB = new javax.swing.JRadioButton();
+    SalvoRB = new javax.swing.JRadioButton();
+    DifficultyL = new javax.swing.JLabel();
+    DifficultyP = new javax.swing.JPanel();
+    SRB = new javax.swing.JRadioButton();
+    RRB = new javax.swing.JRadioButton();
+    BRB = new javax.swing.JRadioButton();
+    ShipsL = new javax.swing.JLabel();
+    ShipsP = new javax.swing.JPanel();
+    BattleshipCB = new javax.swing.JCheckBox();
+    CruiserCB = new javax.swing.JCheckBox();
+    DestroyerCB = new javax.swing.JCheckBox();
+    PatrolCB = new javax.swing.JCheckBox();
+    ButtonsP = new javax.swing.JPanel();
+    GoBackB = new javax.swing.JButton();
+    PlayB = new javax.swing.JButton();
 
-    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Game Setup");
     setResizable(false);
 
-    TitleL.setHorizontalAlignment(SwingConstants.CENTER);
+    TitleL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     TitleL.setText("Game Setup");
 
     GridL.setLabelFor(GridL);
     GridL.setText("Grid Size:");
 
-    GridP.setLayout(new GridLayout(1, 2));
+    GridP.setLayout(new java.awt.GridLayout(1, 2));
 
     SizeBG.add(Grid10RB);
     Grid10RB.setSelected(true);
     Grid10RB.setText("10 x 10");
     Grid10RB.setActionCommand("10");
-    Grid10RB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
+    Grid10RB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         SizeChanged(evt);
       }
     });
@@ -160,8 +159,8 @@ public class Pre extends JFrame {
     SizeBG.add(Grid15RB);
     Grid15RB.setText("15 x 15");
     Grid15RB.setActionCommand("15");
-    Grid15RB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
+    Grid15RB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         SizeChanged(evt);
       }
     });
@@ -170,7 +169,7 @@ public class Pre extends JFrame {
     ModeL.setLabelFor(ModeP);
     ModeL.setText("Game Mode:");
 
-    ModeP.setLayout(new GridLayout(1, 2));
+    ModeP.setLayout(new java.awt.GridLayout(1, 2));
 
     ModeBG.add(ClassRB);
     ClassRB.setSelected(true);
@@ -181,40 +180,47 @@ public class Pre extends JFrame {
     ModeBG.add(SalvoRB);
     SalvoRB.setText("Salvo");
     SalvoRB.setActionCommand("S");
-    SalvoRB.setEnabled(false);
     ModeP.add(SalvoRB);
 
-    TypeL.setLabelFor(TypeP);
-    TypeL.setText("Game Type:");
+    DifficultyL.setText("AI Difficulty:");
 
-    TypeP.setLayout(new GridLayout(1, 3));
+    DifficultyP.setLayout(new java.awt.GridLayout(1, 3));
 
-    TypeBG.add(PvERB);
-    PvERB.setSelected(true);
-    PvERB.setText("Player vs AI");
-    PvERB.setActionCommand("PvE");
-    PvERB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
-        TypeChanged(evt);
+    DifficultyBG.add(SRB);
+    SRB.setSelected(true);
+    SRB.setText("Sandbox");
+    SRB.setActionCommand("S");
+    SRB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        AIDiffChanged(evt);
       }
     });
-    TypeP.add(PvERB);
+    DifficultyP.add(SRB);
 
-    TypeBG.add(EvERB);
-    EvERB.setText("AI vs AI");
-    EvERB.setActionCommand("EvE");
-    EvERB.setEnabled(false);
-    EvERB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
-        TypeChanged(evt);
+    DifficultyBG.add(RRB);
+    RRB.setText("Realistic");
+    RRB.setActionCommand("R");
+    RRB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        AIDiffChanged(evt);
       }
     });
-    TypeP.add(EvERB);
+    DifficultyP.add(RRB);
+
+    DifficultyBG.add(BRB);
+    BRB.setText("Brutal");
+    BRB.setActionCommand("B");
+    BRB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        AIDiffChanged(evt);
+      }
+    });
+    DifficultyP.add(BRB);
 
     ShipsL.setLabelFor(ShipsP);
     ShipsL.setText("Ships Available:");
 
-    ShipsP.setLayout(new GridLayout(2, 3));
+    ShipsP.setLayout(new java.awt.GridLayout(2, 3));
 
     BattleshipCB.setText("<html>Battleship<br>1 Space; x5</html>");
     ShipsP.add(BattleshipCB);
@@ -228,83 +234,87 @@ public class Pre extends JFrame {
     PatrolCB.setText("<html>Patrol Boat<br>1 Space; x15</html>");
     ShipsP.add(PatrolCB);
 
-    ButtonsP.setLayout(new GridLayout(1, 3, 100, 0));
+    ButtonsP.setLayout(new java.awt.GridLayout(1, 3, 100, 0));
 
     GoBackB.setText("Go Back");
-    GoBackB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
+    GoBackB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         GoBack(evt);
       }
     });
     ButtonsP.add(GoBackB);
 
-    PlayB.setText("Next");
-    PlayB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
-        Next(evt);
+    PlayB.setText("Start");
+    PlayB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Start(evt);
       }
     });
     ButtonsP.add(PlayB);
 
-    GroupLayout PrePLayout = new GroupLayout(PreP);
+    javax.swing.GroupLayout PrePLayout = new javax.swing.GroupLayout(PreP);
     PreP.setLayout(PrePLayout);
-    PrePLayout.setHorizontalGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(PrePLayout.createSequentialGroup()
+    PrePLayout.setHorizontalGroup(
+      PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PrePLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-          .addComponent(ButtonsP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(TitleL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(ButtonsP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(TitleL, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(PrePLayout.createSequentialGroup()
-            .addGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-              .addComponent(ModeL, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(TypeL, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(ShipsL, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(GridL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(DifficultyL, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(ModeL, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(ShipsL, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(GridL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(18, 18, 18)
-            .addGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-              .addComponent(TypeP, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(ModeP, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(GridP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(ShipsP, GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE))))
+            .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(ModeP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(GridP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(ShipsP, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+              .addComponent(DifficultyP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         .addContainerGap())
     );
-    PrePLayout.setVerticalGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    PrePLayout.setVerticalGroup(
+      PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(PrePLayout.createSequentialGroup()
         .addContainerGap()
         .addComponent(TitleL)
         .addGap(18, 18, 18)
-        .addGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-          .addComponent(GridP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(GridL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(GridP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(GridL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addGap(18, 18, 18)
-        .addGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-          .addComponent(ModeP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(ModeL, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+        .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(ModeP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(ModeL, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
-        .addGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-          .addComponent(TypeL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(TypeP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(DifficultyL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(DifficultyP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addGap(18, 18, 18)
-        .addGroup(PrePLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-          .addComponent(ShipsL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(ShipsP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        .addGroup(PrePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(ShipsL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(ShipsP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addGap(18, 18, 18)
-        .addComponent(ButtonsP, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(ButtonsP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    GroupLayout layout = new GroupLayout(getContentPane());
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    layout.setHorizontalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(PreP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(PreP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
-    layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    layout.setVerticalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(PreP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(PreP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -328,7 +338,7 @@ public class Pre extends JFrame {
 	 *
 	 * @param evt Button Click
 	 */
-	private void Next(ActionEvent evt) {//GEN-FIRST:event_Next
+	private void Start(ActionEvent evt) {//GEN-FIRST:event_Start
 		this.mode = this.ModeBG.getSelection().getActionCommand();
 		this.initVars[1] = this.BattleshipCB.isSelected();
 		this.initVars[2] = this.CruiserCB.isSelected();
@@ -348,38 +358,12 @@ public class Pre extends JFrame {
 			System.out.println("No Ship Type is selected! Please select a ship type!");
 			JOptionPane.showMessageDialog(null, "No Ship Type is selected! Please select a ship type!", "No Ship Selected", JOptionPane.WARNING_MESSAGE);
 		} else {
-			if (this.type == 0) {
-				System.out.println("Statistics will not be tracked for this EvE round.");
-				JOptionPane.showMessageDialog(null, "Statistics will not be tracked for this round.", "Stats not Counted", JOptionPane.INFORMATION_MESSAGE);
-			} else if (this.type != 1) {
-				System.out.println("An Error occurred! Please contact the developer!");
-				JOptionPane.showMessageDialog(null, "An Error occurred! Please contact the developer!", "An Error occured", JOptionPane.ERROR_MESSAGE);
-			}
+			Game Game = new Game(this.initVars, this.mode, this.AIDiff); // Creates the JShip Form object
+			Game.setVisible(true);                                       // Makes the JShip Form to be visible
 
-			if (this.type == 0 || this.type == 1) {
-				DiffSelector DiffSelector = new DiffSelector(this.initVars, this.type, this.mode); // Creates the DiffSelector form object
-				DiffSelector.setVisible(true);                                                     // Makes the DiffSelector form to be visible
-
-				this.dispose();                                                                    // Destroys the current form object
-			}
+			this.dispose();                                              // Destroys the current form object
 		}
-
-		System.out.println("Play() ended!\n");
-	}//GEN-LAST:event_Next
-
-	/**
-	 * Sets the Game Type variable
-	 *
-	 * @param evt Button Click
-	 */
-	private void TypeChanged(ActionEvent evt) {//GEN-FIRST:event_TypeChanged
-		String diff = this.TypeBG.getSelection().getActionCommand();
-		if (diff.equals("EvE")) {
-			this.type = 0;
-		} else if (diff.equals("PvE")) {
-			this.type = 1;
-		}
-	}//GEN-LAST:event_TypeChanged
+	}//GEN-LAST:event_Start
 
 	/**
 	 * Sets the Grid Size variable
@@ -390,32 +374,45 @@ public class Pre extends JFrame {
 		this.initVars[0] = Integer.parseInt(this.SizeBG.getSelection().getActionCommand()) == 15;
 	}//GEN-LAST:event_SizeChanged
 
+  private void AIDiffChanged(ActionEvent evt) {//GEN-FIRST:event_AIDiffChanged
+		String diff = this.DifficultyBG.getSelection().getActionCommand();
+		if (diff.equals("S")) {
+			this.AIDiff = -1;
+		} else if (diff.equals("R")) {
+			this.AIDiff = 0;
+		} else if (diff.equals("B")) {
+			this.AIDiff = 1;
+		}
+  }//GEN-LAST:event_AIDiffChanged
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private JCheckBox BattleshipCB;
-  private JPanel ButtonsP;
-  private JRadioButton ClassRB;
-  private JCheckBox CruiserCB;
-  private JCheckBox DestroyerCB;
-  private JRadioButton EvERB;
-  private JButton GoBackB;
-  private JRadioButton Grid10RB;
-  private JRadioButton Grid15RB;
-  private JLabel GridL;
-  private JPanel GridP;
-  private ButtonGroup ModeBG;
-  private JLabel ModeL;
-  private JPanel ModeP;
-  private JCheckBox PatrolCB;
-  private JButton PlayB;
-  private JPanel PreP;
-  private JRadioButton PvERB;
-  private JRadioButton SalvoRB;
-  private JLabel ShipsL;
-  private JPanel ShipsP;
-  private ButtonGroup SizeBG;
-  private JLabel TitleL;
-  private ButtonGroup TypeBG;
-  private JLabel TypeL;
-  private JPanel TypeP;
+  private javax.swing.JRadioButton BRB;
+  private javax.swing.JCheckBox BattleshipCB;
+  private javax.swing.JPanel ButtonsP;
+  private javax.swing.JRadioButton ClassRB;
+  private javax.swing.JCheckBox CruiserCB;
+  private javax.swing.JCheckBox DestroyerCB;
+  private javax.swing.ButtonGroup DifficultyBG;
+  private javax.swing.JLabel DifficultyL;
+  private javax.swing.JPanel DifficultyP;
+  private javax.swing.JButton GoBackB;
+  private javax.swing.JRadioButton Grid10RB;
+  private javax.swing.JRadioButton Grid15RB;
+  private javax.swing.JLabel GridL;
+  private javax.swing.JPanel GridP;
+  private javax.swing.ButtonGroup ModeBG;
+  private javax.swing.JLabel ModeL;
+  private javax.swing.JPanel ModeP;
+  private javax.swing.JCheckBox PatrolCB;
+  private javax.swing.JButton PlayB;
+  private javax.swing.JPanel PreP;
+  private javax.swing.JRadioButton RRB;
+  private javax.swing.JRadioButton SRB;
+  private javax.swing.JRadioButton SalvoRB;
+  private javax.swing.JLabel ShipsL;
+  private javax.swing.JPanel ShipsP;
+  private javax.swing.ButtonGroup SizeBG;
+  private javax.swing.JLabel TitleL;
+  private javax.swing.ButtonGroup TypeBG;
   // End of variables declaration//GEN-END:variables
 }

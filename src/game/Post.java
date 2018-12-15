@@ -47,10 +47,11 @@ public class Post extends JFrame {
 	 * @param AIDiff    AI Difficulty
 	 */
 	public Post(int[] statsList, String mode, int AIDiff) {
-		initComponents();
+		this.initComponents();
+		this.setLocationRelativeTo(null);
 
 		this.statsList = statsList;
-		this.Acc = ((float) statsList[2] * 100) / statsList[1];
+		this.Acc = (float) (Math.round((this.statsList[2] * 10000.0) / this.statsList[1]) / 100.0);
 
 		this.mode = mode;
 		this.AIDiff = AIDiff;

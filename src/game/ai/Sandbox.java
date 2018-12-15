@@ -1,6 +1,5 @@
 package game.ai;
 
-import game.Location;
 import java.util.Random;
 
 
@@ -16,11 +15,9 @@ public final class Sandbox extends AI {
 	 * Constructor for the Sandbox AI
 	 *
 	 * @param initVars Initialization Variables
-	 * @param mode     Game Mode
-	 * @param gridOpp  Enemy Grid
 	 */
-	public Sandbox(boolean[] initVars, String mode, Location[][] gridOpp) {
-		super(initVars, mode, gridOpp);
+	public Sandbox(boolean[] initVars) {
+		super(initVars);
 	}
 
 	/**

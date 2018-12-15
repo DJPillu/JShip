@@ -28,6 +28,8 @@ public class ViewStats extends JFrame {
 		String difficulty = this.DifficultyBG.getSelection().getActionCommand();
 		this.diff = difficulty.equals("B") ? 2 : (difficulty.equals("R") ? 1 : 0);
 		this.userStatsSetter();
+
+		this.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -371,7 +373,7 @@ public class ViewStats extends JFrame {
 	 */
 	private void GoBack(ActionEvent evt) {//GEN-FIRST:event_GoBack
 		JShip JShip = new JShip(); // Creates the JShip Form object
-		JShip.setVisible(true);	  // Makes the JShip Form to be visible
+		JShip.setVisible(true);	   // Makes the JShip Form to be visible
 
 		this.dispose();            // Destroys the current form object
 	}//GEN-LAST:event_GoBack

@@ -7,7 +7,11 @@ package users;
  * @author blackk100
  */
 public final class CurrentUser {
-	private static String UName = "guest"; // Username
+
+	/**
+	 * Current user's username
+	 */
+	private static String UName = "guest";
 
 	/**
 	 * Returns the Current User

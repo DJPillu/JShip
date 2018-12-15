@@ -13,7 +13,15 @@ import misc.DBDetails;
  * @author blackk100
  */
 public final class UpdateStats extends Stats {
-	private final String mode, UName;
+	/**
+	 * Game mode
+	 */
+	private final String mode;
+
+	/**
+	 * Current Player's Username
+	 */
+	private final String UName;
 
 	/**
 	 * Mode:<br>
@@ -104,7 +112,7 @@ public final class UpdateStats extends Stats {
 			update.append("' AND AIDiff='").append(this.diff).append("';");             // Complete 3rd Conditional statement
 
 			Statement stmnt = con.createStatement(); // Creates the SQL statement object
-			stmnt.executeQuery(update.toString());   // Runs the update
+			stmnt.executeUpdate(update.toString());  // Runs the update statement
 
 			stmnt.close();
 			con.close();

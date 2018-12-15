@@ -9,8 +9,16 @@ import java.util.Arrays;
  * @author blackk100
  */
 abstract class User {
-	private final long Hash;    // Hashed Password
-	private final String UName; // Username
+
+	/**
+	 * The password in a hashed format
+	 */
+	private final long Hash;
+
+	/**
+	 * The entered username
+	 */
+	private final String UName;
 
 	/**
 	 * Constructor for the User class

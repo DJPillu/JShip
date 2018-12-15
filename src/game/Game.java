@@ -36,15 +36,6 @@ public class Game extends JFrame {
 	private final boolean[] initVars;
 
 	/**
-	 * Game Type:
-	 * <pre>
-	 *  1 - PvE
-	 *  0 - EvE
-	 * </pre>
-	 */
-	private final int type;
-
-	/**
 	 * Game Mode:
 	 * <pre>
 	 * C - Classic
@@ -65,56 +56,30 @@ public class Game extends JFrame {
 	private int shipNos = 0;
 
 	/**
-	 * AI 1 Difficulty:
+	 * AI Difficulty:
 	 *
 	 * <pre>
-	 * -1 - Sandbox       (Easy)
-	 *  0 - Realistic     (Medium)
-	 *  1 - Brutal        (Hard)
+	 * -1 - Sandbox   (Easy)
+	 *  0 - Realistic (Medium)
+	 *  1 - Brutal    (Hard)
 	 * </pre>
 	 */
-	private final int AI1Diff;
+	private final int AIDiff;
 
 	/**
-	 * AI 2 Difficulty (Present during EvE only):
-	 *
-	 * <pre>
-	 * -2 - Disabled
-	 * -1 - Sandbox       (Easy)
-	 *  0 - Realistic     (Medium)
-	 *  1 - Brutal        (Hard)
-	 * </pre>
+	 * The AI. Uses Grid 2.
 	 */
-	private final int AI2Diff;
-
-	/**
-	 * AI 1.
-	 * Always uses Grid 2.
-	 */
-	private AI AI1;
-
-	/**
-	 * AI 2.
-	 * Present during EvE only.
-	 * Always uses Grid 1 (during EvE).
-	 */
-	private AI AI2;
+	private AI AI;
 
 	/**
 	 * Grid 1 as a 2-Dimensional Location Array.
 	 */
-	private Location[][] Grid1L;
+	private Location[][] PlayerGridL;
 
 	/**
 	 * Grid 2 as a 2-Dimensional Location Array.
 	 */
-	private Location[][] Grid2L;
-
-	/**
-	 * true if P1 wins.
-	 * false if P2 wins.
-	 */
-	private boolean roundStatus = false;
+	private Location[][] AIGridL;
 
 	/**
 	 * Player 1 Statistics:
@@ -129,7 +94,7 @@ public class Game extends JFrame {
 	 * I-----------I-----------------------I
 	 * </pre>
 	 */
-	private int[] P1Stats = {0, 0, 0};
+	private int[] PlayerStats = {0, 0, 0};
 
 	/**
 	 * Player 2 Statistics:
@@ -144,7 +109,7 @@ public class Game extends JFrame {
 	 * I-----------I-----------------------I
 	 * </pre>
 	 */
-	private int[] P2Stats = {0, 0, 0};
+	private int[] AIStats = {0, 0, 0};
 
 	/**
 	 * Internal counter for current game/match round/sequence.
@@ -165,9 +130,10 @@ public class Game extends JFrame {
 	private boolean[][] buttonsClicked;
 
 	/**
-	 * Internal counter for number of times a button was clicked within a round.
+	 * Temporary variable for storing the number locations selected for placing shots.
+	 * Used after the Ship Placement round.
 	 */
-	private int timesClicked = 0;
+	private int shotsSelected = 0;
 
 	/**
 	 * Temporary variable for storing the number of ships placed.
@@ -177,7 +143,7 @@ public class Game extends JFrame {
 
 	/**
 	 * Temporary variable for storing the current ship being placed.
-	 * Only used during the Ship Placement round.
+	 * Only used during the Ship Placement round, for multi-tile ships.
 	 */
 	private int shipNo = 0;
 
@@ -217,12 +183,10 @@ public class Game extends JFrame {
 	 * Creates new form Main
 	 *
 	 * @param initVars Initialization Variables
-	 * @param type     Game Type
 	 * @param mode     Game Mode
-	 * @param AI1Diff  AI 1 Difficulty Level
-	 * @param AI2Diff  AI 2 Diffiuclty Level
+	 * @param AIDiff   AI Difficulty Level
 	 */
-	public Game(boolean[] initVars, int type, String mode, int AI1Diff, int AI2Diff) {
+	public Game(boolean[] initVars, String mode, int AIDiff) {
 		this.initVars = initVars;
 		this.boardSize = initVars[0] ? 15 : 10;
 		if (initVars[1]) {
@@ -248,70 +212,64 @@ public class Game extends JFrame {
 				this.shipLengths[i] = initVars[4] ? 2 : 0;
 			}
 		}
-		this.type = type;
 		this.mode = mode;
 
-		initComponents();
+		this.AIDiff = AIDiff;
 
+		this.initComponents();
+
+		this.setTitleL(AIDiff);
 		this.GridTF.setText(initVars[0] ? "15 x 15" : "10 x 10");
 		this.ModeTF.setText(mode.equals("C") ? "Classic" : "Salvo");
-
-		this.setTitleL(type);
-
 		this.BattleshipCB.doClick();
 
-		this.P1StatsUpdate(true);
-		this.P2StatsUpdate(true);
-
-		this.AI1Diff = AI1Diff;
-		this.AI2Diff = AI2Diff;
+		P1StatsUpdate(true);
+		P2StatsUpdate(true);
 
 		Object[] temp;                               // Temporary Array for storing Grid 1 & Grid 2 objects.
 		temp = this.initGrid(this.boardSize, false); // Grid 1
-		this.Grid1B = (JButton[][]) temp[0];
-		this.Grid1L = (Location[][]) temp[1];
+		this.PlayerGridB = (JButton[][]) temp[0];
+		this.PlayerGridL = (Location[][]) temp[1];
 		for (int y = 0; y < this.boardSize; y++) {
 			for (int x = 0; x < this.boardSize; x++) {
-				Grid1.add(this.Grid1B[y][x]);
+				this.PlayerGridP.add(this.PlayerGridB[y][x]);
 			}
 		}
 		temp = this.initGrid(this.boardSize, true);  // Grid 2
-		this.Grid2B = (JButton[][]) temp[0];
-		this.Grid2L = (Location[][]) temp[1];
+		this.AIGridB = (JButton[][]) temp[0];
+		this.AIGridL = (Location[][]) temp[1];
 		for (int y = 0; y < this.boardSize; y++) {
 			for (int x = 0; x < this.boardSize; x++) {
-				Grid2.add(this.Grid2B[y][x]);
+				this.AIGridP.add(this.AIGridB[y][x]);
 			}
 		}
-		temp = null;                                 // Implicit Garbage Collecting temp (hopefully)
+		// Implicit Garbage Collecting temp (hopefully). Remove if not necessary.
+		temp = null;
 		System.gc();
 
 		this.buttonsClicked = new boolean[this.boardSize][this.boardSize];
 
-		// Sleeps for 2 seconds.
+		// Sleeps for 0 seconds.
 		// Do I need this?
 		try {
-			java.util.concurrent.TimeUnit.SECONDS.sleep(2);
+			java.util.concurrent.TimeUnit.SECONDS.sleep(0);
 		} catch (InterruptedException ex) {
 			System.out.println(ex);
+		} finally {
+			this.setLocationRelativeTo(null);
 		}
 	}
 
 	/**
 	 * Updates TitleL's display text. Is run upon frame creation.
 	 *
-	 * @param type Game Type
+	 * @param AIDiff The AI Difficulty
 	 */
-	private void setTitleL(int type) {
-		if (type > 0) {
-			System.out.println("PvE - " + (AI1Diff == -1 ? "Sandbox" : (AI1Diff == 0 ? "Realistic" : "Brutal")));
-			this.TypeL.setText("PvE - " + (AI1Diff == -1 ? "Sandbox" : (AI1Diff == 0 ? "Realistic" : "Brutal")));
-			this.setTitle("PvE - " + (AI1Diff == -1 ? "Sandbox" : (AI1Diff == 0 ? "Realistic" : "Brutal")));
-		} else {
-			System.out.println("EvE - " + (AI1Diff == -1 ? "Sandbox" : (AI1Diff == 0 ? "Realistic" : "Brutal")) + " vs " + (AI2Diff == -1 ? "Sandbox" : (AI2Diff == 0 ? "Realistic" : "Brutal")));
-			this.TypeL.setText("EvE - " + (AI1Diff == -1 ? "Sandbox" : (AI1Diff == 0 ? "Realistic" : "Brutal")) + " vs " + (AI2Diff == -1 ? "Sandbox" : (AI2Diff == 0 ? "Realistic" : "Brutal")));
-			this.setTitle("EvE - " + (AI1Diff == -1 ? "Sandbox" : (AI1Diff == 0 ? "Realistic" : "Brutal")) + " vs " + (AI2Diff == -1 ? "Sandbox" : (AI2Diff == 0 ? "Realistic" : "Brutal")));
-		}
+	private void setTitleL(int AIDiff) {
+		System.out.println(AIDiff);
+		System.out.println("PvE - " + (AIDiff == -1 ? "Sandbox" : (AIDiff == 0 ? "Realistic" : "Brutal")));
+		TitleL.setText("PvE - " + (AIDiff == -1 ? "Sandbox" : (AIDiff == 0 ? "Realistic" : "Brutal")));
+		setTitle("PvE - " + (AIDiff == -1 ? "Sandbox" : (AIDiff == 0 ? "Realistic" : "Brutal")));
 	}
 
 	/**
@@ -320,10 +278,10 @@ public class Game extends JFrame {
 	 * @param flag Used for identifying whether or not its the Ship Placement Round
 	 */
 	private void P1StatsUpdate(boolean flag) {
-		this.P1SLTF.setText("" + (this.shipNos - this.P1Stats[2]));
-		this.P1SFTF.setText("" + this.P1Stats[0]);
-		this.P1HitsTF.setText("" + this.P1Stats[1]);
-		this.P1AccTF.setText("" + (float) (this.P1Stats[1] / (flag ? 1 : this.P1Stats[0])) + " %");
+		this.PlayerSLTF.setText("" + (this.shipNos - this.PlayerStats[2]));
+		this.PlayerSFTF.setText("" + this.PlayerStats[0]);
+		this.PlayerHitsTF.setText("" + this.PlayerStats[1]);
+		this.PlayerAccTF.setText("" + (Math.round((this.PlayerStats[1] * 10000.0) / (flag ? 1 : this.PlayerStats[0])) / 100.0) + " %");
 	}
 
 	/**
@@ -332,10 +290,10 @@ public class Game extends JFrame {
 	 * @param flag Used for identifying whether or not its the Ship Placement Round
 	 */
 	private void P2StatsUpdate(boolean flag) {
-		this.P2SLTF.setText("" + (this.shipNos - this.P2Stats[2]));
-		this.P2SFTF.setText("" + this.P2Stats[0]);
-		this.P2HitsTF.setText("" + this.P2Stats[1]);
-		this.P2AccTF.setText("" + (float) (this.P2Stats[1] / (flag ? 1 : this.P2Stats[0])) + " %");
+		this.AISLTF.setText("" + (this.shipNos - this.AIStats[2]));
+		this.AISFTF.setText("" + this.AIStats[0]);
+		this.AIHitsTF.setText("" + this.AIStats[1]);
+		this.AIAccTF.setText("" + (Math.round((this.AIStats[1] * 10000.0) / (flag ? 1 : this.AIStats[0])) / 100.0) + " %");
 	}
 
 	/**
@@ -356,31 +314,18 @@ public class Game extends JFrame {
 				GridB[y][x].setPreferredSize(new Dimension(boardSize * 3, boardSize * 3));
 				GridB[y][x].setActionCommand((gridNo ? 2 : 1) + " " + x + " " + y);
 				GridB[y][x].setBackground(new Color(5, 218, 255, 255));
-				GridB[y][x].addActionListener(this::ButtonHandler);
+				GridB[y][x].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent evt) {
+						buttonClick((JButton) evt.getSource(), true);
+					}
+				});
 
 				GridL[y][x] = new Location();
-				GridL[y][x].shipAbsent();
 			}
 		}
 
 		return new Object[] {GridB, GridL};
-	}
-
-	/**
-	 * Initializes the AI.
-	 *
-	 * @param AIDiff AI Difficulty
-	 *
-	 * @return An AI object of the specific difficulty
-	 */
-	private AI initAI(int AIDiff) {
-		if (AIDiff == -1) {
-			return new Sandbox(this.initVars, this.mode, this.Grid1L);
-		} else if (AIDiff == 0) {
-			return new Regular(this.initVars, this.mode, this.Grid1L);
-		} else {
-			return new Brutal(this.initVars, this.mode, this.Grid1L);
-		}
 	}
 
 	/**
@@ -394,10 +339,10 @@ public class Game extends JFrame {
   private void initComponents() {
 
     TitleP = new JPanel();
-    TypeL = new JLabel();
+    TitleL = new JLabel();
     MainP = new JPanel();
-    Grid1 = new JPanel();
-    Grid2 = new JPanel();
+    PlayerGridP = new JPanel();
+    AIGridP = new JPanel();
     RoundStatusP = new JPanel();
     RoundL = new JLabel();
     RoundTF = new JTextField();
@@ -411,7 +356,6 @@ public class Game extends JFrame {
     PatrolCB = new JCheckBox();
     ModeL = new JLabel();
     GirdL = new JLabel();
-    ModeTF = new JTextField();
     GridTF = new JTextField();
     RoundStatusL = new JLabel();
     AlertsSP = new JScrollPane();
@@ -422,55 +366,56 @@ public class Game extends JFrame {
     NextB = new JButton();
     Spacer2L = new JLabel();
     ExitB = new JButton();
+    ModeTF = new JTextField();
     StatusP = new JPanel();
-    P2StatusP = new JPanel();
-    P2StatusTitleL = new JLabel();
-    P2SLL = new JLabel();
-    P2SLTF = new JTextField();
-    P2SFL = new JLabel();
-    P2SFTF = new JTextField();
-    P2AccL = new JLabel();
-    P2AccTF = new JTextField();
-    P2HitsL = new JLabel();
-    P2HitsTF = new JTextField();
-    P1StatusP = new JPanel();
-    P1StatusTitleL = new JLabel();
-    P1SLL = new JLabel();
-    P1SLTF = new JTextField();
-    P1SFL = new JLabel();
-    P1SFTF = new JTextField();
-    P1AccL = new JLabel();
-    P1AccTF = new JTextField();
-    P1HitsL = new JLabel();
-    P1HitsTF = new JTextField();
+    PlayerStatusP = new JPanel();
+    PlayerStatusTitleL = new JLabel();
+    PlayerrSLL = new JLabel();
+    PlayerSLTF = new JTextField();
+    PlayerSFL = new JLabel();
+    PlayerSFTF = new JTextField();
+    PlayerAccL = new JLabel();
+    PlayerAccTF = new JTextField();
+    PlayerHitsL = new JLabel();
+    PlayerHitsTF = new JTextField();
+    AIStatusP = new JPanel();
+    AIStatusTitleL = new JLabel();
+    AISLL = new JLabel();
+    AISLTF = new JTextField();
+    AISFL = new JLabel();
+    AISFTF = new JTextField();
+    AIAccL = new JLabel();
+    AIAccTF = new JTextField();
+    AIHitsL = new JLabel();
+    AIHitsTF = new JTextField();
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     setBackground(new Color(255, 255, 0));
     setResizable(false);
 
-    TypeL.setHorizontalAlignment(SwingConstants.CENTER);
-    TypeL.setText("PvE - Sandbox");
+    TitleL.setHorizontalAlignment(SwingConstants.CENTER);
+    TitleL.setText("PvE - Sandbox");
 
     GroupLayout TitlePLayout = new GroupLayout(TitleP);
     TitleP.setLayout(TitlePLayout);
     TitlePLayout.setHorizontalGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(TitlePLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(TypeL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(TitleL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
     );
     TitlePLayout.setVerticalGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(TitlePLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(TypeL)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(TitleL)
+        .addContainerGap(14, Short.MAX_VALUE))
     );
 
-    Grid1.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-    Grid1.setLayout(new GridLayout(this.boardSize, this.boardSize, 0, 0));
+    PlayerGridP.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+    PlayerGridP.setLayout(new GridLayout(this.boardSize, this.boardSize, 0, 0));
 
-    Grid2.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-    Grid2.setLayout(new GridLayout(this.boardSize, this.boardSize, 0, 0));
+    AIGridP.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+    AIGridP.setLayout(new GridLayout(this.boardSize, this.boardSize, 0, 0));
 
     RoundL.setLabelFor(RoundTF);
     RoundL.setText("Round No.:");
@@ -527,9 +472,6 @@ public class Game extends JFrame {
     GirdL.setLabelFor(GridTF);
     GirdL.setText("Grid Size:");
 
-    ModeTF.setEditable(false);
-    ModeTF.setText("Classic");
-
     GridTF.setEditable(false);
     GridTF.setText("10 x 10");
 
@@ -558,7 +500,7 @@ public class Game extends JFrame {
     NextB.setText("Start");
     NextB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
-        nextRound(evt);
+        NextRound(evt);
       }
     });
     ButtonsP.add(NextB);
@@ -572,6 +514,9 @@ public class Game extends JFrame {
     });
     ButtonsP.add(ExitB);
 
+    ModeTF.setEditable(false);
+    ModeTF.setText("Classic");
+
     GroupLayout RoundStatusPLayout = new GroupLayout(RoundStatusP);
     RoundStatusP.setLayout(RoundStatusPLayout);
     RoundStatusPLayout.setHorizontalGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -583,22 +528,22 @@ public class Game extends JFrame {
           .addComponent(ShipsP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(RoundStatusL, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(ShipsL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addGroup(RoundStatusPLayout.createSequentialGroup()
-            .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-              .addComponent(ModeL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(GirdL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+          .addGroup(GroupLayout.Alignment.TRAILING, RoundStatusPLayout.createSequentialGroup()
             .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(ModeTF)
-              .addComponent(GridTF, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)))
-          .addGroup(RoundStatusPLayout.createSequentialGroup()
-            .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-              .addComponent(ShipsNoL, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-              .addComponent(RoundL, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+              .addComponent(GirdL, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+              .addComponent(ModeL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-              .addComponent(RoundTF)
-              .addComponent(ShipNoTF))))
+              .addComponent(GridTF)
+              .addComponent(ModeTF)))
+          .addGroup(RoundStatusPLayout.createSequentialGroup()
+            .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(ShipsNoL)
+              .addComponent(RoundL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+              .addComponent(ShipNoTF)
+              .addComponent(RoundTF))))
         .addContainerGap())
     );
     RoundStatusPLayout.setVerticalGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -609,10 +554,10 @@ public class Game extends JFrame {
         .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
           .addComponent(GirdL)
           .addComponent(GridTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addGap(9, 9, 9)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-          .addComponent(ModeTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-          .addComponent(ModeL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(ModeL)
+          .addComponent(ModeTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(ShipsL)
         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -625,9 +570,9 @@ public class Game extends JFrame {
         .addGroup(RoundStatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
           .addComponent(RoundL, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
           .addComponent(RoundTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addGap(8, 8, 8)
-        .addComponent(AlertsSP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(AlertsSP, GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(ButtonsP, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
@@ -637,11 +582,11 @@ public class Game extends JFrame {
     MainPLayout.setHorizontalGroup(MainPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(MainPLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(Grid1, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
+        .addComponent(PlayerGridP, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(RoundStatusP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(Grid2, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
+        .addComponent(AIGridP, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
     MainPLayout.setVerticalGroup(MainPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -651,139 +596,139 @@ public class Game extends JFrame {
           .addComponent(RoundStatusP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(MainPLayout.createSequentialGroup()
             .addGroup(MainPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(Grid2, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-              .addComponent(Grid1, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
+              .addComponent(AIGridP, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+              .addComponent(PlayerGridP, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
             .addGap(0, 0, Short.MAX_VALUE)))
         .addContainerGap())
     );
 
-    P2StatusP.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+    PlayerStatusP.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
 
-    P2StatusTitleL.setHorizontalAlignment(SwingConstants.CENTER);
-    P2StatusTitleL.setText("Player 2 Status");
+    PlayerStatusTitleL.setHorizontalAlignment(SwingConstants.CENTER);
+    PlayerStatusTitleL.setText("Player 1 Status");
 
-    P2SLL.setText("Ships Left:");
+    PlayerrSLL.setText("Ships Left:");
 
-    P2SLTF.setEditable(false);
+    PlayerSLTF.setEditable(false);
 
-    P2SFL.setText("Shots Fired:");
+    PlayerSFL.setText("Shots Fired:");
 
-    P2SFTF.setEditable(false);
+    PlayerSFTF.setEditable(false);
 
-    P2AccL.setText("Accuracy:");
+    PlayerAccL.setText("Accuracy:");
 
-    P2AccTF.setEditable(false);
+    PlayerAccTF.setEditable(false);
 
-    P2HitsL.setText("Hits Landed:");
+    PlayerHitsL.setText("Hits Landed:");
 
-    P2HitsTF.setEditable(false);
+    PlayerHitsTF.setEditable(false);
 
-    GroupLayout P2StatusPLayout = new GroupLayout(P2StatusP);
-    P2StatusP.setLayout(P2StatusPLayout);
-    P2StatusPLayout.setHorizontalGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(P2StatusPLayout.createSequentialGroup()
+    GroupLayout PlayerStatusPLayout = new GroupLayout(PlayerStatusP);
+    PlayerStatusP.setLayout(PlayerStatusPLayout);
+    PlayerStatusPLayout.setHorizontalGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(PlayerStatusPLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-          .addComponent(P2StatusTitleL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addGroup(P2StatusPLayout.createSequentialGroup()
-            .addGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(P2SLL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(P2AccL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+          .addComponent(PlayerStatusTitleL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addGroup(PlayerStatusPLayout.createSequentialGroup()
+            .addGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(PlayerrSLL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(PlayerAccL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(18, 18, 18)
-            .addGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(P2SLTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-              .addComponent(P2AccTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+            .addGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(PlayerSLTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+              .addComponent(PlayerAccTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-            .addGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(P2HitsL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(P2SFL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(PlayerHitsL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(PlayerSFL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(18, 18, 18)
-            .addGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-              .addComponent(P2HitsTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-              .addComponent(P2SFTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
+            .addGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(PlayerHitsTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+              .addComponent(PlayerSFTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
         .addContainerGap())
     );
-    P2StatusPLayout.setVerticalGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(P2StatusPLayout.createSequentialGroup()
+    PlayerStatusPLayout.setVerticalGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(PlayerStatusPLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(P2StatusTitleL)
+        .addComponent(PlayerStatusTitleL)
         .addGap(18, 18, 18)
-        .addGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-          .addComponent(P2SLL)
-          .addComponent(P2SLTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-          .addComponent(P2SFL)
-          .addComponent(P2SFTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        .addGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+          .addComponent(PlayerrSLL)
+          .addComponent(PlayerSLTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+          .addComponent(PlayerSFTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+          .addComponent(PlayerSFL))
         .addGap(18, 18, 18)
-        .addGroup(P2StatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-          .addComponent(P2AccL)
-          .addComponent(P2HitsTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-          .addComponent(P2HitsL)
-          .addComponent(P2AccTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        .addGroup(PlayerStatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+          .addComponent(PlayerAccL)
+          .addComponent(PlayerAccTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+          .addComponent(PlayerHitsL)
+          .addComponent(PlayerHitsTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    P1StatusP.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+    AIStatusP.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
 
-    P1StatusTitleL.setHorizontalAlignment(SwingConstants.CENTER);
-    P1StatusTitleL.setText("Player 1 Status");
+    AIStatusTitleL.setHorizontalAlignment(SwingConstants.CENTER);
+    AIStatusTitleL.setText("Player 2 Status");
 
-    P1SLL.setText("Ships Left:");
+    AISLL.setText("Ships Left:");
 
-    P1SLTF.setEditable(false);
+    AISLTF.setEditable(false);
 
-    P1SFL.setText("Shots Fired:");
+    AISFL.setText("Shots Fired:");
 
-    P1SFTF.setEditable(false);
+    AISFTF.setEditable(false);
 
-    P1AccL.setText("Accuracy:");
+    AIAccL.setText("Accuracy:");
 
-    P1AccTF.setEditable(false);
+    AIAccTF.setEditable(false);
 
-    P1HitsL.setText("Hits Landed:");
+    AIHitsL.setText("Hits Landed:");
 
-    P1HitsTF.setEditable(false);
+    AIHitsTF.setEditable(false);
 
-    GroupLayout P1StatusPLayout = new GroupLayout(P1StatusP);
-    P1StatusP.setLayout(P1StatusPLayout);
-    P1StatusPLayout.setHorizontalGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(P1StatusPLayout.createSequentialGroup()
+    GroupLayout AIStatusPLayout = new GroupLayout(AIStatusP);
+    AIStatusP.setLayout(AIStatusPLayout);
+    AIStatusPLayout.setHorizontalGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(AIStatusPLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-          .addComponent(P1StatusTitleL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addGroup(P1StatusPLayout.createSequentialGroup()
-            .addGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(P1SLL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(P1AccL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+          .addComponent(AIStatusTitleL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addGroup(AIStatusPLayout.createSequentialGroup()
+            .addGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(AISLL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(AIAccL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(18, 18, 18)
-            .addGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(P1SLTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-              .addComponent(P1AccTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+            .addGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(AISLTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+              .addComponent(AIAccTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-            .addGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(P1HitsL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(P1SFL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+              .addComponent(AIHitsL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(AISFL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(18, 18, 18)
-            .addGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-              .addComponent(P1HitsTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-              .addComponent(P1SFTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
+            .addGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+              .addComponent(AIHitsTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+              .addComponent(AISFTF, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
         .addContainerGap())
     );
-    P1StatusPLayout.setVerticalGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(P1StatusPLayout.createSequentialGroup()
+    AIStatusPLayout.setVerticalGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(AIStatusPLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(P1StatusTitleL)
+        .addComponent(AIStatusTitleL)
         .addGap(18, 18, 18)
-        .addGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-          .addComponent(P1SLL)
-          .addComponent(P1SLTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-          .addComponent(P1SFTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-          .addComponent(P1SFL))
+        .addGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+          .addComponent(AISLL)
+          .addComponent(AISLTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+          .addComponent(AISFL)
+          .addComponent(AISFTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
-        .addGroup(P1StatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-          .addComponent(P1AccL)
-          .addComponent(P1AccTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-          .addComponent(P1HitsL)
-          .addComponent(P1HitsTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        .addGroup(AIStatusPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+          .addComponent(AIAccL)
+          .addComponent(AIHitsTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+          .addComponent(AIHitsL)
+          .addComponent(AIAccTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -792,17 +737,17 @@ public class Game extends JFrame {
     StatusPLayout.setHorizontalGroup(StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(StatusPLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(P1StatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        .addComponent(PlayerStatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(P2StatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        .addComponent(AIStatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
     StatusPLayout.setVerticalGroup(StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(GroupLayout.Alignment.TRAILING, StatusPLayout.createSequentialGroup()
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addGroup(StatusPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-          .addComponent(P2StatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-          .addComponent(P1StatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+          .addComponent(AIStatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+          .addComponent(PlayerStatusP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         .addContainerGap())
     );
 
@@ -833,11 +778,13 @@ public class Game extends JFrame {
 
 	/**
 	 * Goes to Post upon match completion.
+	 *
+	 * @param status A integer indicating whether or not the given round was won by the user. 1: Win; 2: Lose
 	 */
-	private void goToPost() {
-		int[] temp = new int[] {(this.roundStatus ? 1 : 0), this.P1Stats[0], this.P1Stats[1], this.P2Stats[1], this.P2Stats[2], this.P1Stats[2]};
+	private void goToPost(int status) {
+		int[] temp = new int[] {status, this.PlayerStats[0], this.PlayerStats[1], this.AIStats[1], this.AIStats[2], this.PlayerStats[2]};
 
-		Post Post = new Post(temp, this.mode, this.AI1Diff);
+		Post Post = new Post(temp, this.mode, this.AIDiff);
 		Post.setVisible(true);
 
 		this.dispose();
@@ -865,57 +812,30 @@ public class Game extends JFrame {
 	 *
 	 * @param evt Button Click
 	 */
-	private void nextRound(ActionEvent evt) {//GEN-FIRST:event_nextRound
-		if (this.type == 1) {            // Checks if it a PvE Round
-			if (this.roundNo != 0) {       // Checks if it isn't the Ship Placement round.
-				if ((this.mode.equals("C") && this.timesClicked == 1) || (this.mode.equals("S") && this.timesClicked == (this.shipNos - this.P1Stats[2]))) { // Checks if the required number of selections have been made
-					// TODO: Make user shoot.
-
-					this.roundStatus = (this.shipNos - this.P2Stats[2]) == 0; // Variable storing whether the user won or not.
-
-					if (this.roundStatus) {    // Checks if the user won.
-						this.goToPost();
-					} else {                   // User did not win. AI shoots.
-						// TODO: Make AI shoot.
-
-						if (!this.roundStatus) { // AI won.
-							this.goToPost();
-						} else {                 // AI did not win. Next round.
-							this.roundNo += 1;
-							this.RoundTF.setText("" + this.roundNo);
-
-							this.P1StatsUpdate(false);
-							this.P2StatsUpdate(false);
-
-							// TODO: Other stuff.
-						}
-
-					}
-				} else {
-					this.AlertsTA.append("\tNot all selections made! " + (this.mode.equals("C") ? 1 : (this.shipNos - this.P1Stats[2])) + " selections left!\n");
-				}
-			} else {                       // Stuff to do during ship placement.
+	private void NextRound(ActionEvent evt) {//GEN-FIRST:event_NextRound
+		if (this.roundNo == 0) {                  // Checks if it's the Ship Placement round.
+			if (this.shipsPlaced == this.shipNos) { // Checks if all ships have been placed.
 				/**
 				 * TODO: Fix this. Used for multi-tile ships.
 				 *
 				 * <code>
 				 * <pre>
-				 *	if (this.shipNo == 0) {         // Checks if no ship has been placed yet.
-				 *		if (this.timesClicked == 0) { // Checks if it the first click
-				 *			this.AlertsTA.append("Ship Placement:\n");
-				 *			this.AlertsTA.append("\tPlace the initial point of the current ship first.\n");
-				 *			this.AlertsTA.append("\tThen place the final point.\n");
-				 *			this.AlertsTA.append("\tThe final point must be vertically or horizontally aligned, and must be as long as the ship's length.\n");
+				 *	if (shipNo == 0) {         // Checks if no ship has been placed yet.
+				 *		if (timesClicked == 0) { // Checks if it the first click
+				 *			AlertsTA.append("Ship Placement:\n");
+				 *			AlertsTA.append("\tPlace the initial point of the current ship first.\n");
+				 *			AlertsTA.append("\tThen place the final point.\n");
+				 *			AlertsTA.append("\tThe final point must be vertically or horizontally aligned, and must be as long as the ship's length.\n");
 				 *
-				 *			int shipLength = this.shipLengths[this.shipNo];
+				 *			int shipLength = shipLengths[shipNo];
 				 *
 				 *			while (shipLength == 0) {
-				 *				this.shipNo += 1;
-				 *				shipLength = this.shipLengths[this.shipNo];
+				 *				shipNo++;
+				 *				shipLength = shipLengths[shipNo];
 				 *			}
 				 *
-				 *			System.out.println("Placing ship no. " + this.shipsPlaced + " - " + shipLength);
-				 *			this.AlertsTA.append("\tPlacing ship no. " + this.shipsPlaced + " of length " + shipLength);
+				 *			System.out.println("Placing ship no. " + shipsPlaced + " - " + shipLength);
+				 *			AlertsTA.append("\tPlacing ship no. " + shipsPlaced + " of length " + shipLength);
 				 *		} else {                         // Not the first click
 				 *			if (true) {
 				 *				// TODO: Do something
@@ -925,43 +845,122 @@ public class Game extends JFrame {
 				 * </pre>
 				 * </code>
 				 */
-				if (this.shipsPlaced == this.shipNos) { // Checks if all ships have been placed.
-					for (int y = 0; y < this.boardSize; y++) {
-						for (int x = 0; x < this.boardSize; x++) {
-							if (this.buttonsClicked[y][x]) {  // Ship is placed here.
-								this.Grid1L[y][x].hasShip();
-								this.Grid1B[y][x].setBackground(new Color(176, 196, 222, 255));
-							} else {                          // Ship isn't placed here. Is this statement required?
-								this.Grid1B[y][x].setBackground(new Color(5, 218, 255, 255));
-							}
+				for (int y = 0; y < this.boardSize; y++) {
+					for (int x = 0; x < this.boardSize; x++) {
+						if (this.buttonsClicked[y][x]) { // Ship is placed here.
+							this.PlayerGridL[y][x].hasShip();
+							this.PlayerGridB[y][x].setBackground(new Color(176, 196, 222, 255));
+						}
+						this.buttonsClicked[y][x] = false;
+					}
+				}
+
+				this.shipsPlaced = 0;
+
+				if (this.AIDiff == -1) {             // Initializes the AI to Sandbox
+					this.AI = new Sandbox(this.initVars);
+				} else if (this.AIDiff == 0) {       // Initializes the AI to Regular
+					this.AI = new Regular(this.initVars);
+				} else {                             // Initializes the AI to Brutal
+					this.AI = new Brutal(this.initVars, this.PlayerGridL);
+				}
+
+				this.AIGridL = this.AI.getGrid();
+				System.out.println("Debug start!"); // Debug start
+				for (int y = 0; y < this.boardSize; y++) {
+					for (int x = 0; x < this.boardSize; x++) {
+						if (this.AIGridL[y][x].hasShip()) {
+							System.out.println("Ship at: " + x + " " + y);
+							this.AIGridB[y][x].setBackground(new Color(176, 196, 222, 255));
 						}
 					}
-
-					this.roundNo += 1;
-					this.RoundTF.setText("" + this.roundNo);
-
-					this.P1StatsUpdate(true);
-					this.P2StatsUpdate(true);
-
-					this.NextB.setText("<html>Next<br/>Round</html");
-
-					// TODO: Initialize the AI.
-				} else {                     // Not all ships placed.
-					this.AlertsTA.append("\tNot all ships placed! " + this.shipsPlaced + " ships left!\n");
 				}
+				System.out.println("Debug end!");   // Debug end
+
+				this.roundNo++;
+				this.RoundTF.setText("" + this.roundNo);
+
+				this.P1StatsUpdate(true);
+				this.P2StatsUpdate(true);
+
+				this.NextB.setText("<html><center>Next<br/>Round</center></html>");
+			} else {                                // Not all ships placed.
+				this.AlertsTA.append("\tNot all ships placed! " + this.shipsPlaced + " ships left!\n");
 			}
-		} else {                         // Stuff to do during a EvE Round
-			// TODO: Do stuff.
+		} else {                                  // Normal Rounds
+			if ((this.mode.equals("C") && (this.shotsSelected == 1)) || (this.mode.equals("S") && (this.shotsSelected == (this.shipNos - this.PlayerStats[2])))) { // Checks if the required number of selections have been made
+
+				for (int y = 0; y < this.boardSize; y++) {
+					for (int x = 0; x < this.boardSize; x++) {
+						if (this.buttonsClicked[y][x]) {   // Shot was placed here.
+							this.AIGridL[y][x].markShot();
+							this.PlayerStats[0]++;
+							if (this.AIGridL[y][x].isHit()) { // A Ship was hit
+								this.AIGridB[y][x].setBackground(new Color(205, 0, 0, 255));
+								this.PlayerStats[1]++;
+								this.AIStats[2]++;
+							} else {
+								this.AIGridB[y][x].setBackground(new Color(5, 218, 229, 255));
+							}
+
+						}
+						this.buttonsClicked[y][x] = false;
+					}
+				}
+
+				this.shotsSelected = 0;
+				this.P1StatsUpdate(false);
+
+				if (this.shipNos - this.AIStats[2] == 0) {   // Checks if the user won.
+					this.goToPost(1);
+				} else {                                     // User did not win. AI shoots.
+					// TODO: Make AI shoot.
+					for (int y = 0; y < this.boardSize; y++) {
+						for (int x = 0; x < this.boardSize; x++) {
+							if (this.buttonsClicked[y][x]) {   // Shot was placed here.
+								this.PlayerGridL[y][x].markShot();
+								this.AIStats[0]++;
+								if (this.PlayerGridL[y][x].isHit()) { // A Ship was hit
+									this.PlayerGridB[y][x].setBackground(new Color(205, 0, 0, 255));
+									this.AIStats[1]++;
+									this.PlayerStats[2]++;
+								} else {
+									this.PlayerGridB[y][x].setBackground(new Color(5, 218, 229, 255));
+								}
+
+							}
+							this.buttonsClicked[y][x] = false;
+						}
+					}
+					this.P2StatsUpdate(false);
+
+					if (this.shipNos - this.PlayerStats[2] == 0) { // Checks if the AI won.
+						this.goToPost(0);
+					} else {                                   // AI did not win. Next round.
+						this.roundNo++;
+						this.RoundTF.setText("" + this.roundNo);
+
+						// TODO: Some stuff?
+					}
+
+				}
+
+			} else {                                // Not enough selections made
+				this.AlertsTA.append("\tNot all selections made! " + (this.mode.equals("C") ? 1 : (this.shipNos - this.shipsPlaced)) + " selections left!\n");
+			}
+
 		}
-	}//GEN-LAST:event_nextRound
+	}//GEN-LAST:event_NextRound
 
 	/**
-	 * A series of JOptionPanes/JMessage Dialogs for explaining the game.
+	 * A series of <code>JOptionPane.MessageDialog</code>-s for explaining the game.
 	 *
 	 * @param evt Button Click
 	 */
 	private void Help(ActionEvent evt) {//GEN-FIRST:event_Help
-		// TODO: Do stuff
+		JOptionPane.showMessageDialog(null, "This is where all help text will go.", "Help - 1", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "There will be multiple ones like this.", "Help - 2", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "3 should be enough for being a placeholder, no?", "Help - 3", JOptionPane.INFORMATION_MESSAGE);
 	}//GEN-LAST:event_Help
 
 	/**
@@ -971,10 +970,10 @@ public class Game extends JFrame {
 	 * @param evt Button Click
 	 */
 	private void ShipCBClicked(ActionEvent evt) {//GEN-FIRST:event_ShipCBClicked
-		this.BattleshipCB.setSelected(initVars[1]);
-		this.CruiserCB.setSelected(initVars[2]);
-		this.DestroyerCB.setSelected(initVars[3]);
-		this.PatrolCB.setSelected(initVars[4]);
+		this.BattleshipCB.setSelected(this.initVars[1]);
+		this.CruiserCB.setSelected(this.initVars[2]);
+		this.DestroyerCB.setSelected(this.initVars[3]);
+		this.PatrolCB.setSelected(this.initVars[4]);
 		this.ShipNoTF.setText("" + this.shipNos);
 	}//GEN-LAST:event_ShipCBClicked
 
@@ -1007,7 +1006,7 @@ public class Game extends JFrame {
 		// Checks if the ship will intersect any other ship
 		if (this.direction) {                                                  // Vertical Orientation
 			for (int l = 0; l < shipLength; l++) {
-				if (this.Grid1L[this.initLoc[0] + l][this.initLoc[1]].hasShip()) { // Y-Coordinate is incremented if vertical
+				if (this.PlayerGridL[this.initLoc[0] + l][this.initLoc[1]].hasShip()) { // Y-Coordinate is incremented if vertical
 					System.out.println("Ship exists at vertical length: " + (l + 1));
 					this.AlertsTA.append("\t\tA Ship exists at vertical length " + (l + 1) + " from the initial point!\n");
 					return;
@@ -1015,7 +1014,7 @@ public class Game extends JFrame {
 			}
 		} else {                                                               // Horizontal Orientation
 			for (int l = 0; l < shipLength; l++) {
-				if (this.Grid1L[this.initLoc[0]][this.initLoc[1] + l].hasShip()) { // X-Coordinate is incremented if horizontal
+				if (this.PlayerGridL[this.initLoc[0]][this.initLoc[1] + l].hasShip()) { // X-Coordinate is incremented if horizontal
 					System.out.println("Ship exists at horizontal length: " + (l + 1));
 					this.AlertsTA.append("\t\tA Ship exists at horizontal length " + (l + 1) + " from the initial point!\n");
 					return;
@@ -1026,11 +1025,11 @@ public class Game extends JFrame {
 		// Sets the location values
 		if (this.direction) {                                                // Verical Orientation
 			for (int l = 0; l < shipLength; l++) {
-				this.Grid1L[this.initLoc[0] + l][this.initLoc[1]].shipPresent(); // Y-Coordinate is incremented if vertical
+				this.PlayerGridL[this.initLoc[0] + l][this.initLoc[1]].shipPresent(); // Y-Coordinate is incremented if vertical
 			}
 		} else {                                                             // Horizontal Orientation
 			for (int l = 0; l < shipLength; l++) {
-				this.Grid1L[this.initLoc[0]][this.initLoc[1] + l].shipPresent(); // X-Coordinate is incremented if horizontal
+				this.PlayerGridL[this.initLoc[0]][this.initLoc[1] + l].shipPresent(); // X-Coordinate is incremented if horizontal
 			}
 		}
 
@@ -1040,17 +1039,17 @@ public class Game extends JFrame {
 	}
 
 	/**
-	 * ActionEvent handler for the buttons in Grid 1 for PvE matches.
+	 * Manages what to do if a button was clicked.
 	 *
-	 * @param evt Button Click
+	 * @param button    JButton which was clicked
+	 * @param userClick Whether the click originated from the user
 	 */
-	private void ButtonHandler(ActionEvent evt) {
-		JButton button = (JButton) evt.getSource();
+	private void buttonClick(JButton button, boolean userClick) {
 		String coords = button.getActionCommand();
 
 		System.out.println(coords);
 
-		if (type == 1) {                                     // Checks if its a PvE match.
+		if (userClick) {                                     // User Clicked the button
 			int[] xy = this.extractCoordinates(coords);
 
 			if (this.roundNo == 0) {                           // Checks if it is the Ship Placement Round.
@@ -1058,14 +1057,16 @@ public class Game extends JFrame {
 					if (this.buttonsClicked[xy[1]][xy[0]]) {       // Checks if the button has already been clicked.
 						button.setBackground(new Color(5, 218, 255, 255));
 						this.buttonsClicked[xy[1]][xy[0]] = false;
-						this.timesClicked -= 1;
-						this.shipsPlaced -= 1;
+						this.shipsPlaced--;
 					} else {                                       // Button hasn't been clicked.
 						if (this.shipsPlaced < this.shipNos) {       // Checks if the number of ships placed is less than the max ships available.
 							button.setBackground(new Color(242, 236, 0, 255));
 							this.buttonsClicked[xy[1]][xy[0]] = true;
-							this.timesClicked += 1;
-							this.shipsPlaced += 1;
+							this.shipsPlaced++;
+
+							if (this.shipsPlaced == this.shipNos) {
+								this.AlertsTA.append("\tAll ships placed!\n");
+							}
 						} else {                                     // More ships than limit allowed added.
 							this.AlertsTA.append("\tShip limit reached!\n");
 						}
@@ -1075,31 +1076,29 @@ public class Game extends JFrame {
 				}
 			} else {                                           // Not Ship Placement Round. Has to be from Grid 2 in this case.
 				if (coords.charAt(0) == '2') {                   // Checks if the button clicked is from Grid 2
-					if (this.Grid2L[xy[1]][xy[0]].isUnguessed()) { // Checks if the location is unguessed.
-						if (this.mode.equals("C")) {                 // Checks if the match is in Classic Mode.
-							if (this.buttonsClicked[xy[1]][xy[0]]) {   // Checks if the button has already been clicked.
-								button.setBackground(new Color(5, 218, 255, 255));
-								this.buttonsClicked[xy[1]][xy[0]] = false;
-								this.timesClicked -= 1;
-							} else {                                   // Button hasn't been clicked.
-								if (this.timesClicked == 0) {            // Checks if another location hasn't been selected.
+					if (this.AIGridL[xy[1]][xy[0]].isUnguessed()) { // Checks if the location is unguessed.
+						if (this.buttonsClicked[xy[1]][xy[0]]) {     // Checks if the button has already been clicked.
+							button.setBackground(new Color(5, 218, 255, 255));
+							this.buttonsClicked[xy[1]][xy[0]] = false;
+							this.shotsSelected--;
+						} else {                                     // Button hasn't been clicked.
+							if (this.mode.equals("C")) {               // Checks if the match is in Classic Mode.
+								if (this.shotsSelected == 0) {           // Checks if another location hasn't been selected.
 									button.setBackground(new Color(242, 236, 0, 255));
 									this.buttonsClicked[xy[1]][xy[0]] = true;
-									this.timesClicked += 1;
+									this.shotsSelected++;
 								} else {                                 // Another location has been selected.
 									this.AlertsTA.append("\tMaximum locations selected!\n");
 								}
-							}
-						} else {                                     // Salvo Mode.
-							if (this.buttonsClicked[xy[1]][xy[0]]) {   // Checks if the button has already been clicked.
-								button.setBackground(new Color(5, 218, 255, 255));
-								this.buttonsClicked[xy[1]][xy[0]] = false;
-								this.timesClicked -= 1;
-							} else {                                   // Button hasn't been clicked.
-								if (this.timesClicked == (this.shipNos - this.P1Stats[2])) { // Checks if max locations haven't been selected.
+							} else {                                   // Salvo Mode.
+								if (this.shotsSelected < (this.shipNos - this.PlayerStats[2])) { // Checks if max locations haven't been selected.
 									button.setBackground(new Color(242, 236, 0, 255));
 									this.buttonsClicked[xy[1]][xy[0]] = true;
-									this.timesClicked += 1;
+									this.shotsSelected++;
+
+									if (this.shipNos == this.PlayerStats[2]) {
+										this.AlertsTA.append("\tAll locations selected!\n");
+									}
 								} else {                                 // Max locations have been selected.
 									this.AlertsTA.append("\tMaximum locations selected!\n");
 								}
@@ -1112,10 +1111,9 @@ public class Game extends JFrame {
 					this.AlertsTA.append("\tWrong grid!\n");
 				}
 			}
-
-		} else {                                             // EvE Match.
+		} else {                                             // AI Clicked the button
+			// TODO: Do stuff.
 		}
-
 	}
 
 	/**
@@ -1133,12 +1131,10 @@ public class Game extends JFrame {
 			xy[0] = Integer.parseInt("" + coords.charAt(2));
 			xy[1] = Integer.parseInt("" + coords.charAt(4));
 		} else {                             // 15 x 15 Grid
-
 			if (coords.length() == 5) {        // 1 digit for each coordinate
 				xy[0] = Integer.parseInt("" + coords.charAt(2));
 				xy[1] = Integer.parseInt("" + coords.charAt(4));
 			} else if (coords.length() == 6) { // 1 digit for 1 coordinate. 2 digits for the other.
-
 				if (coords.charAt(3) == ' ') {   // Y-Coordinate has 2 digits
 					xy[0] = Integer.parseInt("" + coords.charAt(2));
 					xy[1] = 10 + Integer.parseInt("" + coords.charAt(5));
@@ -1146,12 +1142,10 @@ public class Game extends JFrame {
 					xy[0] = 10 + Integer.parseInt("" + coords.charAt(3));
 					xy[1] = Integer.parseInt("" + coords.charAt(5));
 				}
-
 			} else {                           // 2 digits for each coordinate
 				xy[0] = 10 + Integer.parseInt("" + coords.charAt(3));
 				xy[1] = 10 + Integer.parseInt("" + coords.charAt(6));
 			}
-
 		}
 
 		return xy;
@@ -1160,12 +1154,26 @@ public class Game extends JFrame {
 	/**
 	 * Function for handling the AI input in Grid 2 for PvE matches
 	 * Also handles the AI input in Grids 1, 2 for EvE matches.
+	 *
+	 * @param button JButton to be clicked. May be removed?
 	 */
-	private void ButtonHandlerAI() {
+	private void buttonClickAI(JButton button) {
 		// TODO: Do stuff.
+		this.buttonClick(button, false);
 	}
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private JLabel AIAccL;
+  private JTextField AIAccTF;
+  private JPanel AIGridP;
+  private JLabel AIHitsL;
+  private JTextField AIHitsTF;
+  private JLabel AISFL;
+  private JTextField AISFTF;
+  private JLabel AISLL;
+  private JTextField AISLTF;
+  private JPanel AIStatusP;
+  private JLabel AIStatusTitleL;
   private JScrollPane AlertsSP;
   private JTextArea AlertsTA;
   private JCheckBox BattleshipCB;
@@ -1174,35 +1182,24 @@ public class Game extends JFrame {
   private JCheckBox DestroyerCB;
   private JButton ExitB;
   private JLabel GirdL;
-  private JPanel Grid1;
-  private JPanel Grid2;
   private JTextField GridTF;
   private JButton HelpB;
   private JPanel MainP;
   private JLabel ModeL;
   private JTextField ModeTF;
   private JButton NextB;
-  private JLabel P1AccL;
-  private JTextField P1AccTF;
-  private JLabel P1HitsL;
-  private JTextField P1HitsTF;
-  private JLabel P1SFL;
-  private JTextField P1SFTF;
-  private JLabel P1SLL;
-  private JTextField P1SLTF;
-  private JPanel P1StatusP;
-  private JLabel P1StatusTitleL;
-  private JLabel P2AccL;
-  private JTextField P2AccTF;
-  private JLabel P2HitsL;
-  private JTextField P2HitsTF;
-  private JLabel P2SFL;
-  private JTextField P2SFTF;
-  private JLabel P2SLL;
-  private JTextField P2SLTF;
-  private JPanel P2StatusP;
-  private JLabel P2StatusTitleL;
   private JCheckBox PatrolCB;
+  private JLabel PlayerAccL;
+  private JTextField PlayerAccTF;
+  private JPanel PlayerGridP;
+  private JLabel PlayerHitsL;
+  private JTextField PlayerHitsTF;
+  private JLabel PlayerSFL;
+  private JTextField PlayerSFTF;
+  private JTextField PlayerSLTF;
+  private JPanel PlayerStatusP;
+  private JLabel PlayerStatusTitleL;
+  private JLabel PlayerrSLL;
   private JLabel RoundL;
   private JLabel RoundStatusL;
   private JPanel RoundStatusP;
@@ -1214,11 +1211,11 @@ public class Game extends JFrame {
   private JLabel Spacer1L;
   private JLabel Spacer2L;
   private JPanel StatusP;
+  private JLabel TitleL;
   private JPanel TitleP;
-  private JLabel TypeL;
   // End of variables declaration//GEN-END:variables
 	// Start of special variables declaration
-	private JButton[][] Grid1B;
-	private JButton[][] Grid2B;
+	private JButton[][] PlayerGridB;
+	private JButton[][] AIGridB;
 	// End of special variables decralation
 }

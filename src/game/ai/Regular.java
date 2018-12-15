@@ -1,12 +1,11 @@
 package game.ai;
 
-import game.Location;
 import java.util.Random;
 
 
 /**
  * The Regular AI, i.e., the "Medium" AI.
- * Fires at "intelligently".
+ * Plays like an actual person.
  *
  * @author blackk100
  */
@@ -16,11 +15,9 @@ public final class Regular extends AI {
 	 * Constructor for the Sandbox AI
 	 *
 	 * @param initVars Initialization Variables
-	 * @param mode     Game Mode
-	 * @param gridOpp  Enemy Grid
 	 */
-	public Regular(boolean[] initVars, String mode, Location[][] gridOpp) {
-		super(initVars, mode, gridOpp);
+	public Regular(boolean[] initVars) {
+		super(initVars);
 	}
 
 	/**
