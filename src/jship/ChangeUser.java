@@ -13,12 +13,12 @@ import users.LoginUser;
  *
  * @author blackk100
  */
-public class ChangeUser extends JFrame {
+final class ChangeUser extends JFrame {
 
 	/**
 	 * Creates new form Login
 	 */
-	public ChangeUser() {
+	ChangeUser() {
 		this.initComponents();
 		this.updateCurrentUser();
 		this.setLocationRelativeTo(null);
@@ -166,7 +166,7 @@ public class ChangeUser extends JFrame {
 	 * Updates the current user. Called after every button.
 	 */
 	private void updateCurrentUser() {
-		CurrentUserTF.setText(users.CurrentUser.GetCurrentUser());
+		CurrentUserTF.setText(CurrentUser.getCurrentUser());
 	}
 
 	/**
@@ -212,11 +212,11 @@ public class ChangeUser extends JFrame {
 	 * @param evt Button Click
 	 */
 	private void Logout(ActionEvent evt) {//GEN-FIRST:event_Logout
-		if (CurrentUser.GetCurrentUser().equals("guest")) { // No User is logged in
+		if (CurrentUser.getCurrentUser().equals("guest")) { // No User is logged in
 			System.out.println("No User is logged in!");
 			JOptionPane.showMessageDialog(null, "No User is logged in!");
 		} else {                                            // A User is logged in. Logging out.
-			users.CurrentUser.Logout();
+			CurrentUser.logout();
 			this.updateCurrentUser();
 			System.out.println("User logged out!");
 			JOptionPane.showMessageDialog(null, "User logged out!");
@@ -250,12 +250,9 @@ public class ChangeUser extends JFrame {
 			} else if (res == -2 || res == -1) { // SQL Exception; Class Not Found Exception
 				System.out.println("Error Occured! Contact Developer!");
 				JOptionPane.showMessageDialog(null, "Error Occured! Contact Developer!");
-			} else if (res == 0) {               // ChangeUser Failed
-				System.out.println("We could not find a matching user! Please register first!");
-				JOptionPane.showMessageDialog(null, "We could not find a matching user! Please register first!");
-			} else if (res == 1) {               // ChangeUser Successful
-				System.out.println("Registered! Please login in!");
-				JOptionPane.showMessageDialog(null, "Registered! Please login in!");
+			} else if (res == 0) {               // ChangeUser Passed
+				System.out.println("Registration successful1!");
+				JOptionPane.showMessageDialog(null, "Registration successful1!");
 			} else {                             // Unknown Return Value
 				System.out.println("Unknown Return Value! Contact Developer");
 				JOptionPane.showMessageDialog(null, "Unknown Return Value! Contact Developer!");

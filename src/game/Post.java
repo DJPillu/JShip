@@ -12,7 +12,7 @@ import stats.UpdateStats;
  *
  * @author blackk100
  */
-public class Post extends JFrame {
+final class Post extends JFrame {
 
 	/**
 	 * Round Statistics:
@@ -46,19 +46,18 @@ public class Post extends JFrame {
 	 * @param mode      Game Mode
 	 * @param AIDiff    AI Difficulty
 	 */
-	public Post(int[] statsList, String mode, int AIDiff) {
-		this.initComponents();
-		this.setLocationRelativeTo(null);
-
+	Post(int[] statsList, String mode, int AIDiff) {
 		this.statsList = statsList;
 		this.Acc = (float) (Math.round((this.statsList[2] * 10000.0) / this.statsList[1]) / 100.0);
 
 		this.mode = mode;
 		this.AIDiff = AIDiff;
 
+		this.initComponents();
 		this.playMusic();
 		this.setTitleL(statsList[0]);
 		this.userStatsSetter();
+		this.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -94,9 +93,9 @@ public class Post extends JFrame {
     setResizable(false);
 
     TitleL.setHorizontalAlignment(SwingConstants.CENTER);
-    TitleL.setText("Title Label");
+    TitleL.setText("Match Won!");
 
-    PlayL.setText("Play Another Round:");
+    PlayL.setText("Play Another Game:");
 
     PlayB.setText("Play");
     PlayB.addActionListener(new ActionListener() {
@@ -125,7 +124,7 @@ public class Post extends JFrame {
             .addComponent(PlayL)
             .addGap(18, 18, 18)
             .addComponent(PlayB)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
             .addComponent(GoBackL)
             .addGap(18, 18, 18)
             .addComponent(GoBackB)))
@@ -254,7 +253,9 @@ public class Post extends JFrame {
 	 * Rujul wanted this.
 	 */
 	private void playMusic() {
-		//TODO: Play ze music
+		//TODO: Play ze epic music.
+		System.out.println("NOW PLAYING ZE YEPIC MUSIC!");
+		System.out.println("jk, we still need to finish the actual project part still. But may be done if we complete quickly.");
 	}
 
 	/**
@@ -267,7 +268,6 @@ public class Post extends JFrame {
 			System.out.println("Match Won!");
 			this.TitleL.setText("Match Won!");
 			this.setTitle("Match Won!");
-
 		} else if (status == 0) {
 			System.out.println("Match Lost!");
 			this.TitleL.setText("Match Lost!");
@@ -287,7 +287,7 @@ public class Post extends JFrame {
 		this.SSTF.setText("" + statsList[4]);
 		this.SLTF.setText("" + statsList[5]);
 
-		UpdateStats stats = new UpdateStats(users.CurrentUser.GetCurrentUser(), this.mode, this.AIDiff, this.statsList, this.Acc);
+		UpdateStats stats = new UpdateStats(this.mode, this.AIDiff, this.statsList, this.Acc);
 		stats.update();
 	}
 

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import misc.DBDetails;
+import users.CurrentUser;
 
 
 /**
@@ -13,30 +14,43 @@ import misc.DBDetails;
  * @author blackk100
  */
 public final class UpdateStats extends Stats {
+
 	/**
-	 * Game mode
+	 * Game Mode:
+	 *
+	 * <pre>
+	 *      0 - Classic
+	 *      1 - Salvo
+	 * </pre>
 	 */
 	private final String mode;
 
 	/**
-	 * Current Player's Username
+	 * AI Difficulty:
+	 *
+	 * <pre>
+	 *      0 - Sandbox
+	 *      1 - Regular
+	 *      2 - Brutal
+	 * </pre>
 	 */
-	private final String UName;
+	private final int AIDiff;
 
 	/**
-	 * Mode:<br>
-	 * &emsp; 0 - Classic<br>
-	 * &emsp; 1 - Salvo<br>
+	 * Statistics list index
+	 *
+	 * <pre>
+	 * Index value = 0 + x, where x depends on the following:
+	 *     Mode:
+	 *          +0 - Classic
+	 *          +3 - Salvo
+	 *     AIDiff:
+	 *          +0 - Sandbox
+	 *          +1 - Regular
+	 *          +2 - Brutal
+	 * </pre>
 	 */
-	private final int mdI;
-
-	/**
-	 * AIDiff:<br>
-	 * &emsp; 0 - Sandbox<br>
-	 * &emsp; 1 - Regular<br>
-	 * &emsp; 2 - Brutal
-	 */
-	private final int diff;
+	private final int index;
 
 	/**
 	 * Round Statistics:
@@ -57,26 +71,24 @@ public final class UpdateStats extends Stats {
 	private final int[] statsList;
 
 	/**
-	 * Accuracy = (Hits Landed / Shots Fired) * 100 = (statsList[2] / statsList[1]) * 100
+	 * <code>Accuracy = (Hits Landed / Shots Fired) * 100 = (statsList[2] / statsList[1]) * 100</code>
 	 */
 	private final float Acc;
 
 	/**
 	 * Constructor for the UpdateStats class. Calls the superclass's constructor.
 	 *
-	 * @param UName     Username
 	 * @param mode      Game Mode
 	 * @param AIDiff    AI Difficulty
 	 * @param statsList Statistics List
 	 * @param Acc       Accuracy
 	 */
-	public UpdateStats(String UName, String mode, int AIDiff, int[] statsList, float Acc) {
-		super(UName);
+	public UpdateStats(String mode, int AIDiff, int[] statsList, float Acc) {
+		super();
 
-		this.UName = UName;
 		this.mode = mode;
-		this.diff = AIDiff;
-		this.mdI = (mode.equals("S") ? 3 : 0) + (AIDiff == 1 ? 2 : (AIDiff == 0 ? 1 : 0));
+		this.AIDiff = AIDiff;
+		this.index = (mode.equals("S") ? 3 : 0) + (AIDiff + 1);
 		this.statsList = statsList;
 		this.Acc = Acc;
 
@@ -84,11 +96,11 @@ public final class UpdateStats extends Stats {
 	}
 
 	/**
-	 * Sets the Current User's statistics to the MySQL database.
+	 * Updates the Current User's statistics in the MySQL database.
 	 *
-	 * @return ret - An Integer indicating the result of statistics retrieval.<br>
-	 * &emsp; {-1, -2, -3} imply an error.<br>
-	 * &emsp; {0} implies successful update.
+	 * @return ret - An Integer indicating the result of statistics retrieval.
+	 *         {-1, -2, -3} imply an error.
+	 *         {0} implies successful update.
 	 */
 	public int update() {
 		int ret = 0; // Return code
@@ -98,18 +110,18 @@ public final class UpdateStats extends Stats {
 			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
 
 			StringBuffer update = new StringBuffer(250);
-			update.append("UPDATE stats SET GP=").append(this.getStatsLists()[mdI][0]); // Base Statement with GP value
-			update.append(", GW=").append(this.getStatsLists()[mdI][1]);                // GW value
-			update.append(", GL=").append(this.getStatsLists()[mdI][2]);                // GL value
-			update.append(", SF=").append(this.getStatsLists()[mdI][3]);                // SF value
-			update.append(", Hits=").append(this.getStatsLists()[mdI][4]);              // Hits value
-			update.append(", Acc=").append(this.getAcc()[mdI]);                         // Acc value
-			update.append(", TH=").append(this.getStatsLists()[mdI][5]);                // TH value
-			update.append(", SS=").append(this.getStatsLists()[mdI][6]);                // SS value
-			update.append(", SL=").append(this.getStatsLists()[mdI][7]);                // SL value
+			update.append("UPDATE stats SET GP=").append(this.getStatsLists()[index][0]); // Base Statement with GP value
+			update.append(", GW=").append(this.getStatsLists()[index][1]);                // GW value
+			update.append(", GL=").append(this.getStatsLists()[index][2]);                // GL value
+			update.append(", SF=").append(this.getStatsLists()[index][3]);                // SF value
+			update.append(", Hits=").append(this.getStatsLists()[index][4]);              // Hits value
+			update.append(", Acc=").append(this.getAcc()[index]);                         // Acc value
+			update.append(", TH=").append(this.getStatsLists()[index][5]);                // TH value
+			update.append(", SS=").append(this.getStatsLists()[index][6]);                // SS value
+			update.append(", SL=").append(this.getStatsLists()[index][7]);                // SL value
 			update.append(" WHERE UNo=(SELECT UNo FROM users WHERE UName='");           // 1st Conditional statement using Subquery
-			update.append(this.UName).append("') AND Mode='").append(this.mode);        // Username for Subquery and Complete 2nd Conditional statement
-			update.append("' AND AIDiff='").append(this.diff).append("';");             // Complete 3rd Conditional statement
+			update.append(CurrentUser.getCurrentUser()).append("') AND Mode='").append(this.mode);        // Username for Subquery and Complete 2nd Conditional statement
+			update.append("' AND AIDiff='").append(this.AIDiff == 1 ? "B" : (this.AIDiff == 0 ? "R" : "S")).append("';"); // Complete 3rd Conditional statement
 
 			Statement stmnt = con.createStatement(); // Creates the SQL statement object
 			stmnt.executeUpdate(update.toString());  // Runs the update statement
@@ -127,7 +139,7 @@ public final class UpdateStats extends Stats {
 			ret = -3;
 		}
 
-		this.getStats(this.UName);
+		this.getStats();
 		return ret;
 	}
 
@@ -135,8 +147,8 @@ public final class UpdateStats extends Stats {
 	 * Updates Stats.statsList with this.statsList
 	 */
 	private void setLocalStats() {
-		this.setStatsLists(this.mdI, this.statsList);
-		this.setAcc(this.mdI, this.Acc);
+		this.setStatsLists(this.index, this.statsList);
+		this.setAcc(this.index, this.Acc);
 	}
 
 }

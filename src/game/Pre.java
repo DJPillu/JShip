@@ -11,7 +11,7 @@ import jship.JShip;
  *
  * @author blackk100
  */
-public class Pre extends JFrame {
+public final class Pre extends JFrame {
 
 	/**
 	 * Round Initialization Variables:
@@ -58,6 +58,7 @@ public class Pre extends JFrame {
 	 */
 	public Pre() {
 		initComponents();
+		this.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class Pre extends JFrame {
 	 * @param type     Game Type
 	 * @param mode     Game Mode
 	 */
-	public Pre(boolean[] initVars, int type, String mode) {
+	Pre(boolean[] initVars, int type, String mode) {
 		this.initComponents();
 
 		if (initVars[0] == true) {
@@ -201,7 +202,6 @@ public class Pre extends JFrame {
     DifficultyBG.add(RRB);
     RRB.setText("Realistic");
     RRB.setActionCommand("R");
-    RRB.setEnabled(false);
     RRB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         AIDiffChanged(evt);
@@ -212,7 +212,6 @@ public class Pre extends JFrame {
     DifficultyBG.add(BRB);
     BRB.setText("Brutal");
     BRB.setActionCommand("B");
-    BRB.setEnabled(false);
     BRB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         AIDiffChanged(evt);
@@ -225,16 +224,16 @@ public class Pre extends JFrame {
 
     ShipsP.setLayout(new GridLayout(2, 3));
 
-    BattleshipCB.setText("<html>Battleship<br>1 Space; x5</html>");
+    BattleshipCB.setText("<html>Battleships<br/>5 Tiles; x1</html>");
     ShipsP.add(BattleshipCB);
 
-    CruiserCB.setText("<html>Cruiser<br>1 Space; x8</html>");
+    CruiserCB.setText("<html>Cruisers<br/>4 Tiles; x3</html>");
     ShipsP.add(CruiserCB);
 
-    DestroyerCB.setText("<html>Destroyer<br>1 Space; x10</html>");
+    DestroyerCB.setText("<html>Destroyers<br/>3 Tiles; x4</html>");
     ShipsP.add(DestroyerCB);
 
-    CorvetteCB.setText("<html>Corvette<br>1 Space; x15</html>");
+    CorvetteCB.setText("<html>Corvettes<br/>2 Tiles; x5</html>");
     ShipsP.add(CorvetteCB);
 
     ButtonsP.setLayout(new GridLayout(1, 3, 100, 0));

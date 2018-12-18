@@ -1,6 +1,7 @@
 package game.ai;
 
-import game.Location;
+import game.Grid.Location;
+import game.Grid.Ship;
 import java.util.Random;
 
 
@@ -17,9 +18,20 @@ public final class Brutal extends AI {
 	 *
 	 * @param initVars Initialization Variables
 	 * @param gridOpp  Enemy Grid
+	 * @param shipsOpp Enemy Ships
 	 */
-	public Brutal(boolean[] initVars, Location[][] gridOpp) {
-		super(initVars, gridOpp);
+	public Brutal(boolean[] initVars, Location[][] gridOpp, Ship[] shipsOpp) {
+		super(initVars, gridOpp, shipsOpp);
+	}
+
+	/**
+	 * A setter for shipsOpp.
+	 *
+	 * @param shipsOpp Ships list of the Player
+	 */
+	@Override
+	public void updateShipsOpp(Ship[] shipsOpp) {
+		this.shipsOpp = shipsOpp;
 	}
 
 	/**
@@ -38,7 +50,7 @@ public final class Brutal extends AI {
 	 */
 	@Override
 	public int[] fire() {
-		int[] out = {-1, -1};
+		int[] out = this.randomFire();
 		// TODO: Do something.
 		return out;
 	}

@@ -88,7 +88,7 @@ public final class LoginUser extends User {
 
 			if (match) {  // Logged in successfuly. Changing current user.
 				System.out.println("return code corresponds to a match!");
-				CurrentUser.SetCurrentUser(this.getUName());
+				CurrentUser.setCurrentUser(this.getUName());
 				ret = 1;
 			} else {      // Login unsuccessful.
 				System.out.println("return code corresponds to a non-match!");

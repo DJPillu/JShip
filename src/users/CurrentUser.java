@@ -18,7 +18,7 @@ public final class CurrentUser {
 	 *
 	 * @return The current User's Username
 	 */
-	public static String GetCurrentUser() {
+	public static String getCurrentUser() {
 		return CurrentUser.UName;
 	}
 
@@ -27,15 +27,15 @@ public final class CurrentUser {
 	 *
 	 * @param UName Username
 	 */
-	public static void SetCurrentUser(String UName) {
+	public static void setCurrentUser(String UName) {
 		CurrentUser.UName = UName;
 	}
 
 	/**
 	 * Logs the user out.
 	 */
-	public static void Logout() {
-		CurrentUser.SetCurrentUser("guest");
+	public static void logout() {
+		CurrentUser.setCurrentUser("guest");
 	}
 
 }

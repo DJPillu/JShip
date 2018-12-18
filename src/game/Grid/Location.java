@@ -1,8 +1,8 @@
-package game;
+package game.Grid;
 
 
 /**
- * Class for maintaining the location of each ship.
+ * Class for maintaining the game board.
  *
  * @author blackk100
  */
@@ -27,19 +27,26 @@ public final class Location {
 	 * Stores whether or not this location has been guessed.
 	 * Takes the constants UNGUESSED, HIT and MISS
 	 */
-	private int status;
+	private int status = Location.UNGUESSED;
 
 	/**
 	 * Used to store whether or not this location has a ship part.
 	 */
-	private boolean hasShip;
+	private boolean hasShip = false;
+
+	/**
+	 * Used to store whether or not this location borders a ship part.
+	 *
+	 * This is used to prevent ships being placed beside each other.
+	 *
+	 * TODO: Implement this within the game code.
+	 */
+	private boolean border = false;
 
 	/**
 	 * Constructor for the Location class.
 	 */
 	public Location() {
-		this.status = Location.UNGUESSED;
-		this.hasShip = false;
 	}
 
 	/**
@@ -52,10 +59,26 @@ public final class Location {
 	}
 
 	/**
-	 * This location has a ship
+	 * This location has a ship part (setter for <code>this.hasShip</code>)
 	 */
 	public void shipPresent() {
 		this.hasShip = true;
+	}
+
+	/**
+	 * Getter for border
+	 *
+	 * @return hasShip
+	 */
+	public boolean isBorder() {
+		return this.border;
+	}
+
+	/**
+	 * This location borders a ship part (setter for <code>this.border</code>)
+	 */
+	public void bordersShip() {
+		this.border = true;
 	}
 
 	/**

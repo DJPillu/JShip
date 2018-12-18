@@ -66,7 +66,7 @@ abstract class User {
 
 		hash = ~hash;                 // Binary Flip of the Hash Value
 
-		if (hash > 8388607) {         // Max limit of MySQL MEDIUMINT is 8388607
+		if (hash > 8388607) {         // Max positive limit of MySQL MEDIUMINT is +8388607
 			hash = 8388607;
 		} else if (hash < -8388608) { // Max negative limit of MySQL MEDIUMINT is -8388608
 			hash = -8388607;

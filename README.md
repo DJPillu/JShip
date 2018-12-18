@@ -20,6 +20,6 @@ It is also the investigatory project for 2 high school students (and hence the r
 3. Compile and run jship.JShip (may distribute .jar files later).
 
 ## TODO
-* Ships spanning multiple tiles.
+* Ships not being able to be placed beside each other (no contact between ships).
 * AI Difficulties (other than a random number generator).
 * Make it beautiful.

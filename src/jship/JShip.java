@@ -4,6 +4,7 @@ import game.Pre;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
+import users.CurrentUser;
 
 
 /**
@@ -11,15 +12,15 @@ import javax.swing.*;
  *
  * @author blackk100
  */
-public class JShip extends JFrame {
+public final class JShip extends JFrame {
 
 	/**
 	 * Creates new form JShip
 	 */
 	public JShip() {
 		this.initComponents();
-		this.setLocationRelativeTo(null);
 		this.updateCurrentUser();
+		this.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -37,9 +38,12 @@ public class JShip extends JFrame {
     UserTF = new JTextField();
     ButtonP = new JPanel();
     ChangeB = new JButton();
-    Spacer2L = new JLabel();
+    Spacer1L = new JLabel();
     StatsB = new JButton();
+    Spacer2L = new JLabel();
     PlayB = new JButton();
+    Spacer3L = new JLabel();
+    HelpB = new JButton();
     Spacer4L = new JLabel();
     ExitB = new JButton();
 
@@ -79,7 +83,7 @@ public class JShip extends JFrame {
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    ButtonP.setLayout(new GridLayout(2, 3, 10, 20));
+    ButtonP.setLayout(new GridLayout(3, 3, 10, 10));
 
     ChangeB.setText("Register/ Login / Logout");
     ChangeB.addActionListener(new ActionListener() {
@@ -88,7 +92,7 @@ public class JShip extends JFrame {
       }
     });
     ButtonP.add(ChangeB);
-    ButtonP.add(Spacer2L);
+    ButtonP.add(Spacer1L);
 
     StatsB.setText("Statistics");
     StatsB.addActionListener(new ActionListener() {
@@ -97,6 +101,7 @@ public class JShip extends JFrame {
       }
     });
     ButtonP.add(StatsB);
+    ButtonP.add(Spacer2L);
 
     PlayB.setText("Play");
     PlayB.addActionListener(new ActionListener() {
@@ -105,6 +110,15 @@ public class JShip extends JFrame {
       }
     });
     ButtonP.add(PlayB);
+    ButtonP.add(Spacer3L);
+
+    HelpB.setText("Help");
+    HelpB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        Help(evt);
+      }
+    });
+    ButtonP.add(HelpB);
     ButtonP.add(Spacer4L);
 
     ExitB.setText("Exit");
@@ -128,7 +142,7 @@ public class JShip extends JFrame {
       .addGroup(HomePLayout.createSequentialGroup()
         .addComponent(TitleP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(ButtonP, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+        .addComponent(ButtonP, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -154,7 +168,7 @@ public class JShip extends JFrame {
 	 * Updates the current user. Called after every button.
 	 */
 	private void updateCurrentUser() {
-		UserTF.setText(users.CurrentUser.GetCurrentUser());
+		UserTF.setText(CurrentUser.getCurrentUser());
 	}
 
 	/**
@@ -189,7 +203,6 @@ public class JShip extends JFrame {
 	private void Play(ActionEvent evt) {//GEN-FIRST:event_Play
 		Pre Pre = new Pre();  // Creates the Pre Form object
 		Pre.setVisible(true); // Makes the Pre Form to be visible
-		Pre.setLocationRelativeTo(null); // TODO: Figure out why Pre doesn't screen-centre without this.
 
 		this.dispose();       // Destroys the current form object
 	}//GEN-LAST:event_Play
@@ -205,18 +218,40 @@ public class JShip extends JFrame {
 		}
 	}//GEN-LAST:event_Exit
 
+  private void Help(ActionEvent evt) {//GEN-FIRST:event_Help
+		boolean[] responses = {false, false, false};
+
+		one:
+		while (true) {
+			responses[0] = JOptionPane.showConfirmDialog(null, "This is where all help text will go.", "Help - 1", JOptionPane.YES_NO_OPTION) == 0;
+			two:
+			while (responses[0]) {   // One   -> Two
+				responses[1] = JOptionPane.showConfirmDialog(null, "There will be multiple ones like this.", "Help - 2", JOptionPane.YES_NO_OPTION) == 0;
+				three:
+				while (responses[1]) { // Two   -> Three
+					responses[2] = JOptionPane.showConfirmDialog(null, "3 should be enough for being a placeholder, no?", "Help - 3", JOptionPane.YES_NO_OPTION) == 0;
+					if (responses[2]) {  // Three -> Game
+						return;
+					} else {             // Three -> Two
+						continue two;
+					}
+				}
+				continue one;          // Two   -> One
+			}
+			return;                  // One   -> Game
+		}
+  }//GEN-LAST:event_Help
+
 	/**
+	 * Sets the Nimbus look and feel.
+	 * If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel. For details see
+	 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+	 *
+	 * Creates and displays the form.
+	 *
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
-		/*
-		 * Set the Nimbus look and feel
-		 */
-		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-		 */
 		try {
 			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -227,13 +262,12 @@ public class JShip extends JFrame {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			java.util.logging.Logger.getLogger(JShip.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
 		}
-		//</editor-fold>
 
-		/*
-		 * Create and display the form
-		 */
-		java.awt.EventQueue.invokeLater(() -> {
-			new JShip().setVisible(true);
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new JShip().setVisible(true);
+			}
 		});
 	}
 
@@ -241,9 +275,12 @@ public class JShip extends JFrame {
   private JPanel ButtonP;
   private JButton ChangeB;
   private JButton ExitB;
+  private JButton HelpB;
   private JPanel HomeP;
   private JButton PlayB;
+  private JLabel Spacer1L;
   private JLabel Spacer2L;
+  private JLabel Spacer3L;
   private JLabel Spacer4L;
   private JButton StatsB;
   private JLabel TitleL;

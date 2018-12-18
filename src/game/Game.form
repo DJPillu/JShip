@@ -76,7 +76,7 @@
         <Component class="javax.swing.JLabel" name="TitleL">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="PvE - Sandbox"/>
+            <Property name="text" type="java.lang.String" value="Difficulty - Sandbox"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -88,11 +88,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="PlayerGridP" min="-2" pref="450" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="PlayerL" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="PlayerGridP" min="-2" pref="450" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="RoundStatusP" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="AIGridP" min="-2" pref="450" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="AIGridP" pref="450" max="32767" attributes="0"/>
+                      <Component id="AIL" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -101,22 +110,31 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="RoundStatusP" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="AIGridP" pref="450" max="32767" attributes="0"/>
-                              <Component id="PlayerGridP" alignment="0" pref="450" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="PlayerL" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="PlayerGridP" min="-2" pref="450" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="AIL" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="AIGridP" min="-2" pref="450" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
+        <Component class="javax.swing.JLabel" name="PlayerL">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Player&apos;s Grid"/>
+          </Properties>
+        </Component>
         <Container class="javax.swing.JPanel" name="PlayerGridP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -141,6 +159,12 @@
             </Property>
           </Layout>
         </Container>
+        <Component class="javax.swing.JLabel" name="AIL">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="AI&apos;s Grid"/>
+          </Properties>
+        </Component>
         <Container class="javax.swing.JPanel" name="AIGridP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -174,7 +198,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="AlertsSP" max="32767" attributes="0"/>
-                          <Component id="ButtonsP" alignment="1" max="32767" attributes="0"/>
+                          <Component id="ButtonsP" alignment="1" pref="275" max="32767" attributes="0"/>
                           <Component id="ShipsP" alignment="0" max="32767" attributes="0"/>
                           <Component id="RoundStatusL" alignment="1" max="32767" attributes="0"/>
                           <Component id="ShipsL" alignment="0" max="32767" attributes="0"/>
@@ -235,7 +259,7 @@
                           <Component id="RoundTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="AlertsSP" pref="131" max="32767" attributes="0"/>
+                      <Component id="AlertsSP" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ButtonsP" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -286,12 +310,11 @@
                 <Property name="columns" type="int" value="2"/>
                 <Property name="horizontalGap" type="int" value="10"/>
                 <Property name="rows" type="int" value="2"/>
-                <Property name="verticalGap" type="int" value="10"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JCheckBox" name="BattleshipCB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Battleship"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleships&lt;br/&gt;5 Tiles; x1&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShipCBClicked"/>
@@ -299,7 +322,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CruiserCB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Cruiser"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Cruisers&lt;br/&gt;4 Tiles; x3&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShipCBClicked"/>
@@ -307,7 +330,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="DestroyerCB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Destroyer"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyers&lt;br/&gt;3 Tiles; x4&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShipCBClicked"/>
@@ -315,7 +338,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CorvetteCB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Corvette"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Corvettes&lt;br/&gt;2 Tiles; x5&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShipCBClicked"/>
@@ -398,9 +421,9 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NextRound"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JButton" name="ClearB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Clear&lt;br/&gt;Notifications&lt;/center&gt;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Clear&lt;br/&gt;Alerts&lt;/center&gt;&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Clear"/>
@@ -435,9 +458,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="PlayerStatusP" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="AIStatusP" min="-2" max="-2" attributes="0"/>
+                  <Component id="PlayerStatsP" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="101" max="32767" attributes="0"/>
+                  <Component id="AIStatsP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -447,8 +470,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="AIStatusP" min="-2" max="-2" attributes="0"/>
-                      <Component id="PlayerStatusP" min="-2" max="-2" attributes="0"/>
+                      <Component id="AIStatsP" min="-2" max="-2" attributes="0"/>
+                      <Component id="PlayerStatsP" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -456,7 +479,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="PlayerStatusP">
+        <Container class="javax.swing.JPanel" name="PlayerStatsP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -526,7 +549,7 @@
             <Component class="javax.swing.JLabel" name="PlayerStatusTitleL">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Player 1 Status"/>
+                <Property name="text" type="java.lang.String" value="Player&apos;s Statistics"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="PlayerrSLL">
@@ -571,7 +594,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="AIStatusP">
+        <Container class="javax.swing.JPanel" name="AIStatsP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -641,7 +664,7 @@
             <Component class="javax.swing.JLabel" name="AIStatusTitleL">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Player 2 Status"/>
+                <Property name="text" type="java.lang.String" value="AI&apos;s Statistics"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="AISLL">

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import misc.DBDetails;
+import users.CurrentUser;
 
 
 /**
@@ -43,16 +44,16 @@ public class Stats {
 	 * I     6     I Ships Sunk    (SS)   I
 	 * I     7     I Ships Lost    (SL)   I
 	 * I-----------I----------------------I
-	 * </pre>
 	 *
-	 * Mode:<br>
-	 * &emsp; 0 - Classic<br>
-	 * &emsp; 1 - Salvo<br>
-	 * <br>
-	 * AIDiff:<br>
-	 * &emsp; 0 - Sandbox<br>
-	 * &emsp; 1 - Regular<br>
-	 * &emsp; 2 - Brutal
+	 * Index value = 0 + x, where x depends on the following:
+	 *     Mode:
+	 *          +0 - Classic
+	 *          +3 - Salvo
+	 *     AIDiff:
+	 *          +0 - Sandbox
+	 *          +1 - Regular
+	 *          +2 - Brutal
+	 * </pre>
 	 */
 	private int[][] statsLists = new int[6][10];
 
@@ -69,26 +70,24 @@ public class Stats {
 	 * I     4     I Salvo   - Regular    I
 	 * I     5     I Salvo   - Brutal     I
 	 * I-----------I----------------------I
-	 * </pre>
 	 *
-	 * Mode:<br>
-	 * &emsp; 0 - Classic<br>
-	 * &emsp; 1 - Salvo<br>
-	 * <br>
-	 * AIDiff:<br>
-	 * &emsp; 0 - Sandbox<br>
-	 * &emsp; 1 - Regular<br>
-	 * &emsp; 2 - Brutal
+	 * Mode:
+	 *      0 - Classic
+	 *      3 - Salvo
+	 *
+	 * AIDiff:
+	 *      0 - Sandbox<br>
+	 *      1 - Regular<br>
+	 *      2 - Brutal
+	 * </pre>
 	 */
 	private float[] Acc = new float[6];
 
 	/**
 	 * Constructor for the Stats class.
-	 *
-	 * @param UName Username
 	 */
-	public Stats(String UName) {
-		getStats(UName);
+	public Stats() {
+		this.getStats();
 	}
 
 	/**
@@ -108,22 +107,20 @@ public class Stats {
 	/**
 	 * Gets the Current User's statistics from the MySQL database.
 	 *
-	 * @param UName - The Username
-	 *
 	 * @return ret - An Integer indicating the result of statistics retrieval.<br>
 	 * &emsp; {-1, -2, -3} imply an error.<br>
 	 * &emsp; {0} implies a successful retrieval.
 	 */
-	public int getStats(String UName) {
+	public final int getStats() {
 		int ret = 0; // Return code
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
+			Class.forName("com.mysql.jdbc.Driver");                                                                                    // Creates the MySQL JDBC Driver class
 			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
 
 			StringBuffer query = new StringBuffer(137);                                             // StringBuffer for holding the updates
 			query.append("SELECT * FROM stats WHERE UNo = (SELECT UNo FROM users WHERE UName = '"); // Base Query with Base Subquery
-			query.append(UName).append("');");                                                      // Username for Subquery
+			query.append(CurrentUser.getCurrentUser()).append("');");                                                      // Username for Subquery
 
 			Statement stmnt = con.createStatement();             // Creates the SQL statement object
 			ResultSet rs = stmnt.executeQuery(query.toString()); // Runs the querys
@@ -163,25 +160,18 @@ public class Stats {
 	}
 
 	/**
-	 * <pre>
-	 * public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
-	 *
-	 * src     − This is the source array.
-	 * srcPos  − This is the starting position in the source array.
-	 * dest    − This is the destination array.
-	 * destPos − This is the starting position in the destination data.
-	 * length  − This is the number of array elements to be copied.
-	 * </pre>
+	 * Setter for <code>this.statsLists</code>.
 	 *
 	 * @param index     Index number of the statistics record
 	 * @param statsList the statsLists to set
 	 */
 	final void setStatsLists(int index, int[] statsList) {
-		System.arraycopy(statsList, 1, this.statsLists[index], 3, statsList.length - 1);
-
 		this.statsLists[index][0] += 1;                         // Games PLayed += 1
 		this.statsLists[index][1] += statsList[0] == 1 ? 1 : 0; // Games Won += 1 if Round Status is true
 		this.statsLists[index][2] += statsList[0] == 0 ? 1 : 0; // Games Lost += 1 if Round Status is false
+		for (int i = 0; i < statsList.length - 1; i++) {        // All other stats
+			this.statsLists[index][i + 3] = statsList[i + 1];
+		}
 	}
 
 	/**

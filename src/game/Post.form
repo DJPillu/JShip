@@ -60,7 +60,7 @@
                           <Component id="PlayL" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="PlayB" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="36" max="32767" attributes="0"/>
+                          <EmptySpace pref="40" max="32767" attributes="0"/>
                           <Component id="GoBackL" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="GoBackB" min="-2" max="-2" attributes="0"/>
@@ -91,12 +91,12 @@
         <Component class="javax.swing.JLabel" name="TitleL">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Title Label"/>
+            <Property name="text" type="java.lang.String" value="Match Won!"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="PlayL">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Play Another Round:"/>
+            <Property name="text" type="java.lang.String" value="Play Another Game:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="PlayB">

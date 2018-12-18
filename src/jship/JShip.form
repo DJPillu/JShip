@@ -62,7 +62,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="TitleP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="ButtonP" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="ButtonP" min="-2" pref="125" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -130,8 +130,8 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="3"/>
             <Property name="horizontalGap" type="int" value="10"/>
-            <Property name="rows" type="int" value="2"/>
-            <Property name="verticalGap" type="int" value="20"/>
+            <Property name="rows" type="int" value="3"/>
+            <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JButton" name="ChangeB">
@@ -142,7 +142,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChangeUser"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="Spacer2L">
+            <Component class="javax.swing.JLabel" name="Spacer1L">
             </Component>
             <Component class="javax.swing.JButton" name="StatsB">
               <Properties>
@@ -152,12 +152,24 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShowStats"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JLabel" name="Spacer2L">
+            </Component>
             <Component class="javax.swing.JButton" name="PlayB">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Play"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Play"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Spacer3L">
+            </Component>
+            <Component class="javax.swing.JButton" name="HelpB">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Help"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Help"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="Spacer4L">

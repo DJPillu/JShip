@@ -26,10 +26,18 @@ CREATE TABLE stats (
 ) ENGINE = 'InnoDB';
 
 INSERT INTO users (UName, PassWrd) VALUES ('guest', 0);
-
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'C', 'S', 1, 0, 1, 10, 5, 50.00, 9, 10, 11);
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'C', 'R', 1, 0, 1, 11, 6, 54.55, 10, 11, 12);
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'C', 'B', 1, 0, 1, 12, 7, 58.33, 11, 12, 13);
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'S', 'S', 1, 0, 1, 13, 8, 61.54, 12, 13, 14);
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'S', 'R', 1, 0, 1, 14, 9, 64.29, 13, 14, 15);
 INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'guest'), 'S', 'B', 1, 1, 0, 15, 10, 66.67, 14, 15, 16);
+
+
+INSERT INTO users (UName, PassWrd) VALUES ('admin', 50); # Password is 'cheats'
+INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'admin'), 'C', 'S', 0, 0, 0, 0, 0, 0.00, 0, 0, 0);
+INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'admin'), 'C', 'R', 0, 0, 0, 0, 0, 0.00, 0, 0, 0);
+INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'admin'), 'C', 'B', 0, 0, 0, 0, 0, 0.00, 0, 0, 0);
+INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'admin'), 'S', 'S', 0, 0, 0, 0, 0, 0.00, 0, 0, 0);
+INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'admin'), 'S', 'R', 0, 0, 0, 0, 0, 0.00, 0, 0, 0);
+INSERT INTO stats VALUES ((SELECT UNo FROM users WHERE UName = 'admin'), 'S', 'B', 0, 0, 0, 0, 0, 0.00, 0, 0, 0);

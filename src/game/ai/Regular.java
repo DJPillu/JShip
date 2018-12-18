@@ -1,6 +1,7 @@
 package game.ai;
 
-import game.Location;
+import game.Grid.Location;
+import game.Grid.Ship;
 import java.util.Random;
 
 
@@ -17,9 +18,10 @@ public final class Regular extends AI {
 	 *
 	 * @param initVars Initialization Variables
 	 * @param gridOpp  Enemy Grid
+	 * @param shipsOpp Enemy Ships
 	 */
-	public Regular(boolean[] initVars, Location[][] gridOpp) {
-		super(initVars, gridOpp);
+	public Regular(boolean[] initVars, Location[][] gridOpp, Ship[] shipsOpp) {
+		super(initVars, gridOpp, shipsOpp);
 	}
 
 	/**
@@ -37,7 +39,7 @@ public final class Regular extends AI {
 	 */
 	@Override
 	public int[] fire() {
-		int[] out = {-1, -1};
+		int[] out = this.randomFire();
 		// TODO: Do something.
 		return out;
 	}
@@ -51,14 +53,15 @@ public final class Regular extends AI {
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
 	private int[] randomFire() {
-		int[] out = new int[2], temp = new int[2];
-		Random rand = new Random();
+		int[] out = new int[2];     // Firing coordinates.
+		int[] temp = new int[2];    // Temporary variable to store coordinates if xy refers to a guessed position.
+		Random rand = new Random(); // Random data type generator (built-in class).
 
 		for (int i = 0; i < 2; i++) {
 			out[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
 		}
 
-		while (!this.gridSelf[out[0]][out[1]].isUnguessed()) {
+		while (!this.gridSelf[out[0]][out[1]].isUnguessed()) { // If xy refers to a guessed coordinate, regenerate it.
 			for (int i = 0; i < 2; i++) {
 				temp[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
 			}

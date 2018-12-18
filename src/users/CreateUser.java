@@ -1,9 +1,9 @@
 package users;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import misc.DBDetails;
 
@@ -31,6 +31,7 @@ public final class CreateUser extends User {
 	 * @return ret - An integer that refers to a specific return code.<br>
 	 * &emsp; {-1, -2, -3} imply an error.<br>
 	 * &emsp; {0} implies successful creation.
+	 * &emsp; (-4) implies an already username.
 	 */
 	public int create() {
 		int ret = 0; // Return code
@@ -75,27 +76,24 @@ public final class CreateUser extends User {
 					inserts[i].append("S', '");
 				}
 
-				if (i - 1 % 3 == 0) {        // 1st StringBuffer of either Mode is for Sandbox Difficulty
+				if (i == 1 || i == 4) {        // 1st StringBuffer of either Mode is for Sandbox Difficulty
 					inserts[i].append("S');");
-				} else if (i + 1 % 3 == 0) { // 2nd StringBuffer of either Mode is for Regular Difficulty
+				} else if (i == 2 || i == 5) { // 2nd StringBuffer of either Mode is for Regular Difficulty
 					inserts[i].append("R');");
-				} else if (i % 3 == 0) {     // 3rd StringBuffer of either Mode is for Brutal Difficulty
+				} else if (i == 3 || i == 6) { // 3rd StringBuffer of either Mode is for Brutal Difficulty
 					inserts[i].append("B');");
 				}
 			}
 
-			for (int i = 0; i < inserts.length; i++) {
-				System.out.println(inserts[i].toString());
-			}
-
 			Statement stmnt = con.createStatement(); // Creates the SQL statement object
 			for (int i = 0; i < inserts.length; i++) {
+				System.out.println(inserts[i].toString());
 				stmnt.executeUpdate(inserts[i].toString());
 			}
 
 			stmnt.close();
 			con.close();
-		} catch (MySQLIntegrityConstraintViolationException e) { // User already registered;   return -4
+		} catch (SQLIntegrityConstraintViolationException e) { // User already registered;   return -4
 			// Is above the rest since it is a subclass of SQLException.
 			System.out.println("User Already Registered Exception:\n" + e);
 			ret = -4;

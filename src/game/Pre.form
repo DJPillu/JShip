@@ -244,7 +244,6 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;R&quot;" type="code"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AIDiffChanged"/>
@@ -259,7 +258,6 @@
                 <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="&quot;B&quot;" type="code"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AIDiffChanged"/>
@@ -284,22 +282,22 @@
           <SubComponents>
             <Component class="javax.swing.JCheckBox" name="BattleshipCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleship&lt;br&gt;1 Space; x5&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleships&lt;br/&gt;5 Tiles; x1&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="CruiserCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Cruiser&lt;br&gt;1 Space; x8&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Cruisers&lt;br/&gt;4 Tiles; x3&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="DestroyerCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyer&lt;br&gt;1 Space; x10&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Destroyers&lt;br/&gt;3 Tiles; x4&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="CorvetteCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Corvette&lt;br&gt;1 Space; x15&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Corvettes&lt;br/&gt;2 Tiles; x5&lt;/html&gt;"/>
               </Properties>
             </Component>
           </SubComponents>

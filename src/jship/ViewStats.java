@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 import stats.Stats;
+import users.CurrentUser;
 
 
 /**
@@ -11,8 +12,7 @@ import stats.Stats;
  *
  * @author blackk100
  */
-public class ViewStats extends JFrame {
-	private String UName;
+final class ViewStats extends JFrame {
 	private String mode;
 	private int diff;
 	private int mdI; // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
@@ -20,7 +20,7 @@ public class ViewStats extends JFrame {
 	/**
 	 * Creates new form Statistics
 	 */
-	public ViewStats() {
+	ViewStats() {
 		this.initComponents();
 
 		this.updateCurrentUser();
@@ -341,8 +341,7 @@ public class ViewStats extends JFrame {
 	 * Updates the current user. Called after every button.
 	 */
 	private void updateCurrentUser() {
-		this.UName = users.CurrentUser.GetCurrentUser();
-		UserTF.setText(this.UName);
+		UserTF.setText(CurrentUser.getCurrentUser());
 	}
 
 	/**
@@ -351,7 +350,7 @@ public class ViewStats extends JFrame {
 	private void userStatsSetter() {
 		this.mdI = (this.mode.equals("S") ? 3 : 0) + this.diff;
 
-		Stats stats = new Stats(this.UName);
+		Stats stats = new Stats();
 		int[][] userStats = stats.getStatsLists();
 		float[] Acc = stats.getAcc();
 
