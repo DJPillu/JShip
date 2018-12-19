@@ -1,6 +1,6 @@
 game
-game.Grid
 game.ai
+game.grid
 jship
 misc
 stats
