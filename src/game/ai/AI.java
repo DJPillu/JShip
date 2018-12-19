@@ -1,7 +1,7 @@
 package game.ai;
 
-import game.Grid.Location;
-import game.Grid.Ship;
+import game.grid.Location;
+import game.grid.Ship;
 import java.util.Random;
 
 
@@ -82,35 +82,34 @@ public class AI {
 			}
 		}
 
-		int shipNos = (initVars[1] ? 1 : 0) + (initVars[2] ? 3 : 0) + (initVars[3] ? 4 : 0) + (initVars[4] ? 5 : 0);
+		int shipNos = (initVars[1] ? 1 : 0) + (initVars[2] ? 2 : 0) + (initVars[3] ? 2 : 0) + (initVars[4] ? 4 : 0);
 		int shipNo = 0;    // Temporary variable storing the ship number being initialized.
 		this.shipsSelf = new Ship[shipNos];
-		Random random = new Random();
 		if (initVars[1]) { // Battleships
 			for (int i = shipNo; i < shipNo + 1; i++) {
-				this.shipsSelf[i] = new Ship(5, random.nextBoolean());
+				this.shipsSelf[i] = new Ship(5);
 			}
 			shipNo += 1;
 		}
 		if (initVars[2]) { // Cruisers
-			for (int i = shipNo; i < shipNo + 3; i++) {
-				this.shipsSelf[i] = new Ship(4, random.nextBoolean());
+			for (int i = shipNo; i < shipNo + 2; i++) {
+				this.shipsSelf[i] = new Ship(4);
 			}
-			shipNo += 3;
+			shipNo += 2;
 		}
 		if (initVars[3]) { // Destroyers
-			for (int i = shipNo; i < shipNo + 4; i++) {
-				this.shipsSelf[i] = new Ship(3, random.nextBoolean());
+			for (int i = shipNo; i < shipNo + 2; i++) {
+				this.shipsSelf[i] = new Ship(3);
 			}
-			shipNo += 4;
+			shipNo += 2;
 		}
 		if (initVars[4]) { // Corvettes
-			for (int i = shipNo; i < shipNo + 5; i++) {
-				this.shipsSelf[i] = new Ship(2, random.nextBoolean());
+			for (int i = shipNo; i < shipNo + 4; i++) {
+				this.shipsSelf[i] = new Ship(2);
 			}
 		}
+		// Implicit Garbage Collecting temp (hopefully). Remove if not necessary.
 		shipNo = 0;
-		random = null;
 		System.gc();
 
 		this.place(shipNos);
@@ -186,38 +185,58 @@ public class AI {
 	 * @param shipNos the number of ships present
 	 */
 	private void place(int shipNos) {
+		int shipLength;
+		boolean direction;
+		Random random = new Random();
 		for (int i = 0; i < shipNos; i++) {
-			int shipLength = this.shipsSelf[i].length;
-			boolean direction = this.shipsSelf[i].getDirection();
-			System.out.println(i + ": " + shipLength + (direction ? " Vertical" : " Horizontal"));
+			shipLength = this.shipsSelf[i].length;
+			direction = random.nextBoolean();
+			System.out.println("AI Ship no. " + i + ": " + shipLength + (direction ? " Vertical" : " Horizontal"));
 
-			int[] xy = this.random(shipLength); // 0: Y-Coordinate ; 1: X-Coordinate
+			int[] xy = this.random(shipLength);
 
-			// Checks for any intersections
-			top:                                           // outer loop label
-			while (true) {
-				if (this.gridSelf[xy[1]][xy[0]].hasShip()) { // Checks if the initial location has a ship part
-					System.out.println("Ship exists at initial point");
-					xy = this.random(shipLength);
-					continue;
-				}
-
-				for (int l = 0; l < shipLength; l++) {       // Checks if the ship will intersect any other ship
-					if (this.gridSelf[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].hasShip()) { // X- is incremented if horizontal, else Y-
-						System.out.println("Ship exists at position: " + (l + 1));
+			intersect:
+			while (true) {     // Checks for any intersections
+				for (int l = 0; l < shipLength; l++) {
+					// Checks if the ship will intersect any other ship
+					if (this.gridSelf[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].hasShip()) {
+						System.out.println("AI - Ship exists at position: " + (l + 1));
 						xy = this.random(shipLength);
-						continue top;
+						continue intersect;
+					}
+
+					// Checks if the ship will border any other ship
+					if (this.gridSelf[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].isBorder()) {
+						System.out.println("AI - Bordering another ship at position: " + (l + 1));
+						xy = this.random(shipLength);
+						continue intersect;
 					}
 				}
 
-				break;                                       // No intersections. Continue to placement.
+				break intersect; // No intersections. Continue to placement.
 			}
 
 			// Sets the location values
 			for (int l = 0; l < shipLength; l++) {
-				this.gridSelf[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].shipPresent(); // X- is incremented if horizontal, else Y-
+				this.gridSelf[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].shipPresent();
+
+				// Sets the borders at the terminal positions of the ship.
+				if ((l == 0) && (xy[direction ? 1 : 0] != 0)) {                                               // Checks if the 1st tile isn't at the edge of the Board
+					this.gridSelf[xy[1] - (direction ? 1 : 0)][xy[0] - (direction ? 0 : 1)].bordersShip();
+				} else if ((l == shipLength - 1) && (xy[direction ? 1 : 0] + shipLength - 1 != this.boardSize - 1)) { // Checks if the last tile isn't at the edge of the Board
+					this.gridSelf[xy[1] + (direction ? shipLength : 0)][xy[0] + (direction ? 0 : shipLength)].bordersShip();
+				}
+				// Sets the borders along the length of the ship
+				if (xy[direction ? 0 : 1] == 0) {                         // At the Top/Left edge
+					this.gridSelf[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)].bordersShip();
+				} else if (xy[direction ? 0 : 1] == this.boardSize - 1) { // At the Bottom/Right edge
+					this.gridSelf[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)].bordersShip();
+				} else {                                                  // Not at the edges
+					this.gridSelf[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)].bordersShip();
+					this.gridSelf[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)].bordersShip();
+				}
 			}
-			this.shipsSelf[i].setStart(xy);
+			this.shipsSelf[i].add(xy, direction);
 			System.out.println("Ship " + i + " placed");
 
 		}
@@ -227,7 +246,7 @@ public class AI {
 	}
 
 	/**
-	 * (Psuedo-)Randomiser for the place() function
+	 * (Psuedo-)Randomiser for the <code>place()</code> function
 	 *
 	 * @param length Length of the Ship
 	 *

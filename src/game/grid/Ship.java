@@ -1,4 +1,4 @@
-package game.Grid;
+package game.grid;
 
 
 /**
@@ -55,7 +55,6 @@ public final class Ship {
 
 	/**
 	 * Constructor for the Ship class.
-	 * Used for player ships as their direction can change.
 	 *
 	 * @param length The length of the ship.
 	 */
@@ -73,26 +72,17 @@ public final class Ship {
 	}
 
 	/**
-	 * Constructor for the Ship class.
-	 * Used for AI ships as their direction is decided during initialization.
-	 *
-	 * @param length    The length of the ship.
-	 * @param direction The orientation of the ship.
-	 */
-	public Ship(int length, boolean direction) {
-		this(length);
-		this.direction = direction;
-	}
-
-	/**
 	 * Sets the starting and the ending coordinates of the ship.
 	 *
 	 * @param coordinates The starting coordinates (1st value is X-Coordinate, 2nd is Y-Coordinate).
+	 * @param direction   The orientation of the ship.
 	 */
-	public void setStart(int[] coordinates) {
-		if (length != 0) { // Ship not being used.
+	public void add(int[] coordinates, boolean direction) {
+		if (length != 0) { // Checks if the ship is being used.
 			this.start = coordinates;
 			this.end = new int[] {coordinates[0] + (direction ? 0 : length - 1), coordinates[1] + (direction ? length - 1 : 0)};
+
+			this.direction = direction;
 		}
 	}
 
@@ -102,6 +92,7 @@ public final class Ship {
 	public void remove() {
 		this.start = new int[] {-1, -1};
 		this.end = new int[] {-1, -1};
+		this.direction = false;
 	}
 
 	/**
@@ -120,15 +111,6 @@ public final class Ship {
 	 */
 	public int[] getEnd() {
 		return this.end;
-	}
-
-	/**
-	 * Sets the orientation of the ship.
-	 *
-	 * @param direction The orientation of the ship.
-	 */
-	public void setDirection(boolean direction) {
-		this.direction = direction;
 	}
 
 	/**
@@ -189,7 +171,7 @@ public final class Ship {
 	 *
 	 * @return true if hit, else false.
 	 */
-	public boolean isSectionHit(int[] coords) {
+	public boolean isHit(int[] coords) {
 		if (length != 0) { // Checks if the ship is being used.
 			return this.hit[this.getPosition(coords)];
 		} else {

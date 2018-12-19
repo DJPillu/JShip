@@ -1,4 +1,4 @@
-package game.Grid;
+package game.grid;
 
 
 /**
@@ -38,8 +38,6 @@ public final class Location {
 	 * Used to store whether or not this location borders a ship part.
 	 *
 	 * This is used to prevent ships being placed beside each other.
-	 *
-	 * TODO: Implement this within the game code.
 	 */
 	private boolean border = false;
 
@@ -59,10 +57,17 @@ public final class Location {
 	}
 
 	/**
-	 * This location has a ship part (setter for <code>this.hasShip</code>)
+	 * This location has a ship part (setter for <code>this.hasShip</code> to true).
 	 */
 	public void shipPresent() {
 		this.hasShip = true;
+	}
+
+	/**
+	 * This location has a ship part (setter for <code>this.hasShip</code> to false).
+	 */
+	public void shipAbsent() {
+		this.hasShip = false;
 	}
 
 	/**
@@ -75,10 +80,17 @@ public final class Location {
 	}
 
 	/**
-	 * This location borders a ship part (setter for <code>this.border</code>)
+	 * This location borders a ship part (setter for <code>this.border</code> to true)
 	 */
 	public void bordersShip() {
 		this.border = true;
+	}
+
+	/**
+	 * This location does not border a ship part (setter for <code>this.border</code> to false)
+	 */
+	public void noBordersShip() {
+		this.border = false;
 	}
 
 	/**

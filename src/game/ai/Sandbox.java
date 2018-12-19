@@ -1,7 +1,7 @@
 package game.ai;
 
-import game.Grid.Location;
-import game.Grid.Ship;
+import game.grid.Location;
+import game.grid.Ship;
 import java.util.Random;
 
 

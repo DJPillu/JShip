@@ -1,6 +1,6 @@
 ### NetBeans ###
 build/
-nbbuild/
 dist/
+nbbuild/
 nbdist/
 .nb-gradle/

@@ -1,37 +1,23 @@
 Colors:
-	Selection        - Yellow     - 242, 236, 0, 255
-	Basic            - Blue       - 5, 218, 255, 255
-		Shot fired at  - Navy Blue  - 0, 0, 128, 255
-		Ship Placed    - Steel Grey - 176, 196, 222, 255
-			Ship damaged - Red        - 205, 0, 0, 255
+	Base             - Blue             - 5  , 218, 255, 255
+		Selection      - Yellow           - 242, 236, 0  , 255
+		Ship Placed    - Steel Grey       - 176, 196, 222, 255
+			Ship Border  - Light Steel Gray - 67 , 70 , 75 , 255 [Stretch Goals]
+		Shot fired at  - Navy Blue        - 0  , 0  , 128, 255
+			Ship Damaged - Red              - 205, 0  , 0  , 255
 
-Winning Song: ???
-In-game Song: Sabaton
-Losing Song : Evil Morty Song (For the Damaged Coda - Blonde Redhead)
+Size Occupied by Ships:
+	Formula:    ((Length * 3) + 2) * Number of this type
+	Battleship: ((5 * 3) + 2) * 1 = (15 + 2) * 1 = 17 * 1 = 17
+	Cruiser:    ((4 * 3) + 2) * 2 = (12 + 2) * 2 = 14 * 2 = 28
+	Destroyer:  ((3 * 3) + 2) * 3 = (09 + 2) * 3 = 11 * 2 = 22
+	Corvette:   ((2 * 3) + 2) * 4 = (06 + 2) * 4 = 08 * 4 = 32
+	Total Space occupied = 91
 
-PvE:
-	1) Round 0:
-		i  ) User Places Ships
-		ii ) AI gets User's map
-		iii) AI places Ships
-	2) Round n:								[n >= 1]
-		i  ) User shoots
-		ii ) Game checks if all AI ships are sunk. If yes, WIN.
-		iii) AI shoots
-		iv ) Game checks if all User ships are sunk. If yes, LOSE.
-	3) Post Game:
-		i  ) JOption Pane showing that the game ended.
-
-EvE:
-	1) Round 0:
-		i  ) AI1 Places Ships
-		ii ) AI2 gets AI1's map
-		ii ) AI2 Places Ships
-		iii) AI1 gets AI2's map
-	2) Round n:								[n >= 1]
-		i  ) AI1 shoots
-		ii ) Game checks if all AI1 ships are sunk. If yes, WIN.
-		iii) AI2 shoots
-		iv ) Game checks if all AI2 ships are sunk. If yes, LOSE.
-	3) Post Game:
-		i  ) JOption Pane showing that the game ended.
+Stretch Goals:
+	1) Add a border to the ships, i.e., no 2 ships can be in contact with each other.
+	2) Add music to the project
+			* Menu Song:
+			* In-game Song: Sabaton
+			* Winning Song: ???
+			* Losing Song : Evil Morty Song (For the Damaged Coda - Blonde Redhead)

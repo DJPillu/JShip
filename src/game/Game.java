@@ -1,8 +1,8 @@
 package game;
 
-import game.Grid.Location;
-import game.Grid.Ship;
 import game.ai.*;
+import game.grid.Location;
+import game.grid.Ship;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -205,7 +205,7 @@ final class Game extends JFrame {
 		this.boardSize = initVars[0] ? 15 : 10;
 		this.buttonsClicked = new boolean[this.boardSize][this.boardSize];
 
-		this.shipNos = (initVars[1] ? 1 : 0) + (initVars[2] ? 3 : 0) + (initVars[3] ? 4 : 0) + (initVars[4] ? 5 : 0);
+		this.shipNos = (initVars[1] ? 1 : 0) + (initVars[2] ? 2 : 0) + (initVars[3] ? 2 : 0) + (initVars[4] ? 4 : 0);
 		this.PlayerShips = new Ship[this.shipNos];
 		int shipNo = 0;    // Temporary variable storing the ship number being initialized.
 		if (initVars[1]) { // Battleships
@@ -215,19 +215,19 @@ final class Game extends JFrame {
 			shipNo += 1;
 		}
 		if (initVars[2]) { // Cruisers
-			for (int i = shipNo; i < shipNo + 3; i++) {
+			for (int i = shipNo; i < shipNo + 2; i++) {
 				this.PlayerShips[i] = new Ship(4);
 			}
-			shipNo += 3;
+			shipNo += 2;
 		}
 		if (initVars[3]) { // Destroyers
-			for (int i = shipNo; i < shipNo + 4; i++) {
+			for (int i = shipNo; i < shipNo + 2; i++) {
 				this.PlayerShips[i] = new Ship(3);
 			}
-			shipNo += 4;
+			shipNo += 2;
 		}
 		if (initVars[4]) { // Corvettes
-			for (int i = shipNo; i < shipNo + 5; i++) {
+			for (int i = shipNo; i < shipNo + 4; i++) {
 				this.PlayerShips[i] = new Ship(2);
 			}
 		}
@@ -452,7 +452,7 @@ final class Game extends JFrame {
     });
     ShipsP.add(BattleshipCB);
 
-    CruiserCB.setText("<html>Cruisers<br/>4 Tiles; x3</html>");
+    CruiserCB.setText("<html>Cruisers<br/>4 Tiles; x2</html>");
     CruiserCB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         ShipCBClicked(evt);
@@ -460,7 +460,7 @@ final class Game extends JFrame {
     });
     ShipsP.add(CruiserCB);
 
-    DestroyerCB.setText("<html>Destroyers<br/>3 Tiles; x4</html>");
+    DestroyerCB.setText("<html>Destroyers<br/>3 Tiles; x2</html>");
     DestroyerCB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         ShipCBClicked(evt);
@@ -468,7 +468,7 @@ final class Game extends JFrame {
     });
     ShipsP.add(DestroyerCB);
 
-    CorvetteCB.setText("<html>Corvettes<br/>2 Tiles; x5</html>");
+    CorvetteCB.setText("<html>Corvettes<br/>2 Tiles; x4</html>");
     CorvetteCB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         ShipCBClicked(evt);
@@ -862,7 +862,6 @@ final class Game extends JFrame {
 				for (int y = 0; y < this.boardSize; y++) { // Finalizes the player's ships placement.
 					for (int x = 0; x < this.boardSize; x++) {
 						if (this.buttonsClicked[y][x]) {
-							this.PlayerGridL[y][x].shipPresent();
 							this.PlayerGridB[y][x].setBackground(new Color(176, 196, 222, 255));
 							this.buttonsClicked[y][x] = false;
 						}
@@ -899,6 +898,7 @@ final class Game extends JFrame {
 			}
 		} else {                                    // Normal Rounds
 			if ((this.mode.equals("C") && (this.shotsSelected == 1)) || (this.mode.equals("S") && (this.shotsSelected == (this.shipNos - this.PlayerStats[2])))) { // Checks if the required number of selections have been made
+				shotChecker:
 				for (int y = 0; y < this.boardSize; y++) {
 					for (int x = 0; x < this.boardSize; x++) {
 						if (this.buttonsClicked[y][x]) {    // Checks if a shot was placed here.
@@ -920,6 +920,10 @@ final class Game extends JFrame {
 
 										if (this.AIShips[ship].isSunk()) {               // Checks if the ship was sunk due to this shot.
 											this.AIStats[2]++;
+										}
+
+										if (this.shipNos - this.AIStats[2] == 0) {       // Checks if the user won (to allow 100% accuracy scores).
+											break shotChecker;
 										}
 
 										break shipChecker;
@@ -1044,10 +1048,11 @@ final class Game extends JFrame {
 				}
 
 				length = this.PlayerShips[ship].length;              // Length
-				boolean dir = this.PlayerShips[ship].getDirection(); // Direction
 				int[] start = this.PlayerShips[ship].getStart();     // Starting Coordinates
-
+				boolean dir = this.PlayerShips[ship].getDirection(); // Direction
+				flag = false;                                        // Boolean flag to check if any other ship is present
 				for (int l = 0; l < length; l++) {
+					this.PlayerGridL[start[1] + (dir ? l : 0)][start[0] + (dir ? 0 : l)].shipAbsent();
 					this.PlayerGridB[start[1] + (dir ? l : 0)][start[0] + (dir ? 0 : l)].setBackground(new Color(5, 218, 255, 255));
 					this.buttonsClicked[start[1] + (dir ? l : 0)][start[0] + (dir ? 0 : l)] = false;
 				}
@@ -1062,7 +1067,7 @@ final class Game extends JFrame {
 							System.out.println("Ship out of bounds at position: " + (l + 1));
 							this.AlertsTA.append("Ship out of bounds at position: " + (l + 1) + "\n");
 							return;
-						} else if (this.PlayerGridB[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].getBackground().equals(new Color(242, 236, 0, 255))) {
+						} else if (this.buttonsClicked[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)]) {
 							// An intersection occurred!
 							System.out.println("Ship exists at position: " + (l + 1));
 							this.AlertsTA.append("Ship exists at position: " + (l + 1) + "\n");
@@ -1072,11 +1077,11 @@ final class Game extends JFrame {
 					// No intersections
 
 					for (int l = 0; l < length; l++) {
-						this.PlayerShips[this.shipPlacing].setStart(xy);
-						this.PlayerShips[this.shipPlacing].setDirection(direction);
+						this.PlayerGridL[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].shipPresent();
 						this.PlayerGridB[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].setBackground(new Color(242, 236, 0, 255));
 						this.buttonsClicked[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)] = true;
 					}
+					this.PlayerShips[this.shipPlacing].add(xy, direction);
 
 					this.shipPlacing = this.nextShip();     // Determines the next ship to place.
 					if (this.shipPlacing == this.shipNos) { // Checks if all ships were placed.
