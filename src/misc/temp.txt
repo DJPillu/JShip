@@ -1,8 +1,8 @@
 Colors:
 	Base             - Blue             - 5  , 218, 255, 255
 		Selection      - Yellow           - 242, 236, 0  , 255
-		Ship Placed    - Steel Grey       - 176, 196, 222, 255
-			Ship Border  - Light Steel Gray - 67 , 70 , 75 , 255 [Stretch Goals]
+		Ship Placed    - Steel Grey       - 67 , 70 , 75 , 255
+			Ship Border  - Light Steel Gray - 176, 196, 222, 255
 		Shot fired at  - Navy Blue        - 0  , 0  , 128, 255
 			Ship Damaged - Red              - 205, 0  , 0  , 255
 

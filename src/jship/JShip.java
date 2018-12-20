@@ -213,7 +213,7 @@ public final class JShip extends JFrame {
 	 * @param evt Button Click
 	 */
 	private void Exit(ActionEvent evt) {//GEN-FIRST:event_Exit
-		if (JOptionPane.showConfirmDialog(null, "Are you a wuss?", "Abandon Ship?", JOptionPane.YES_NO_OPTION) == 0) {
+		if (JOptionPane.showConfirmDialog(null, "Are you sure?", "Abandon Ship?", JOptionPane.YES_NO_OPTION) == 0) {
 			System.exit(0);
 		}
 	}//GEN-LAST:event_Exit

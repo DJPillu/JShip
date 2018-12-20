@@ -73,7 +73,7 @@ public final class Location {
 	/**
 	 * Getter for border
 	 *
-	 * @return hasShip
+	 * @return border
 	 */
 	public boolean isBorder() {
 		return this.border;

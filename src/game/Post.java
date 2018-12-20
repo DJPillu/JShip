@@ -55,7 +55,7 @@ final class Post extends JFrame {
 
 		this.initComponents();
 		this.playMusic();
-		this.setTitleL(statsList[0]);
+		this.setTitleL();
 		this.userStatsSetter();
 		this.setLocationRelativeTo(null);
 	}
@@ -90,10 +90,11 @@ final class Post extends JFrame {
     SLTF = new JTextField();
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setTitle("Match Ended!");
     setResizable(false);
 
     TitleL.setHorizontalAlignment(SwingConstants.CENTER);
-    TitleL.setText("Match Won!");
+    TitleL.setText("Match Ended!");
 
     PlayL.setText("Play Another Game:");
 
@@ -260,18 +261,20 @@ final class Post extends JFrame {
 
 	/**
 	 * Updates TitleL's display text. Is run upon frame creation.
-	 *
-	 * @param status Match Status
 	 */
-	private void setTitleL(int status) {
-		if (status == 1) {
+	private void setTitleL() {
+		if (this.statsList[0] == Game.WIN) {         // Checks if the user won
 			System.out.println("Match Won!");
 			this.TitleL.setText("Match Won!");
 			this.setTitle("Match Won!");
-		} else if (status == 0) {
+		} else if (this.statsList[0] == Game.LOSE) { // Checks if the user lost
 			System.out.println("Match Lost!");
 			this.TitleL.setText("Match Lost!");
 			this.setTitle("Match Lost!");
+		} else {                                     // Should not have happened.
+			System.out.println("Match Ended!");
+			this.TitleL.setText("Match Ended!");
+			this.setTitle("Match Ended!");
 		}
 	}
 
