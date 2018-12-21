@@ -48,21 +48,8 @@ public final class LoginUser extends User {
 
 			String curUser = this.getUName(); // Current User's username
 			long curHash = this.getHash();    // Current User's password hash
-			while (!match && rs.next()) {
-				// Loops over the result set to see whether the entered username matches any of the registered users
+			while (!match && rs.next()) {     // Loops over the result set to see whether the entered username matches any of the registered users
 				System.out.println("match (within loop): ".concat(match ? "true" : "false"));
-				/**
-				 * Whether or not the given details match.
-				 *
-				 * Equivalent to the following code:
-				 * <code>
-				 *	if (rs.getString(1).equals(curUser) && (rs.hetLong(2) == curHash)) {
-				 *		match = true;
-				 *	} else {
-				 *		match = false;
-				 *	}
-				 * </code>
-				 */
 				match = rs.getString(1).equals(curUser) && (rs.getLong(2) == curHash);
 			}
 			System.out.println("match (final value): ".concat(match ? "true" : "false"));
@@ -88,7 +75,7 @@ public final class LoginUser extends User {
 
 			if (match) {  // Logged in successfuly. Changing current user.
 				System.out.println("return code corresponds to a match!");
-				CurrentUser.setCurrentUser(this.getUName());
+				CurrentUser.setCurrentUser(this.getUName(), this.getHash());
 				ret = 1;
 			} else {      // Login unsuccessful.
 				System.out.println("return code corresponds to a non-match!");

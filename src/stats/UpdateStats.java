@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import misc.DBDetails;
 import users.CurrentUser;
 
@@ -68,12 +69,12 @@ public final class UpdateStats extends Stats {
 	 * I-----------I-----------------------I
 	 * </pre>
 	 */
-	private final int[] statsList;
+	private int[] statsList;
 
 	/**
 	 * <code>Accuracy = (Hits Landed / Shots Fired) * 100 = (statsList[2] / statsList[1]) * 100</code>
 	 */
-	private final float Acc;
+	private float Acc;
 
 	/**
 	 * Constructor for the UpdateStats class. Calls the superclass's constructor.
@@ -93,6 +94,21 @@ public final class UpdateStats extends Stats {
 		this.Acc = Acc;
 
 		this.setLocalStats();
+	}
+
+	/**
+	 * Resets the statistics of the given category to all zeroes.
+	 *
+	 * @return ret - An Integer indicating the result of statistics retrieval.
+	 *         {-1, -2, -3} imply an error.
+	 *         {0} implies successful update.
+	 */
+	public int reset() {
+		Arrays.fill(this.statsList, 0);
+		this.Acc = (float) 0.0;
+
+		this.setLocalStats();
+		return this.update();
 	}
 
 	/**
@@ -119,8 +135,8 @@ public final class UpdateStats extends Stats {
 			update.append(", TH=").append(this.getStatsLists()[index][5]);                // TH value
 			update.append(", SS=").append(this.getStatsLists()[index][6]);                // SS value
 			update.append(", SL=").append(this.getStatsLists()[index][7]);                // SL value
-			update.append(" WHERE UNo=(SELECT UNo FROM users WHERE UName='");           // 1st Conditional statement using Subquery
-			update.append(CurrentUser.getCurrentUser()).append("') AND Mode='").append(this.mode);        // Username for Subquery and Complete 2nd Conditional statement
+			update.append(" WHERE UNo=(SELECT UNo FROM users WHERE UName='");             // 1st Conditional statement using Subquery
+			update.append(CurrentUser.getCurrentUser()).append("') AND Mode='").append(this.mode); // Username for Subquery and Complete 2nd Conditional statement
 			update.append("' AND AIDiff='").append(this.AIDiff == 1 ? "B" : (this.AIDiff == 0 ? "R" : "S")).append("';"); // Complete 3rd Conditional statement
 
 			Statement stmnt = con.createStatement(); // Creates the SQL statement object

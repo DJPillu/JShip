@@ -28,7 +28,7 @@ abstract class User {
 	 */
 	User(String UName, char[] psswrd) {
 		this.UName = UName;
-		this.Hash = hash(psswrd);
+		this.Hash = this.hash(psswrd);
 	}
 
 	/**

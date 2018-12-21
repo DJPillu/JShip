@@ -2,6 +2,7 @@ package jship;
 
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.util.Arrays;
 import javax.swing.*;
 import users.CreateUser;
 import users.CurrentUser;
@@ -32,6 +33,15 @@ final class ChangeUser extends JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    ConfirmP = new JPanel();
+    ConfirmL = new JLabel();
+    ConfirmPF = new JPasswordField();
+    ChangePassP = new JPanel();
+    ChangePassL = new JLabel();
+    ChangePassPF = new JPasswordField();
+    VerifyPassP = new JPanel();
+    VerifyPassL = new JLabel();
+    VerifyPassPF = new JPasswordField();
     InputP = new JPanel();
     TitleL = new JLabel();
     CurrentUserL = new JLabel();
@@ -39,14 +49,89 @@ final class ChangeUser extends JFrame {
     UserL = new JLabel();
     UserTF = new JTextField();
     PassL = new JLabel();
-    PassTF = new JPasswordField();
+    PassPF = new JPasswordField();
     ButtonsP = new JPanel();
     LoginB = new JButton();
     Spacer1L = new JLabel();
     LogoutB = new JButton();
-    RegisterB = new JButton();
     Spacer2L = new JLabel();
+    ChangeB = new JButton();
+    Spacer3L = new JLabel();
+    RegisterB = new JButton();
+    Spacer4L = new JLabel();
     CancelB = new JButton();
+
+    ConfirmL.setLabelFor(ConfirmPF);
+    ConfirmL.setText("Please confirm your password:");
+
+    GroupLayout ConfirmPLayout = new GroupLayout(ConfirmP);
+    ConfirmP.setLayout(ConfirmPLayout);
+    ConfirmPLayout.setHorizontalGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(ConfirmPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+          .addGroup(ConfirmPLayout.createSequentialGroup()
+            .addComponent(ConfirmL)
+            .addGap(218, 218, 218))
+          .addComponent(ConfirmPF))
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    ConfirmPLayout.setVerticalGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(ConfirmPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(ConfirmL)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(ConfirmPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    ChangePassL.setLabelFor(ChangePassPF);
+    ChangePassL.setText("Enter the new password:");
+
+    GroupLayout ChangePassPLayout = new GroupLayout(ChangePassP);
+    ChangePassP.setLayout(ChangePassPLayout);
+    ChangePassPLayout.setHorizontalGroup(ChangePassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(ChangePassPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(ChangePassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+          .addGroup(ChangePassPLayout.createSequentialGroup()
+            .addComponent(ChangePassL)
+            .addGap(0, 200, Short.MAX_VALUE))
+          .addComponent(ChangePassPF))
+        .addContainerGap())
+    );
+    ChangePassPLayout.setVerticalGroup(ChangePassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(ChangePassPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(ChangePassL)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(ChangePassPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    VerifyPassL.setLabelFor(VerifyPassPF);
+    VerifyPassL.setText("Verify the new password:");
+
+    VerifyPassPF.setText("jPasswordField1");
+
+    GroupLayout VerifyPassPLayout = new GroupLayout(VerifyPassP);
+    VerifyPassP.setLayout(VerifyPassPLayout);
+    VerifyPassPLayout.setHorizontalGroup(VerifyPassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(VerifyPassPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(VerifyPassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+          .addComponent(VerifyPassL)
+          .addComponent(VerifyPassPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(208, Short.MAX_VALUE))
+    );
+    VerifyPassPLayout.setVerticalGroup(VerifyPassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(VerifyPassPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(VerifyPassL)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(VerifyPassPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     setTitle("User Management");
@@ -63,7 +148,7 @@ final class ChangeUser extends JFrame {
     UserL.setLabelFor(UserTF);
     UserL.setText("Username:");
 
-    PassL.setLabelFor(PassTF);
+    PassL.setLabelFor(PassPF);
     PassL.setText("Password:");
 
     GroupLayout InputPLayout = new GroupLayout(InputP);
@@ -80,7 +165,7 @@ final class ChangeUser extends JFrame {
               .addComponent(PassL, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(18, 18, 18)
             .addGroup(InputPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-              .addComponent(PassTF)
+              .addComponent(PassPF)
               .addComponent(UserTF)
               .addComponent(CurrentUserTF))))
         .addContainerGap())
@@ -100,11 +185,11 @@ final class ChangeUser extends JFrame {
         .addGap(18, 18, 18)
         .addGroup(InputPLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
           .addComponent(PassL)
-          .addComponent(PassTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+          .addComponent(PassPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    ButtonsP.setLayout(new GridLayout(2, 3, 30, 10));
+    ButtonsP.setLayout(new GridLayout(3, 3, 30, 10));
 
     LoginB.setText("Login");
     LoginB.addActionListener(new ActionListener() {
@@ -122,6 +207,16 @@ final class ChangeUser extends JFrame {
       }
     });
     ButtonsP.add(LogoutB);
+    ButtonsP.add(Spacer2L);
+
+    ChangeB.setText("Change Password");
+    ChangeB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        Change(evt);
+      }
+    });
+    ButtonsP.add(ChangeB);
+    ButtonsP.add(Spacer3L);
 
     RegisterB.setText("Register");
     RegisterB.addActionListener(new ActionListener() {
@@ -130,7 +225,7 @@ final class ChangeUser extends JFrame {
       }
     });
     ButtonsP.add(RegisterB);
-    ButtonsP.add(Spacer2L);
+    ButtonsP.add(Spacer4L);
 
     CancelB.setText("Cancel");
     CancelB.addActionListener(new ActionListener() {
@@ -175,15 +270,18 @@ final class ChangeUser extends JFrame {
 	 * @param evt Button Click
 	 */
 	private void Login(ActionEvent evt) {//GEN-FIRST:event_Login
-		if (UserTF.getText().isEmpty()) {              // Checks if a username is entered
+		String user = UserTF.getText();
+		char[] pass = PassPF.getPassword();
+
+		if (user.isEmpty()) {                       // Checks if a username is entered
 			System.out.println("Please enter a Username!");
 			JOptionPane.showMessageDialog(null, "Please enter a Username!");
-		} else if (PassTF.getPassword().length == 0) { // Checks if a password is entered
+		} else if (pass.length == 0) {              // Checks if a password is entered
 			System.out.println("Please enter a Password!");
 			JOptionPane.showMessageDialog(null, "Please enter a Password!");
-		} else {                                       // A Username and a Password has been entered
-			LoginUser lu = new LoginUser(UserTF.getText(), PassTF.getPassword()); // Created the LoginUser object
-			int res = lu.login(); // User logged in. res holds the return value.
+		} else {                                    // A Username and a Password has been entered
+			LoginUser lu = new LoginUser(user, pass); // Created the LoginUser object
+			int res = lu.login();
 
 			this.updateCurrentUser();
 			if (res == -3) {                     // Unknown Exception
@@ -198,7 +296,6 @@ final class ChangeUser extends JFrame {
 			} else if (res == 1) {               // ChangeUser Successful
 				System.out.println("Logged in!");
 				JOptionPane.showMessageDialog(null, "Logged in!");
-				this.CancelB.doClick();
 			} else {                             // Unknown Return Value
 				System.out.println("Unknown Return Value! Contact Developer");
 				JOptionPane.showMessageDialog(null, "Unknown Return Value! Contact Developer!");
@@ -230,15 +327,18 @@ final class ChangeUser extends JFrame {
 	 * @param evt Button Click
 	 */
 	private void Register(ActionEvent evt) {//GEN-FIRST:event_Register
-		if (UserTF.getText().isEmpty()) {               // Checks if a username is entered
+		String user = UserTF.getText();
+		char[] pass = PassPF.getPassword();
+
+		if (user.isEmpty()) {                         // Checks if a username is entered
 			System.out.println("Please enter a Username!");
 			JOptionPane.showMessageDialog(null, "Please enter a Username!");
-		} else if (PassTF.getPassword().length == 0) { // Checks if a password is entered
+		} else if (pass.length == 0) {                // Checks if a password is entered
 			System.out.println("Please enter a Password!");
 			JOptionPane.showMessageDialog(null, "Please enter a Password!");
-		} else {                                       // A Username and a Password has been entered
-			CreateUser cu = new CreateUser(UserTF.getText(), PassTF.getPassword()); // Created the CreateUser object
-			int res = cu.create(); // User created. res holds the return value.
+		} else {                                      // A Username and a Password has been entered
+			CreateUser cu = new CreateUser(user, pass); // Created the CreateUser object
+			int res = cu.create();
 
 			this.updateCurrentUser();
 			if (res == -4) {                     // User Already Registered Exception
@@ -272,21 +372,87 @@ final class ChangeUser extends JFrame {
 		this.dispose();            // Destroys the current form object
 	}//GEN-LAST:event_GoBack
 
+	/**
+	 * Changes the user's password.
+	 *
+	 * @param evt button click.
+	 */
+  private void Change(ActionEvent evt) {//GEN-FIRST:event_Change
+		int confirmRes = JOptionPane.showConfirmDialog(null, this.ConfirmP, "Confirm Password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		boolean flag = confirmRes == 0;
+		while (flag) {               // Checks if the user clicked Yes
+			char[] password = this.ConfirmPF.getPassword();
+
+			if (CurrentUser.checkHash(password) == CurrentUser.getCurrentHash()) { // Checks if the correct current password was entered.
+				Arrays.fill(password, '0');             // Security measure
+
+				while (flag) {
+					int changeRes = JOptionPane.showConfirmDialog(null, this.ChangePassP, "New Password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					flag = changeRes == 0; // Checks if the user clicked Yes
+					char[] newPassword = this.ChangePassPF.getPassword();
+
+					int verifyRes = JOptionPane.showConfirmDialog(null, this.VerifyPassP, "Verify New Password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					flag = verifyRes == 0; // Checks if the user clicked Yes
+					char[] verifyPassword = this.VerifyPassPF.getPassword();
+
+					if (newPassword.length == verifyPassword.length) {  // Checks if the new and the verification of the new password match length.
+						boolean check = true;
+
+						check:
+						for (int i = 0; i < verifyPassword.length; i++) { // Checks if the new and the verification of the new password match.
+							if (verifyPassword[i] != newPassword[i]) {
+								check = false;
+								break check;
+							}
+						}
+
+						if (check) { // Checks if the new and the verification of the new password match length
+							CurrentUser.updatePassword(newPassword);
+
+							Arrays.fill(newPassword, '0');    // Security measure
+							Arrays.fill(verifyPassword, '0'); // Security measure
+							JOptionPane.showMessageDialog(null, "Your password has been changed.", "Password Changed", JOptionPane.ERROR_MESSAGE);
+						} else {     // New and the verification of the new password don't match.
+							JOptionPane.showMessageDialog(null, "The Passwords entered don't match!", "Passwords don't Match!", JOptionPane.ERROR_MESSAGE);
+						}
+					} else {       // New and the verification of the new password don't match.
+						JOptionPane.showMessageDialog(null, "The Passwords entered don't match!", "Passwords don't Match!", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			} else {           // Incorrect current password entered.
+				JOptionPane.showMessageDialog(null, "Incorrect Password entered!", "Password Incorrect", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+  }//GEN-LAST:event_Change
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private JPanel ButtonsP;
   private JButton CancelB;
+  private JButton ChangeB;
+  private JLabel ChangePassL;
+  private JPanel ChangePassP;
+  private JPasswordField ChangePassPF;
+  private JLabel ConfirmL;
+  private JPanel ConfirmP;
+  private JPasswordField ConfirmPF;
   private JLabel CurrentUserL;
   private JTextField CurrentUserTF;
   private JPanel InputP;
   private JButton LoginB;
   private JButton LogoutB;
   private JLabel PassL;
-  private JPasswordField PassTF;
+  private JPasswordField PassPF;
   private JButton RegisterB;
   private JLabel Spacer1L;
   private JLabel Spacer2L;
+  private JLabel Spacer3L;
+  private JLabel Spacer4L;
   private JLabel TitleL;
   private JLabel UserL;
   private JTextField UserTF;
+  private JLabel VerifyPassL;
+  private JPanel VerifyPassP;
+  private JPasswordField VerifyPassPF;
   // End of variables declaration//GEN-END:variables
 }

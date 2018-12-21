@@ -3,7 +3,7 @@ package jship;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
-import stats.Stats;
+import stats.*;
 import users.CurrentUser;
 
 
@@ -13,9 +13,9 @@ import users.CurrentUser;
  * @author blackk100
  */
 final class ViewStats extends JFrame {
-	private String mode;
-	private int diff;
-	private int mdI; // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
+	private String mode = "C";
+	private int AIDiff = 0;
+	private int index; // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
 
 	/**
 	 * Creates new form Statistics
@@ -23,11 +23,11 @@ final class ViewStats extends JFrame {
 	ViewStats() {
 		this.initComponents();
 
-		this.updateCurrentUser();
-		this.mode = this.ModeBG.getSelection().getActionCommand();
-		String difficulty = this.DifficultyBG.getSelection().getActionCommand();
-		this.diff = difficulty.equals("B") ? 2 : (difficulty.equals("R") ? 1 : 0);
+		this.UserTF.setText(CurrentUser.getCurrentUser());
 		this.userStatsSetter();
+		if (CurrentUser.getCurrentUser().equals("guest")) {
+			this.ResetB.setEnabled(false);
+		}
 
 		this.setLocationRelativeTo(null);
 	}
@@ -42,6 +42,10 @@ final class ViewStats extends JFrame {
 
     ModeBG = new ButtonGroup();
     DifficultyBG = new ButtonGroup();
+    ConfirmP = new JPanel();
+    ConfirmL = new JLabel();
+    ConfirmPF = new JPasswordField();
+    jLabel1 = new JLabel();
     TitleP = new JPanel();
     TitleL = new JLabel();
     CurrentUserL = new JLabel();
@@ -56,6 +60,7 @@ final class ViewStats extends JFrame {
     MediumRB = new JRadioButton();
     HardRB = new JRadioButton();
     GoBackB = new JButton();
+    ResetB = new JButton();
     StatsP = new JPanel();
     GPL = new JLabel();
     GPTF = new JTextField();
@@ -75,6 +80,36 @@ final class ViewStats extends JFrame {
     SSTF = new JTextField();
     SLL = new JLabel();
     SLTF = new JTextField();
+
+    ConfirmL.setLabelFor(ConfirmPF);
+    ConfirmL.setText("Please confirm your password:");
+
+    jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+    jLabel1.setText("Are you sure you wish to reset the statistics for this category?");
+
+    GroupLayout ConfirmPLayout = new GroupLayout(ConfirmP);
+    ConfirmP.setLayout(ConfirmPLayout);
+    ConfirmPLayout.setHorizontalGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(ConfirmPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+          .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addGroup(ConfirmPLayout.createSequentialGroup()
+            .addComponent(ConfirmL)
+            .addGap(218, 218, 218))
+          .addComponent(ConfirmPF))
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    ConfirmPLayout.setVerticalGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(GroupLayout.Alignment.TRAILING, ConfirmPLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jLabel1)
+        .addGap(18, 18, 18)
+        .addComponent(ConfirmL)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(ConfirmPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     setTitle("Statistics");
@@ -155,6 +190,13 @@ final class ViewStats extends JFrame {
       }
     });
 
+    ResetB.setText("Reset Statistics");
+    ResetB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        Reset(evt);
+      }
+    });
+
     GroupLayout TitlePLayout = new GroupLayout(TitleP);
     TitleP.setLayout(TitlePLayout);
     TitlePLayout.setHorizontalGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -173,12 +215,12 @@ final class ViewStats extends JFrame {
             .addGap(18, 18, 18)
             .addGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
               .addComponent(ModeP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(DifficultyP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+              .addComponent(DifficultyP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+          .addGroup(TitlePLayout.createSequentialGroup()
+            .addComponent(GoBackB)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ResetB)))
         .addContainerGap())
-      .addGroup(TitlePLayout.createSequentialGroup()
-        .addGap(175, 175, 175)
-        .addComponent(GoBackB)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     TitlePLayout.setVerticalGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(TitlePLayout.createSequentialGroup()
@@ -197,7 +239,9 @@ final class ViewStats extends JFrame {
           .addComponent(DifficultyP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(DifficultyL, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
-        .addComponent(GoBackB)
+        .addGroup(TitlePLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+          .addComponent(GoBackB)
+          .addComponent(ResetB))
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -338,31 +382,24 @@ final class ViewStats extends JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Updates the current user. Called after every button.
-	 */
-	private void updateCurrentUser() {
-		UserTF.setText(CurrentUser.getCurrentUser());
-	}
-
-	/**
 	 * Gets the current user's statistics and sets the TextFields to display them.
 	 */
 	private void userStatsSetter() {
-		this.mdI = (this.mode.equals("S") ? 3 : 0) + this.diff;
+		this.index = (this.mode.equals("S") ? 3 : 0) + this.AIDiff;
 
 		Stats stats = new Stats();
 		int[][] userStats = stats.getStatsLists();
 		float[] Acc = stats.getAcc();
 
-		GPTF.setText("" + userStats[mdI][0]);
-		GWTF.setText("" + userStats[mdI][1]);
-		GLTF.setText("" + userStats[mdI][2]);
-		SFTF.setText("" + userStats[mdI][3]);
-		HitsTF.setText("" + userStats[mdI][4]);
-		AccTF.setText("" + Acc[mdI] + " %");
-		THTF.setText("" + userStats[mdI][5]);
-		SSTF.setText("" + userStats[mdI][6]);
-		SLTF.setText("" + userStats[mdI][7]);
+		this.GPTF.setText("" + userStats[this.index][0]);
+		this.GWTF.setText("" + userStats[this.index][1]);
+		this.GLTF.setText("" + userStats[this.index][2]);
+		this.SFTF.setText("" + userStats[this.index][3]);
+		this.HitsTF.setText("" + userStats[this.index][4]);
+		this.AccTF.setText("" + Acc[this.index] + " %");
+		this.THTF.setText("" + userStats[this.index][5]);
+		this.SSTF.setText("" + userStats[this.index][6]);
+		this.SLTF.setText("" + userStats[this.index][7]);
 	}
 
 	/**
@@ -384,7 +421,8 @@ final class ViewStats extends JFrame {
 	 */
 	private void DifficultyChanged(ActionEvent evt) {//GEN-FIRST:event_DifficultyChanged
 		String difficulty = this.DifficultyBG.getSelection().getActionCommand();
-		this.diff = difficulty.equals("B") ? 2 : (difficulty.equals("R") ? 1 : 0);
+		this.AIDiff = difficulty.equals("B") ? 2 : (difficulty.equals("R") ? 1 : 0);
+
 		this.userStatsSetter();
 	}//GEN-LAST:event_DifficultyChanged
 
@@ -395,13 +433,43 @@ final class ViewStats extends JFrame {
 	 */
 	private void ModeChanged(ActionEvent evt) {//GEN-FIRST:event_ModeChanged
 		this.mode = this.ModeBG.getSelection().getActionCommand();
+
 		this.userStatsSetter();
 	}//GEN-LAST:event_ModeChanged
+
+	/**
+	 * Resets the user's statistics for this round.
+	 *
+	 * @param evt button click.
+	 */
+  private void Reset(ActionEvent evt) {//GEN-FIRST:event_Reset
+		int response = JOptionPane.showConfirmDialog(null, this.ConfirmP, "Confirm Password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		if (response == 0) { // Checks if the user clicked Yes
+			char[] password = this.ConfirmPF.getPassword();
+
+			if (CurrentUser.checkHash(password) == CurrentUser.getCurrentHash()) { // Checks if the correct current password was entered.
+				Stats stats = new Stats();
+				UpdateStats rStats = new UpdateStats(this.mode, this.AIDiff, stats.getStatsLists()[this.index], stats.getAcc()[this.index]);
+
+				if (rStats.reset() < 0) {
+					JOptionPane.showMessageDialog(null, "An Error Occurred!", "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "All statistics for this category were reset!", "Reset Performed", JOptionPane.INFORMATION_MESSAGE);
+				}
+			} else {           // Incorrect current password entered.
+				JOptionPane.showMessageDialog(null, "Incorrect Password entered!", "Password Incorrect", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+  }//GEN-LAST:event_Reset
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private JLabel AccL;
   private JTextField AccTF;
   private JRadioButton ClassRB;
+  private JLabel ConfirmL;
+  private JPanel ConfirmP;
+  private JPasswordField ConfirmPF;
   private JLabel CurrentUserL;
   private ButtonGroup DifficultyBG;
   private JLabel DifficultyL;
@@ -421,6 +489,7 @@ final class ViewStats extends JFrame {
   private ButtonGroup ModeBG;
   private JLabel ModeL;
   private JPanel ModeP;
+  private JButton ResetB;
   private JLabel SFL;
   private JTextField SFTF;
   private JLabel SLL;
@@ -434,5 +503,6 @@ final class ViewStats extends JFrame {
   private JLabel TitleL;
   private JPanel TitleP;
   private JTextField UserTF;
+  private JLabel jLabel1;
   // End of variables declaration//GEN-END:variables
 }
