@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.Arrays;
 import javax.swing.*;
+import users.ChangeUserDetails;
 import users.CreateUser;
 import users.CurrentUser;
 import users.LoginUser;
@@ -22,6 +23,13 @@ final class ChangeUser extends JFrame {
 	ChangeUser() {
 		this.initComponents();
 		this.updateCurrentUser();
+		if (CurrentUser.getCurrentUser().equals("guest")) {
+			this.ChangeB.setEnabled(false);
+			this.DeleteB.setEnabled(false);
+		}
+		if (CurrentUser.getCurrentUser().equals("admin")) {
+			this.DeleteB.setEnabled(false);
+		}
 		this.setLocationRelativeTo(null);
 	}
 
@@ -54,11 +62,11 @@ final class ChangeUser extends JFrame {
     LoginB = new JButton();
     Spacer1L = new JLabel();
     LogoutB = new JButton();
-    Spacer2L = new JLabel();
     ChangeB = new JButton();
-    Spacer3L = new JLabel();
+    Spacer2L = new JLabel();
+    DeleteB = new JButton();
     RegisterB = new JButton();
-    Spacer4L = new JLabel();
+    Spacer3L = new JLabel();
     CancelB = new JButton();
 
     ConfirmL.setLabelFor(ConfirmPF);
@@ -207,7 +215,6 @@ final class ChangeUser extends JFrame {
       }
     });
     ButtonsP.add(LogoutB);
-    ButtonsP.add(Spacer2L);
 
     ChangeB.setText("Change Password");
     ChangeB.addActionListener(new ActionListener() {
@@ -216,7 +223,15 @@ final class ChangeUser extends JFrame {
       }
     });
     ButtonsP.add(ChangeB);
-    ButtonsP.add(Spacer3L);
+    ButtonsP.add(Spacer2L);
+
+    DeleteB.setText("Delete User");
+    DeleteB.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        Delete(evt);
+      }
+    });
+    ButtonsP.add(DeleteB);
 
     RegisterB.setText("Register");
     RegisterB.addActionListener(new ActionListener() {
@@ -225,7 +240,7 @@ final class ChangeUser extends JFrame {
       }
     });
     ButtonsP.add(RegisterB);
-    ButtonsP.add(Spacer4L);
+    ButtonsP.add(Spacer3L);
 
     CancelB.setText("Cancel");
     CancelB.addActionListener(new ActionListener() {
@@ -261,7 +276,7 @@ final class ChangeUser extends JFrame {
 	 * Updates the current user. Called after every button.
 	 */
 	private void updateCurrentUser() {
-		CurrentUserTF.setText(CurrentUser.getCurrentUser());
+		this.CurrentUserTF.setText(CurrentUser.getCurrentUser());
 	}
 
 	/**
@@ -270,8 +285,8 @@ final class ChangeUser extends JFrame {
 	 * @param evt Button Click
 	 */
 	private void Login(ActionEvent evt) {//GEN-FIRST:event_Login
-		String user = UserTF.getText();
-		char[] pass = PassPF.getPassword();
+		String user = this.UserTF.getText();
+		char[] pass = this.PassPF.getPassword();
 
 		if (user.isEmpty()) {                       // Checks if a username is entered
 			System.out.println("Please enter a Username!");
@@ -327,8 +342,8 @@ final class ChangeUser extends JFrame {
 	 * @param evt Button Click
 	 */
 	private void Register(ActionEvent evt) {//GEN-FIRST:event_Register
-		String user = UserTF.getText();
-		char[] pass = PassPF.getPassword();
+		String user = this.UserTF.getText();
+		char[] pass = this.PassPF.getPassword();
 
 		if (user.isEmpty()) {                         // Checks if a username is entered
 			System.out.println("Please enter a Username!");
@@ -379,12 +394,13 @@ final class ChangeUser extends JFrame {
 	 */
   private void Change(ActionEvent evt) {//GEN-FIRST:event_Change
 		int confirmRes = JOptionPane.showConfirmDialog(null, this.ConfirmP, "Confirm Password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		ChangeUserDetails change = new ChangeUserDetails();
 
 		boolean flag = confirmRes == 0;
 		while (flag) {               // Checks if the user clicked Yes
 			char[] password = this.ConfirmPF.getPassword();
 
-			if (CurrentUser.checkHash(password) == CurrentUser.getCurrentHash()) { // Checks if the correct current password was entered.
+			if (change.checkHash(password) == ChangeUserDetails.getCurrentHash()) { // Checks if the correct current password was entered.
 				Arrays.fill(password, '0');             // Security measure
 
 				while (flag) {
@@ -407,24 +423,50 @@ final class ChangeUser extends JFrame {
 							}
 						}
 
-						if (check) { // Checks if the new and the verification of the new password match length
-							CurrentUser.updatePassword(newPassword);
+						if (check) {         // Checks if the new and the verification of the new password match length
+							change.updatePassword(newPassword);
 
 							Arrays.fill(newPassword, '0');    // Security measure
 							Arrays.fill(verifyPassword, '0'); // Security measure
 							JOptionPane.showMessageDialog(null, "Your password has been changed.", "Password Changed", JOptionPane.ERROR_MESSAGE);
-						} else {     // New and the verification of the new password don't match.
+						} else {             // New and the verification of the new password don't match.
 							JOptionPane.showMessageDialog(null, "The Passwords entered don't match!", "Passwords don't Match!", JOptionPane.ERROR_MESSAGE);
 						}
-					} else {       // New and the verification of the new password don't match.
+					} else {               // New and the verification of the new password don't match.
 						JOptionPane.showMessageDialog(null, "The Passwords entered don't match!", "Passwords don't Match!", JOptionPane.ERROR_MESSAGE);
 					}
+				}
+			} else {                   // Incorrect current password entered.
+				JOptionPane.showMessageDialog(null, "Incorrect Password entered!", "Password Incorrect", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+  }//GEN-LAST:event_Change
+
+	/**
+	 * Deletes the current user.
+	 *
+	 * @param evt Button Click
+	 */
+  private void Delete(ActionEvent evt) {//GEN-FIRST:event_Delete
+		int response = JOptionPane.showConfirmDialog(null, this.ConfirmP, "Confirm Password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		ChangeUserDetails change = new ChangeUserDetails();
+
+		if (response == 0) { // Checks if the user clicked Yes
+			char[] password = this.ConfirmPF.getPassword();
+
+			if (change.checkHash(password) == ChangeUserDetails.getCurrentHash()) { // Checks if the correct current password was entered.
+				int res = change.deleteUser();
+
+				if (res < 0) {
+					JOptionPane.showMessageDialog(null, "An Error Occurred!", "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "User Deleted!", "Delete Performed", JOptionPane.INFORMATION_MESSAGE);
 				}
 			} else {           // Incorrect current password entered.
 				JOptionPane.showMessageDialog(null, "Incorrect Password entered!", "Password Incorrect", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-  }//GEN-LAST:event_Change
+  }//GEN-LAST:event_Delete
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private JPanel ButtonsP;
@@ -438,6 +480,7 @@ final class ChangeUser extends JFrame {
   private JPasswordField ConfirmPF;
   private JLabel CurrentUserL;
   private JTextField CurrentUserTF;
+  private JButton DeleteB;
   private JPanel InputP;
   private JButton LoginB;
   private JButton LogoutB;
@@ -447,7 +490,6 @@ final class ChangeUser extends JFrame {
   private JLabel Spacer1L;
   private JLabel Spacer2L;
   private JLabel Spacer3L;
-  private JLabel Spacer4L;
   private JLabel TitleL;
   private JLabel UserL;
   private JTextField UserTF;

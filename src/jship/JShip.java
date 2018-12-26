@@ -19,7 +19,7 @@ public final class JShip extends JFrame {
 	 */
 	public JShip() {
 		this.initComponents();
-		this.updateCurrentUser();
+		UserTF.setText(CurrentUser.getCurrentUser());
 		this.setLocationRelativeTo(null);
 	}
 
@@ -163,13 +163,6 @@ public final class JShip extends JFrame {
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
-
-	/**
-	 * Updates the current user. Called after every button.
-	 */
-	private void updateCurrentUser() {
-		UserTF.setText(CurrentUser.getCurrentUser());
-	}
 
 	/**
 	 * Changes the current user.

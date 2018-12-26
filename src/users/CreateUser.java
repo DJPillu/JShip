@@ -93,7 +93,7 @@ public final class CreateUser extends User {
 
 			stmnt.close();
 			con.close();
-		} catch (SQLIntegrityConstraintViolationException e) { // User already registered;   return -4
+		} catch (SQLIntegrityConstraintViolationException e) {   // User already registered;   return -4
 			// Is above the rest since it is a subclass of SQLException.
 			System.out.println("User Already Registered Exception:\n" + e);
 			ret = -4;

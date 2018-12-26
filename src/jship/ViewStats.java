@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 import stats.*;
+import users.ChangeUserDetails;
 import users.CurrentUser;
 
 
@@ -444,11 +445,12 @@ final class ViewStats extends JFrame {
 	 */
   private void Reset(ActionEvent evt) {//GEN-FIRST:event_Reset
 		int response = JOptionPane.showConfirmDialog(null, this.ConfirmP, "Confirm Password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		ChangeUserDetails change = new ChangeUserDetails();
 
 		if (response == 0) { // Checks if the user clicked Yes
 			char[] password = this.ConfirmPF.getPassword();
 
-			if (CurrentUser.checkHash(password) == CurrentUser.getCurrentHash()) { // Checks if the correct current password was entered.
+			if (change.checkHash(password) == ChangeUserDetails.getCurrentHash()) { // Checks if the correct current password was entered.
 				Stats stats = new Stats();
 				UpdateStats rStats = new UpdateStats(this.mode, this.AIDiff, stats.getStatsLists()[this.index], stats.getAcc()[this.index]);
 
