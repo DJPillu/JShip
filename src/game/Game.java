@@ -1,8 +1,7 @@
 package game;
 
 import game.ai.*;
-import game.grid.Location;
-import game.grid.Ship;
+import game.grid.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -312,7 +311,7 @@ final class Game extends JFrame {
 							} else {                   // SHIFT or CTRL weren't held down.
 								placeShip(((JButton) evt.getSource()).getActionCommand(), false); // Horizontal
 							}
-							// setBorders();
+							setBorders();
 						} else if (roundNo != Game.END) { // Normal Round
 							fire(((JButton) evt.getSource()).getActionCommand());
 						}
@@ -911,6 +910,16 @@ final class Game extends JFrame {
 										this.AIShips[ship].sectionHit(new int[] {x, y});           // Marks the section as hit.
 
 										if (this.AIShips[ship].isSunk()) {                         // Checks if the ship was sunk due to this shot.
+											if (this.AIShips[ship].length == 5) {
+												this.AlertsTA.append("Enemy Battleship sunk!\n");
+											} else if (this.AIShips[ship].length == 4) {
+												this.AlertsTA.append("Enemy Cruiser sunk!\n");
+											} else if (this.AIShips[ship].length == 3) {
+												this.AlertsTA.append("Enemy Destroyer sunk!\n");
+											} else {
+												this.AlertsTA.append("Enemy Corvette sunk!\n");
+											}
+
 											this.AIStats[2]++;
 											if (this.shipNos - this.AIStats[2] == 0) {               // Checks if the user won (allows 100% accuracy scores).
 												break shotChecker;
@@ -1042,7 +1051,9 @@ final class Game extends JFrame {
 					this.PlayerGridL[start[1] + (dir ? l : 0)][start[0] + (dir ? 0 : l)].shipAbsent();
 					this.buttonsClicked[start[1] + (dir ? l : 0)][start[0] + (dir ? 0 : l)] = false;
 				}
-				this.PlayerShips[ship].remove();
+				this.PlayerShips[ship].remove();    // "Removes" the ship.
+
+				this.shipPlacing = this.nextShip(); // Determines the next ship to place.
 			} else {                                 // Button hasn't been clicked.
 				if (this.shipPlacing < this.shipNos) { // Checks if the number of ships placed is less than the max ships available.
 					for (int l = 0; l < length; l++) {   // Checks for intersections, direct contact, and if the ship is within the board.
@@ -1071,6 +1082,7 @@ final class Game extends JFrame {
 					}
 					this.PlayerShips[this.shipPlacing].add(xy, direction);
 
+					this.shipPlacing = this.nextShip();     // Determines the next ship to place.
 					if (this.shipPlacing == this.shipNos) { // Checks if all ships were placed.
 						this.AlertsTA.append("All ships placed!\n");
 					}
@@ -1078,7 +1090,6 @@ final class Game extends JFrame {
 					this.AlertsTA.append("Ship limit reached!\n");
 				}
 			}
-			this.shipPlacing = this.nextShip();         // Determines the next ship to place.
 		} else {                                      // Grid 2.
 			this.AlertsTA.append("Wrong grid!\n");
 		}
@@ -1177,7 +1188,7 @@ final class Game extends JFrame {
 	 */
 	private int nextShip() {
 		for (int ship = 0; ship < this.shipNos; ship++) {
-			if (this.PlayerShips[ship].getStart()[0] == -1 || this.PlayerShips[ship].getStart()[0] == -1) {
+			if (!this.PlayerShips[ship].isPlaced()) {
 				this.AlertsTA.append("Placing ");
 				if (this.PlayerShips[ship].length == 5) {        // Battleship
 					this.AlertsTA.append("Placing Battleship - 5");
@@ -1199,91 +1210,133 @@ final class Game extends JFrame {
 
 	/**
 	 * Sets the border property for each tile.
+	 * TODO: Make it more efficient (not requiring to remove all borders at the start).
 	 */
 	private void setBorders() {
-		// Not on the edges
-		for (int y = 1; y < this.gridSize - 1; y++) {
-			for (int x = 1; x < this.gridSize - 1; x++) {
-				if (!this.PlayerGridL[y][x].hasShip()) { // Checks if the current location doesn't have a ship.
-					if (this.PlayerGridL[y - 1][x].hasShip() || this.PlayerGridL[y + 1][x].hasShip() || this.PlayerGridL[y][x - 1].hasShip() || this.PlayerGridL[y][x + 1].hasShip()) {
-						this.PlayerGridL[y][x].bordersShip();
-					} else {                               // No adjacent ship
-						this.PlayerGridL[y][x].noBordersShip();
+		/**
+		 * Original Code (doesn't work on the edges and corners):
+		 * <code>
+		 *	// Not on the edges
+		 *	for (int y = 1; y < this.gridSize - 1; y++) {
+		 *		for (int x = 1; x < this.gridSize - 1; x++) {
+		 *			if (!this.PlayerGridL[y][x].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *				if (this.PlayerGridL[y - 1][x].hasShip() || this.PlayerGridL[y + 1][x].hasShip() || this.PlayerGridL[y][x - 1].hasShip() || this.PlayerGridL[y][x + 1].hasShip()) {
+		 *					this.PlayerGridL[y][x].bordersShip();
+		 *				} else {                               // No adjacent ship
+		 *					this.PlayerGridL[y][x].noBordersShip();
+		 *				}
+		 *			}
+		 *		}
+		 *	}
+		 *
+		 *	// TODO: Fix border selection on the edges and corners.
+		 *	// On the edges, but not on the corners
+		 *	for (int x = 1; x < this.gridSize - 1; x++) {
+		 *		// On top edge
+		 *		if (!this.PlayerGridL[0][x].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *			if (this.PlayerGridL[1][x].hasShip() || this.PlayerGridL[0][x - 1].hasShip() || this.PlayerGridL[0][x + 1].hasShip()) {
+		 *				this.PlayerGridL[0][x].bordersShip();
+		 *			} else {                               // No adjacent ship
+		 *				this.PlayerGridL[0][x].noBordersShip();
+		 *			}
+		 *		}
+		 *		// On bottom edge
+		 *		if (!this.PlayerGridL[this.gridSize - 1][x].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *			if (this.PlayerGridL[this.gridSize - 2][x].hasShip() || this.PlayerGridL[this.gridSize - 1][x - 1].hasShip() || this.PlayerGridL[this.gridSize - 1][x + 1].hasShip()) {
+		 *				this.PlayerGridL[this.gridSize - 1][x].bordersShip();
+		 *			} else {                                               // No adjacent ship
+		 *				this.PlayerGridL[this.gridSize - 1][x].noBordersShip();
+		 *			}
+		 *		}
+		 *	}
+		 *	for (int y = 1; y < this.gridSize - 1; y++) {
+		 *		// On left edge
+		 *		if (!this.PlayerGridL[y][0].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *			if (this.PlayerGridL[y][1].hasShip() || this.PlayerGridL[y - 1][0].hasShip() || this.PlayerGridL[y + 1][0].hasShip()) {
+		 *				this.PlayerGridL[y][0].bordersShip();
+		 *			} else {                               // No adjacent ship
+		 *				this.PlayerGridL[0][y].noBordersShip();
+		 *			}
+		 *		}
+		 *		// On right edge
+		 *		if (!this.PlayerGridL[y][this.gridSize - 1].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *			if (this.PlayerGridL[y][this.gridSize - 2].hasShip() || this.PlayerGridL[y - 1][this.gridSize - 1].hasShip() || this.PlayerGridL[y + 1][this.gridSize - 1].hasShip()) {
+		 *				this.PlayerGridL[y][this.gridSize - 1].bordersShip();
+		 *			} else {                                               // No adjacent ship
+		 *				this.PlayerGridL[this.gridSize - 1][y].noBordersShip();
+		 *			}
+		 *		}
+		 *	}
+		 *
+		 *	// On the corners
+		 *	// Top-Left Corner
+		 *	if (!this.PlayerGridL[0][0].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *		if (this.PlayerGridL[0][1].hasShip() || this.PlayerGridL[1][0].hasShip()) {
+		 *			this.PlayerGridL[0][0].bordersShip();
+		 *		} else {                               // No Adjacent Ship
+		 *			this.PlayerGridL[0][0].noBordersShip();
+		 *		}
+		 *	}
+		 *	// Top-Right Corner
+		 *	if (!this.PlayerGridL[0][this.gridSize - 1].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *		if (this.PlayerGridL[0][this.gridSize - 2].hasShip() || this.PlayerGridL[1][this.gridSize - 1].hasShip()) {
+		 *			this.PlayerGridL[0][this.gridSize - 1].bordersShip();
+		 *		} else {                                               // No Adjacent Ship
+		 *			this.PlayerGridL[0][this.gridSize - 1].noBordersShip();
+		 *		}
+		 *	}
+		 *	// Bottom-Left Corner
+		 *	if (!this.PlayerGridL[this.gridSize - 1][0].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *		if (this.PlayerGridL[this.gridSize - 1][1].hasShip() || this.PlayerGridL[this.gridSize - 2][0].hasShip()) {
+		 *			this.PlayerGridL[this.gridSize - 1][0].bordersShip();
+		 *		} else {                                               // No Adjacent Ship
+		 *			this.PlayerGridL[this.gridSize - 1][0].noBordersShip();
+		 *		}
+		 *	}
+		 *	// Bottom-right Corner
+		 *	if (this.PlayerGridL[this.gridSize - 1][this.gridSize - 1].hasShip()) { // Checks if the current location doesn't have a ship.
+		 *		if (this.PlayerGridL[this.gridSize - 1][this.gridSize - 2].hasShip() || this.PlayerGridL[this.gridSize - 2][this.gridSize - 1].hasShip()) {
+		 *			this.PlayerGridL[this.gridSize - 1][this.gridSize - 1].bordersShip();
+		 *		} else {                                                              // No Adjacent Ship
+		 *			this.PlayerGridL[this.gridSize - 1][this.gridSize - 1].noBordersShip();
+		 *		}
+		 *	}
+		 * </code>
+		 */
+
+		// Removes all borders
+		for (int y = 0; y < this.gridSize; y++) {
+			for (int x = 0; x < this.gridSize; x++) {
+				if (this.PlayerGridL[y][x].isBorder()) {
+					this.PlayerGridL[y][x].noBordersShip();
+				}
+			}
+		}
+
+		// Adds borders on a ship-by-ship basis (identical to the border setting code in AI.place()).
+		for (int ship = 0; ship < this.shipNos; ship++) {
+			if (this.PlayerShips[ship].isPlaced()) { // Checks if the ship has been placed.
+				int shipLength = this.PlayerShips[ship].length;            // Length
+				int[] start = this.PlayerShips[ship].getStart();           // Starting Coordinates
+				boolean direction = this.PlayerShips[ship].getDirection(); // Direction
+
+				for (int l = 0; l < shipLength; l++) {
+					// Sets the borders at the terminal positions of the ship.
+					if ((l == 0) && (start[direction ? 1 : 0] != 0)) {                                                      // Checks if the 1st tile isn't at the edge of the Board
+						this.PlayerGridL[start[1] - (direction ? 1 : 0)][start[0] - (direction ? 0 : 1)].bordersShip();
+					} else if ((l == shipLength - 1) && (start[direction ? 1 : 0] + shipLength - 1 != this.gridSize - 1)) { // Checks if the last tile isn't at the edge of the Board
+						this.PlayerGridL[start[1] + (direction ? shipLength : 0)][start[0] + (direction ? 0 : shipLength)].bordersShip();
+					}
+					// Sets the borders along the length of the ship
+					if (start[direction ? 0 : 1] == 0) {                        // At the Top/Left edge
+						this.PlayerGridL[start[1] + (direction ? l : 1)][start[0] + (direction ? 1 : l)].bordersShip();
+					} else if (start[direction ? 0 : 1] == this.gridSize - 1) { // At the Bottom/Right edge
+						this.PlayerGridL[start[1] + (direction ? l : -1)][start[0] + (direction ? -1 : l)].bordersShip();
+					} else {                                                    // Not at the edges
+						this.PlayerGridL[start[1] + (direction ? l : -1)][start[0] + (direction ? -1 : l)].bordersShip();
+						this.PlayerGridL[start[1] + (direction ? l : 1)][start[0] + (direction ? 1 : l)].bordersShip();
 					}
 				}
-			}
-		}
-
-		// TODO: Fix border selection on the edges and corners.
-		// On the edges, but not on the corners
-		for (int x = 1; x < this.gridSize - 1; x++) {
-			// On top edge
-			if (!this.PlayerGridL[0][x].hasShip()) { // Checks if the current location doesn't have a ship.
-				if (this.PlayerGridL[1][x].hasShip() || this.PlayerGridL[0][x - 1].hasShip() || this.PlayerGridL[0][x + 1].hasShip()) {
-					this.PlayerGridL[0][x].bordersShip();
-				} else {                               // No adjacent ship
-					this.PlayerGridL[0][x].noBordersShip();
-				}
-			}
-			// On bottom edge
-			if (!this.PlayerGridL[this.gridSize - 1][x].hasShip()) { // Checks if the current location doesn't have a ship.
-				if (this.PlayerGridL[this.gridSize - 2][x].hasShip() || this.PlayerGridL[this.gridSize - 1][x - 1].hasShip() || this.PlayerGridL[this.gridSize - 1][x + 1].hasShip()) {
-					this.PlayerGridL[this.gridSize - 1][x].bordersShip();
-				} else {                                               // No adjacent ship
-					this.PlayerGridL[this.gridSize - 1][x].noBordersShip();
-				}
-			}
-		}
-		for (int y = 1; y < this.gridSize - 1; y++) {
-			// On left edge
-			if (!this.PlayerGridL[y][0].hasShip()) { // Checks if the current location doesn't have a ship.
-				if (this.PlayerGridL[y][1].hasShip() || this.PlayerGridL[y - 1][0].hasShip() || this.PlayerGridL[y + 1][0].hasShip()) {
-					this.PlayerGridL[y][0].bordersShip();
-				} else {                               // No adjacent ship
-					this.PlayerGridL[0][y].noBordersShip();
-				}
-			}
-			// On right edge
-			if (!this.PlayerGridL[y][this.gridSize - 1].hasShip()) { // Checks if the current location doesn't have a ship.
-				if (this.PlayerGridL[y][this.gridSize - 2].hasShip() || this.PlayerGridL[y - 1][this.gridSize - 1].hasShip() || this.PlayerGridL[y + 1][this.gridSize - 1].hasShip()) {
-					this.PlayerGridL[y][this.gridSize - 1].bordersShip();
-				} else {                                               // No adjacent ship
-					this.PlayerGridL[this.gridSize - 1][y].noBordersShip();
-				}
-			}
-		}
-
-		// On the corners
-		// Top-Left Corner
-		if (!this.PlayerGridL[0][0].hasShip()) { // Checks if the current location doesn't have a ship.
-			if (this.PlayerGridL[0][1].hasShip() || this.PlayerGridL[1][0].hasShip()) {
-				this.PlayerGridL[0][0].bordersShip();
-			} else {                               // No Adjacent Ship
-				this.PlayerGridL[0][0].noBordersShip();
-			}
-		}
-		// Top-Right Corner
-		if (!this.PlayerGridL[0][this.gridSize - 1].hasShip()) { // Checks if the current location doesn't have a ship.
-			if (this.PlayerGridL[0][this.gridSize - 2].hasShip() || this.PlayerGridL[1][this.gridSize - 1].hasShip()) {
-				this.PlayerGridL[0][this.gridSize - 1].bordersShip();
-			} else {                                               // No Adjacent Ship
-				this.PlayerGridL[0][this.gridSize - 1].noBordersShip();
-			}
-		}
-		// Bottom-Left Corner
-		if (!this.PlayerGridL[this.gridSize - 1][0].hasShip()) { // Checks if the current location doesn't have a ship.
-			if (this.PlayerGridL[this.gridSize - 1][1].hasShip() || this.PlayerGridL[this.gridSize - 2][0].hasShip()) {
-				this.PlayerGridL[this.gridSize - 1][0].bordersShip();
-			} else {                                               // No Adjacent Ship
-				this.PlayerGridL[this.gridSize - 1][0].noBordersShip();
-			}
-		}
-		// Bottom-right Corner
-		if (this.PlayerGridL[this.gridSize - 1][this.gridSize - 1].hasShip()) { // Checks if the current location doesn't have a ship.
-			if (this.PlayerGridL[this.gridSize - 1][this.gridSize - 2].hasShip() || this.PlayerGridL[this.gridSize - 2][this.gridSize - 1].hasShip()) {
-				this.PlayerGridL[this.gridSize - 1][this.gridSize - 1].bordersShip();
-			} else {                                                              // No Adjacent Ship
-				this.PlayerGridL[this.gridSize - 1][this.gridSize - 1].noBordersShip();
 			}
 		}
 	}

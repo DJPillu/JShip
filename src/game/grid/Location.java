@@ -42,12 +42,6 @@ public final class Location {
 	private boolean border = false;
 
 	/**
-	 * Constructor for the Location class.
-	 */
-	public Location() {
-	}
-
-	/**
 	 * Getter for hasShip
 	 *
 	 * @return hasShip

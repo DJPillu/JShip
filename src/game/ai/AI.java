@@ -40,9 +40,9 @@ public class AI {
 
 	/**
 	 * An integer show the length of the grid.
-	 * if initVars[0] is true, boardSize is 15. Else 10.
+	 * if initVars[0] is true, gridSize is 15. Else 10.
 	 */
-	final int boardSize;
+	final int gridSize;
 
 	/**
 	 * Round Initialization Variables:
@@ -71,13 +71,13 @@ public class AI {
 	 */
 	AI(boolean[] initVars, Location[][] gridOpp, Ship[] shipsOpp) {
 		this.initVars = initVars;
-		this.boardSize = initVars[0] ? 15 : 10;
+		this.gridSize = initVars[0] ? 15 : 10;
 		this.gridOpp = gridOpp;
 		this.shipsOpp = shipsOpp;
 
-		this.gridSelf = new Location[this.boardSize][this.boardSize];
-		for (int y = 0; y < this.boardSize; y++) {
-			for (int x = 0; x < this.boardSize; x++) {
+		this.gridSelf = new Location[this.gridSize][this.gridSize];
+		for (int y = 0; y < this.gridSize; y++) {
+			for (int x = 0; x < this.gridSize; x++) {
 				this.gridSelf[y][x] = new Location();
 			}
 		}
@@ -221,17 +221,17 @@ public class AI {
 				this.gridSelf[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)].shipPresent();
 
 				// Sets the borders at the terminal positions of the ship.
-				if ((l == 0) && (xy[direction ? 1 : 0] != 0)) {                                               // Checks if the 1st tile isn't at the edge of the Board
+				if ((l == 0) && (xy[direction ? 1 : 0] != 0)) {                                                      // Checks if the 1st tile isn't at the edge of the Board
 					this.gridSelf[xy[1] - (direction ? 1 : 0)][xy[0] - (direction ? 0 : 1)].bordersShip();
-				} else if ((l == shipLength - 1) && (xy[direction ? 1 : 0] + shipLength - 1 != this.boardSize - 1)) { // Checks if the last tile isn't at the edge of the Board
+				} else if ((l == shipLength - 1) && (xy[direction ? 1 : 0] + shipLength - 1 != this.gridSize - 1)) { // Checks if the last tile isn't at the edge of the Board
 					this.gridSelf[xy[1] + (direction ? shipLength : 0)][xy[0] + (direction ? 0 : shipLength)].bordersShip();
 				}
 				// Sets the borders along the length of the ship
-				if (xy[direction ? 0 : 1] == 0) {                         // At the Top/Left edge
+				if (xy[direction ? 0 : 1] == 0) {                        // At the Top/Left edge
 					this.gridSelf[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)].bordersShip();
-				} else if (xy[direction ? 0 : 1] == this.boardSize - 1) { // At the Bottom/Right edge
+				} else if (xy[direction ? 0 : 1] == this.gridSize - 1) { // At the Bottom/Right edge
 					this.gridSelf[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)].bordersShip();
-				} else {                                                  // Not at the edges
+				} else {                                                 // Not at the edges
 					this.gridSelf[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)].bordersShip();
 					this.gridSelf[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)].bordersShip();
 				}

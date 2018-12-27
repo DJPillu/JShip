@@ -20,7 +20,7 @@ It is also the investigatory project for 2 high school students (and hence the r
 3. Compile and run jship.JShip (may distribute .jar files later).
 
 ## TODO
-* Ships not being able to be placed beside each other (no contact between ships) (only implemented by the AI at the moment).
-* In-game music.
 * AI difficulties (other than a random number generator).
-* Make it beautiful.
+* In-game help text.
+* In-game music (if we get time).
+* Make it beautiful (if we get time).

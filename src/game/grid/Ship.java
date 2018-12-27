@@ -96,6 +96,13 @@ public final class Ship {
 	}
 
 	/**
+	 * @return whether the ship was placed or not.
+	 */
+	public boolean isPlaced() {
+		return (this.start[0] != -1) && (this.start[1] != -1) && (this.end[0] != -1) && (this.end[1] != -1);
+	}
+
+	/**
 	 * Returns the Start coordinates.
 	 *
 	 * @return start 1st value is X-Coordinate. 2nd is Y-Coordinate.
