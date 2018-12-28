@@ -16,11 +16,11 @@ It is also the investigatory project for 2 high school students (and hence the r
 2. For statistics and user profiles:
 	1. Requires a local MySQL server.
 	2. Run ```src/misc/create.sql``` before running the application for the 1st time.
-	3. You may have to modify the JDBC connection variables in the misc.DBDetails class depending on your SQL setup.
-3. Compile and run jship.JShip (may distribute .jar files later).
+	3. You may have to modify the JDBC connection variables in the ```misc.DBDetails``` class depending on your SQL setup.
+3. Compile the project and run from ```jship.JShip``` (may distribute .jar files later).
 
 ## TODO
 * AI difficulties (other than a random number generator).
-* In-game help text.
-* In-game music (if we get time).
+* Add in-game help text.
+* Add in-game music (if we get time).
 * Make it beautiful (if we get time).

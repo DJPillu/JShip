@@ -53,17 +53,17 @@ public final class Regular extends AI {
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
 	private int[] randomFire() {
-		int[] xy = new int[2];     // Firing coordinates.
+		int[] xy = new int[2];      // Firing coordinates.
 		int[] temp = new int[2];    // Temporary variable to store coordinates if xy refers to a guessed position.
 		Random rand = new Random(); // Random data type generator (built-in class).
 
 		for (int i = 0; i < 2; i++) {
-			xy[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
+			xy[i] = rand.nextInt(this.gridSize);
 		}
 
-		while (!this.gridSelf[xy[0]][xy[1]].isUnguessed()) { // If xy refers to a guessed coordinate, regenerate it.
+		while (!this.gridOpp[xy[1]][xy[0]].isUnguessed()) { // If xy refers to a guessed coordinate, regenerate it.
 			for (int i = 0; i < 2; i++) {
-				temp[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
+				temp[i] = rand.nextInt(this.gridSize);
 			}
 
 			xy = temp;

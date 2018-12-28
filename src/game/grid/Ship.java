@@ -11,7 +11,6 @@ public final class Ship {
 
 	/**
 	 * A positive integer indicating length of the ship (distance between start and end points).
-	 * A value of 0 implies the ship is not being used.
 	 */
 	public final int length;
 
@@ -60,15 +59,11 @@ public final class Ship {
 	 */
 	public Ship(int length) {
 		this.length = length;
-
-		this.remove();
-
-		if (length != 0) { // Ship not being used.
-			this.hit = new boolean[length];
-			for (int i = 0; i < length; i++) {
-				this.hit[i] = false;
-			}
+		this.hit = new boolean[length];
+		for (int i = 0; i < length; i++) {
+			this.hit[i] = false;
 		}
+		this.remove();
 	}
 
 	/**
@@ -78,12 +73,10 @@ public final class Ship {
 	 * @param direction   The orientation of the ship.
 	 */
 	public void add(int[] coordinates, boolean direction) {
-		if (length != 0) { // Checks if the ship is being used.
-			this.start = coordinates;
-			this.end = new int[] {coordinates[0] + (direction ? 0 : length - 1), coordinates[1] + (direction ? length - 1 : 0)};
+		this.start = coordinates;
+		this.end = new int[] {coordinates[0] + (direction ? 0 : length - 1), coordinates[1] + (direction ? length - 1 : 0)};
 
-			this.direction = direction;
-		}
+		this.direction = direction;
 	}
 
 	/**
@@ -122,6 +115,8 @@ public final class Ship {
 
 	/**
 	 * Returns the orientation of the ship.
+	 * True if Vertical.
+	 * False if Horizontal.
 	 *
 	 * @return the direction
 	 */
@@ -135,11 +130,7 @@ public final class Ship {
 	 * @return true if sunk, else false.
 	 */
 	public boolean isSunk() {
-		if (length != 0) { // Ship not being used.
-			return this.sunk;
-		} else {
-			return false;
-		}
+		return this.sunk;
 	}
 
 	/**
@@ -149,26 +140,24 @@ public final class Ship {
 	 * @param coords The coordinates at which the ship was hit. 1st value is X-Coordinate, 2nd is Y-Coordinate
 	 */
 	public void sectionHit(int[] coords) {
-		if (length != 0) { // Checks if the ship is being used.
-			int position = this.getPosition(coords);
+		int position = this.getPosition(coords);
 
-			if (position > -1) {
-				this.hit[position] = true;
+		if (position > -1) {
+			this.hit[position] = true;
 
-				// Checking if the ship was sunk.
-				boolean allHit = true;
-				for (int i = 0; i < this.length; i++) {
-					if (!this.hit[i]) {
-						allHit = false;
-						break;
-					}
-				}
-
-				if (allHit) {
-					this.sunk = true;
+			// Checking if the ship was sunk.
+			boolean allHit = true;
+			for (int i = 0; i < this.length; i++) {
+				if (!this.hit[i]) {
+					allHit = false;
+					break;
 				}
 			}
-		} // Ship isn't being used. Do nothing.
+
+			if (allHit) {
+				this.sunk = true;
+			}
+		}
 	}
 
 	/**
@@ -179,11 +168,18 @@ public final class Ship {
 	 * @return true if hit, else false.
 	 */
 	public boolean isHit(int[] coords) {
-		if (length != 0) { // Checks if the ship is being used.
-			return this.hit[this.getPosition(coords)];
-		} else {
-			return false;
-		}
+		return this.hit[this.getPosition(coords)];
+	}
+
+	/**
+	 * Checks if the given position was hit,
+	 *
+	 * @param position the position to check, with the 1st position being equal to 0.
+	 *
+	 * @return true if hit, else false.
+	 */
+	public boolean isHit(int position) {
+		return this.hit[position];
 	}
 
 	/**

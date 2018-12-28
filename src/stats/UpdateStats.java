@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import misc.DBDetails;
 import users.CurrentUser;
 
@@ -41,14 +40,14 @@ public final class UpdateStats extends Stats {
 	 * Statistics list index
 	 *
 	 * <pre>
-	 * Index value = 0 + x, where x depends on the following:
+	 * Index value = 0 + x, where x +=
 	 *     Mode:
-	 *          +0 - Classic
-	 *          +3 - Salvo
+	 *          0 - Classic
+	 *          3 - Salvo
 	 *     AIDiff:
-	 *          +0 - Sandbox
-	 *          +1 - Regular
-	 *          +2 - Brutal
+	 *          0 - Sandbox
+	 *          1 - Regular
+	 *          2 - Brutal
 	 * </pre>
 	 */
 	private final int index;
@@ -72,43 +71,21 @@ public final class UpdateStats extends Stats {
 	private int[] statsList;
 
 	/**
-	 * <code>Accuracy = (Hits Landed / Shots Fired) * 100 = (statsList[2] / statsList[1]) * 100</code>
-	 */
-	private float Acc;
-
-	/**
 	 * Constructor for the UpdateStats class. Calls the superclass's constructor.
 	 *
 	 * @param mode      Game Mode
 	 * @param AIDiff    AI Difficulty
 	 * @param statsList Statistics List
-	 * @param Acc       Accuracy
 	 */
-	public UpdateStats(String mode, int AIDiff, int[] statsList, float Acc) {
+	public UpdateStats(String mode, int AIDiff, int[] statsList) {
 		super();
 
 		this.mode = mode;
 		this.AIDiff = AIDiff;
-		this.index = (mode.equals("S") ? 3 : 0) + (AIDiff + 1);
+		this.index = mode.equals("S") ? 3 : 0 + AIDiff;
 		this.statsList = statsList;
-		this.Acc = Acc;
 
-		this.setLocalStats();
-	}
-
-	/**
-	 * Resets the statistics of the given category to all zeroes.
-	 *
-	 * @return ret - An Integer indicating the result of statistics retrieval.
-	 *         {-1, -2, -3} imply an error.
-	 *         {0} implies successful update.
-	 */
-	public int reset() {
-		Arrays.fill(this.statsList, 0);
-		this.Acc = (float) 0.0;
-
-		this.setLocalStats();
-		return this.update();
+		this.setStatsLists(this.index, this.statsList);
 	}
 
 	/**
@@ -125,19 +102,22 @@ public final class UpdateStats extends Stats {
 			Class.forName("com.mysql.jdbc.Driver");                                                                                // Creates the MySQL JDBC Driver class
 			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
 
-			StringBuffer update = new StringBuffer(250);
-			update.append("UPDATE stats SET GP=").append(this.getStatsLists()[index][0]); // Base Statement with GP value
-			update.append(", GW=").append(this.getStatsLists()[index][1]);                // GW value
-			update.append(", GL=").append(this.getStatsLists()[index][2]);                // GL value
-			update.append(", SF=").append(this.getStatsLists()[index][3]);                // SF value
-			update.append(", Hits=").append(this.getStatsLists()[index][4]);              // Hits value
-			update.append(", Acc=").append(this.getAcc()[index]);                         // Acc value
-			update.append(", TH=").append(this.getStatsLists()[index][5]);                // TH value
-			update.append(", SS=").append(this.getStatsLists()[index][6]);                // SS value
-			update.append(", SL=").append(this.getStatsLists()[index][7]);                // SL value
-			update.append(" WHERE UNo=(SELECT UNo FROM users WHERE UName='");             // 1st Conditional statement using Subquery
-			update.append(CurrentUser.getCurrentUser()).append("') AND Mode='").append(this.mode); // Username for Subquery and Complete 2nd Conditional statement
-			update.append("' AND AIDiff='").append(this.AIDiff == 1 ? "B" : (this.AIDiff == 0 ? "R" : "S")).append("';"); // Complete 3rd Conditional statement
+			int[] statsList = this.getStatsLists()[this.index];
+			float acc = this.getAcc()[this.index];
+
+			StringBuffer update = new StringBuffer(258);
+			update.append("UPDATE stats SET GP=").append(statsList[0]);           // Base Statement with Games Played
+			update.append(", GW=").append(statsList[1]);                          // Games Won
+			update.append(", GL=").append(statsList[2]);                          // Games Lost
+			update.append(", SF=").append(statsList[3]);                          // Shots Fired
+			update.append(", Hits=").append(statsList[4]);                        // Hits
+			update.append(", Acc=").append(acc);                                  // Accuracy
+			update.append(", TH=").append(statsList[5]);                          // Times Hit
+			update.append(", SS=").append(statsList[6]);                          // Ships Sunk
+			update.append(", SL=").append(statsList[7]);                          // Ships Lost
+			update.append(" WHERE UNo = (SELECT UNo FROM users WHERE UName = '"); // 1st Conditional statement using Subquery
+			update.append(CurrentUser.getCurrentUser()).append("') AND Mode = '").append(this.mode); // Username for Subquery and Complete 2nd Conditional statement
+			update.append("' AND AIDiff = '").append(this.AIDiff == 2 ? "B" : (this.AIDiff == 1 ? "R" : "S")).append("';"); // Complete 3rd Conditional statement
 
 			Statement stmnt = con.createStatement(); // Creates the SQL statement object
 			stmnt.executeUpdate(update.toString());  // Runs the update statement
@@ -160,11 +140,15 @@ public final class UpdateStats extends Stats {
 	}
 
 	/**
-	 * Updates Stats.statsList with this.statsList
+	 * Resets the statistics of the given category to all zeroes.
+	 *
+	 * @return ret - An Integer indicating the result of statistics retrieval.
+	 *         {-1, -2, -3} imply an error.
+	 *         {0} implies successful update.
 	 */
-	private void setLocalStats() {
-		this.setStatsLists(this.index, this.statsList);
-		this.setAcc(this.index, this.Acc);
+	public int reset() {
+		this.resetStatsLists(this.index);
+		return this.update();
 	}
 
 }

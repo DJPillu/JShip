@@ -14,9 +14,108 @@ import users.CurrentUser;
  * @author blackk100
  */
 final class ViewStats extends JFrame {
+
+	/**
+	 * Game Mode:
+	 * <pre>
+	 * C - Classic
+	 * S - Salvo
+	 * </pre>
+	 */
 	private String mode = "C";
+
+	/**
+	 * AI Difficulty:
+	 *
+	 * <pre>
+	 *  0 - Sandbox   (Easy)
+	 *  1 - Realistic (Medium)
+	 *  2 - Brutal    (Hard)
+	 * </pre>
+	 */
 	private int AIDiff = 0;
-	private int index; // See Stats.statsLists and Stats.Acc 1-Dimensional Index Documentation
+
+	/**
+	 * <pre>
+	 * index = 0 + :
+	 *
+	 * Mode:
+	 *      0 - Classic
+	 *      3 - Salvo
+	 *
+	 * AIDiff:
+	 *      0 - Sandbox<br>
+	 *      1 - Regular<br>
+	 *      2 - Brutal
+	 * </pre>
+	 */
+	private int index = 0;
+
+	/**
+	 * <pre>
+	 * statsList 1st Dimensional Array:
+	 * I-----------I----------------------I
+	 * I Index No. I     Stats Stored     I
+	 * I-----------I----------------------I
+	 * I     0     I Classic - Sandbox    I
+	 * I     1     I Classic - Regular    I
+	 * I     2     I Classic - Brutal     I
+	 * I     3     I Salvo   - Sandbox    I
+	 * I     4     I Salvo   - Regular    I
+	 * I     5     I Salvo   - Brutal     I
+	 * I-----------I----------------------I
+	 *
+	 * statsList 2nd Dimensional Arrays:
+	 * I-----------I----------------------I
+	 * I Index No. I     Value Stored     I
+	 * I-----------I----------------------I
+	 * I     0     I Games Played  (GP)   I
+	 * I     1     I Games Won     (GW)   I
+	 * I     2     I Games Lost    (GL)   I
+	 * I     3     I Shots Fired   (SF)   I
+	 * I     4     I Hits landed   (Hits) I
+	 * I     5     I Times Hit     (TH)   I
+	 * I     6     I Ships Sunk    (SS)   I
+	 * I     7     I Ships Lost    (SL)   I
+	 * I-----------I----------------------I
+	 *
+	 * Index value = 0 + x, where x +=
+	 *     Mode:
+	 *          0 - Classic
+	 *          3 - Salvo
+	 *     AIDiff:
+	 *          0 - Sandbox
+	 *          1 - Regular
+	 *          2 - Brutal
+	 * </pre>
+	 */
+	private int[][] statsLists;
+
+	/**
+	 * <pre>
+	 * Acc 1st Dimensional Array:
+	 * I-----------I----------------------I
+	 * I Index No. I     Stats Stored     I
+	 * I-----------I----------------------I
+	 * I     0     I Classic - Sandbox    I
+	 * I     1     I Classic - Regular    I
+	 * I     2     I Classic - Brutal     I
+	 * I     3     I Salvo   - Sandbox    I
+	 * I     4     I Salvo   - Regular    I
+	 * I     5     I Salvo   - Brutal     I
+	 * I-----------I----------------------I
+	 *
+	 * Mode:
+	 *      0 - Classic
+	 *      3 - Salvo
+	 *
+	 * AIDiff:
+	 *      0 - Sandbox<br>
+	 *      1 - Regular<br>
+	 *      2 - Brutal
+	 * </pre>
+	 */
+	private float[] acc;
 
 	/**
 	 * Creates new form Statistics
@@ -112,7 +211,7 @@ final class ViewStats extends JFrame {
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     setTitle("Statistics");
     setResizable(false);
 
@@ -389,18 +488,18 @@ final class ViewStats extends JFrame {
 		this.index = (this.mode.equals("S") ? 3 : 0) + this.AIDiff;
 
 		Stats stats = new Stats();
-		int[][] userStats = stats.getStatsLists();
-		float[] Acc = stats.getAcc();
+		this.statsLists = stats.getStatsLists();
+		this.acc = stats.getAcc();
 
-		this.GPTF.setText("" + userStats[this.index][0]);
-		this.GWTF.setText("" + userStats[this.index][1]);
-		this.GLTF.setText("" + userStats[this.index][2]);
-		this.SFTF.setText("" + userStats[this.index][3]);
-		this.HitsTF.setText("" + userStats[this.index][4]);
-		this.AccTF.setText("" + Acc[this.index] + " %");
-		this.THTF.setText("" + userStats[this.index][5]);
-		this.SSTF.setText("" + userStats[this.index][6]);
-		this.SLTF.setText("" + userStats[this.index][7]);
+		this.GPTF.setText("" + this.statsLists[this.index][0]);
+		this.GWTF.setText("" + this.statsLists[this.index][1]);
+		this.GLTF.setText("" + this.statsLists[this.index][2]);
+		this.SFTF.setText("" + this.statsLists[this.index][3]);
+		this.HitsTF.setText("" + this.statsLists[this.index][4]);
+		this.AccTF.setText("" + this.acc[this.index] + " %");
+		this.THTF.setText("" + this.statsLists[this.index][5]);
+		this.SSTF.setText("" + this.statsLists[this.index][6]);
+		this.SLTF.setText("" + this.statsLists[this.index][7]);
 	}
 
 	/**
@@ -451,12 +550,17 @@ final class ViewStats extends JFrame {
 			char[] password = this.ConfirmPF.getPassword();
 
 			if (change.checkHash(password) == ChangeUserDetails.getCurrentHash()) { // Checks if the correct current password was entered.
-				Stats stats = new Stats();
-				UpdateStats rStats = new UpdateStats(this.mode, this.AIDiff, stats.getStatsLists()[this.index], stats.getAcc()[this.index]);
+				int[] statsList = new int[6];
+				statsList[0] = this.statsLists[this.index][0];
+				for (int s = 3; s < this.statsLists[this.index].length; s++) {
+					statsList[s - 2] = this.statsLists[this.index][s];
+				}
+				UpdateStats stats = new UpdateStats(this.mode, this.AIDiff, statsList);
 
-				if (rStats.reset() < 0) {
+				if (stats.reset() < 0) {
 					JOptionPane.showMessageDialog(null, "An Error Occurred!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
+					this.userStatsSetter();
 					JOptionPane.showMessageDialog(null, "All statistics for this category were reset!", "Reset Performed", JOptionPane.INFORMATION_MESSAGE);
 				}
 			} else {           // Incorrect current password entered.

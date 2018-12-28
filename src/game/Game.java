@@ -55,7 +55,7 @@ final class Game extends JFrame {
 	/**
 	 * Total number of ships available in this match.
 	 */
-	private int shipNos = 0;
+	private final int shipNos;
 
 	/**
 	 * AI Difficulty:
@@ -124,12 +124,12 @@ final class Game extends JFrame {
 	private int[] AIStats = {0, 0, 0};
 
 	/**
-	 *
+	 * Constant value of '-1' indicating that the match ended.
 	 */
 	private static final int END = -1;
 
 	/**
-	 *
+	 * Constant value of '0' indicating that it is the ship placement round.
 	 */
 	private static final int PLACE = 0;
 
@@ -144,12 +144,12 @@ final class Game extends JFrame {
 	private int roundNo = 0;
 
 	/**
-	 *
+	 * Constant value of '1' indicating that the user won.
 	 */
 	static final int WIN = 1;
 
 	/**
-	 *
+	 * Constant value of '0' indicating that the user lost.
 	 */
 	static final int LOSE = 0;
 
@@ -389,7 +389,7 @@ final class Game extends JFrame {
     AIHitsL = new JLabel();
     AIHitsTF = new JTextField();
 
-    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     setTitle("JShip");
     setResizable(false);
 
@@ -810,18 +810,20 @@ final class Game extends JFrame {
 		this.ClearB.setEnabled(false);
 		this.ExitB.setEnabled(false);
 
-		this.AlertsTA.append("\nMatch Ended!");
 		if (this.status == Game.WIN) {         // Checks if the user won
 			System.out.println("Match Won!");
 			this.TitleL.setText("Match Won!");
+			this.AlertsTA.append("Match Won!\n");
 			this.setTitle("Match Won!");
 		} else if (this.status == Game.LOSE) { // Checks if the user lost
 			System.out.println("Match Lost!");
 			this.TitleL.setText("Match Lost!");
+			this.AlertsTA.append("Match Lost!\n");
 			this.setTitle("Match Lost!");
 		} else {                               // Should not have happened.
 			System.out.println("Match Ended!");
 			this.TitleL.setText("Match Ended!");
+			this.AlertsTA.append("Match Ended!\n");
 			this.setTitle("Match Ended!");
 		}
 
@@ -845,11 +847,7 @@ final class Game extends JFrame {
 	/**
 	 * If match ended, go to Post.
 	 * If ship placement, setup player ships, enemy AI, and AI ships.
-	 * If user shot, checks if user has won.
-	 * If the user has won, set match to have ended.
-	 * If the user hasn't won, the AI shoots and checks if the AI has won.
-	 * If the AI has won, set match to have ended.
-	 * If neither the user nor the AI have won, advances the game to the next round.
+	 * Otherwise, run <code>this.shoot()</code> if the required number of shot selections have been made.
 	 *
 	 * @param evt Button Click
 	 */
@@ -892,77 +890,112 @@ final class Game extends JFrame {
 				this.AlertsTA.append("Not all ships placed! " + (this.shipNos - this.shipPlacing) + " ships left!\n");
 			}
 		} else {                                    // Normal/Firing Rounds
-			if ((this.mode.equals("C") && (this.shotsSelected == 1)) || (this.mode.equals("S") && (this.shotsSelected == (this.shipNos - this.PlayerStats[2])))) { // Checks if the required number of selections have been made
-				shotChecker:
-				for (int y = 0; y < this.gridSize; y++) {
-					for (int x = 0; x < this.gridSize; x++) {
-						if (this.buttonsClicked[y][x]) {    // Checks if a shot was placed here.
-							this.buttonsClicked[y][x] = false;
-							this.AIGridL[y][x].markShot();
-							this.PlayerStats[0]++;
+			// Used for checking if the required number of selections have been made
+			if (this.mode.equals("C")) { // Checks if it a Classic Round.
+				if (this.shotsSelected == 1) {
+					this.shoot();
+				} else {
+					this.AlertsTA.append("Not all selections made! 1 selection left!\n");
+				}
+			} else {                     // Checks if it a Salvo Round.
+				if (this.shotsSelected == (this.shipNos - this.PlayerStats[2])) {
+					this.shoot();
+				} else {
+					// Checks if the number of selectable locations doesn't exceed the number of selections to be required.
+					int left = 0;
+					int required = (this.shipNos - this.PlayerStats[2] - this.shotsSelected);
 
-							if (this.AIGridL[y][x].isHit()) { // Checks if a Ship was hit.
-								this.PlayerStats[1]++;
+					for (int y = 0; y < this.gridSize; y++) {
+						for (int x = 0; x < this.gridSize; x++) {
+							if (this.AIGridL[y][x].isUnguessed()) {
+								left++;
+							}
+						}
+					}
 
-								shipChecker:
-								for (int ship = 0; ship < this.shipNos; ship++) {              // Used for finding which ship was hit.
-									if (this.AIShips[ship].getPosition(new int[] {x, y}) > -1) { // Checks if this ship was hit
-										this.AIShips[ship].sectionHit(new int[] {x, y});           // Marks the section as hit.
+					if (left > required) {
+						this.AlertsTA.append("Not all selections made! " + required + " selections left!\n");
+					} else {
+						this.shoot();
+					}
+				}
+			}
+		}
+	}//GEN-LAST:event_NextRound
 
-										if (this.AIShips[ship].isSunk()) {                         // Checks if the ship was sunk due to this shot.
-											if (this.AIShips[ship].length == 5) {
-												this.AlertsTA.append("Enemy Battleship sunk!\n");
-											} else if (this.AIShips[ship].length == 4) {
-												this.AlertsTA.append("Enemy Cruiser sunk!\n");
-											} else if (this.AIShips[ship].length == 3) {
-												this.AlertsTA.append("Enemy Destroyer sunk!\n");
-											} else {
-												this.AlertsTA.append("Enemy Corvette sunk!\n");
-											}
+	/**
+	 * Marks the user's shots.
+	 * Checks if user has won.
+	 * If the user has won, set match to have ended.
+	 * If the user hasn't won, the AI shoots and checks if the AI has won.
+	 * If the AI has won, set match to have ended.
+	 * If neither the user nor the AI have won, advances the game to the next round.
+	 */
+	private void shoot() {
+		shotChecker:
+		for (int y = 0; y < this.gridSize; y++) {
+			for (int x = 0; x < this.gridSize; x++) {
+				if (this.buttonsClicked[y][x]) {    // Checks if a shot was placed here.
+					this.buttonsClicked[y][x] = false;
+					this.AIGridL[y][x].markShot();
+					this.PlayerStats[0]++;
 
-											this.AIStats[2]++;
-											if (this.shipNos - this.AIStats[2] == 0) {               // Checks if the user won (allows 100% accuracy scores).
-												break shotChecker;
-											}
-										}
+					if (this.AIGridL[y][x].isHit()) { // Checks if a Ship was hit.
+						this.PlayerStats[1]++;
 
-										break shipChecker;
+						shipChecker:
+						for (int ship = 0; ship < this.shipNos; ship++) {              // Used for finding which ship was hit.
+							if (this.AIShips[ship].getPosition(new int[] {x, y}) > -1) { // Checks if this ship was hit
+								this.AIShips[ship].sectionHit(new int[] {x, y});           // Marks the section as hit.
+
+								if (this.AIShips[ship].isSunk()) {                         // Checks if the ship was sunk due to this shot.
+									if (this.AIShips[ship].length == 5) {
+										this.AlertsTA.append("Enemy Battleship sunk!\n");
+									} else if (this.AIShips[ship].length == 4) {
+										this.AlertsTA.append("Enemy Cruiser sunk!\n");
+									} else if (this.AIShips[ship].length == 3) {
+										this.AlertsTA.append("Enemy Destroyer sunk!\n");
+									} else {
+										this.AlertsTA.append("Enemy Corvette sunk!\n");
+									}
+
+									this.AIStats[2]++;
+									if (this.shipNos - this.AIStats[2] == 0) {               // Checks if the user won (allows 100% accuracy scores).
+										break shotChecker;
 									}
 								}
+
+								break shipChecker;
 							}
 						}
 					}
 				}
+			}
+		}
 
-				this.shotsSelected = 0;
-				this.StatsUpdate();
-				this.setColors();
+		this.shotsSelected = 0;
+		this.StatsUpdate();
+		this.setColors();
 
-				if (this.shipNos - this.AIStats[2] == 0) {       // Checks if the user won.
-					this.end();
-					this.status = Game.WIN;
-				} else {                                         // User did not win.
-					this.AI.updateGridSelf(this.AIGridL);          // Updates the AI's "self" grid
-					this.fireAI();                                 // AI Shoots.
-					this.StatsUpdate();
-					this.setColors();
+		if (this.shipNos == this.AIStats[2]) {       // Checks if the user won.
+			this.status = Game.WIN;
+			this.end();
+		} else {                                         // User did not win.
+			this.AI.updateGridSelf(this.AIGridL);          // Updates the AI's "self" grid
+			this.fireAI();                                 // AI Shoots.
+			this.StatsUpdate();
+			this.setColors();
 
-					if (this.shipNos - this.PlayerStats[2] == 0) { // Checks if the AI won.
-						this.end();
-						this.status = Game.LOSE;
-					} else {                                       // AI did not win. Next round.
-						this.roundNo++;
-						this.RoundTF.setText(Integer.toString(this.roundNo));
-					}
-
-				}
-
-			} else {                                // Not enough selections made
-				this.AlertsTA.append("Not all selections made! " + (this.mode.equals("C") ? 1 : (this.shipNos - this.shotsSelected)) + " selections left!\n");
+			if (this.shipNos == this.PlayerStats[2]) { // Checks if the AI won.
+				this.status = Game.LOSE;
+				this.end();
+			} else {                                       // AI did not win. Next round.
+				this.roundNo++;
+				this.RoundTF.setText(Integer.toString(this.roundNo));
 			}
 
 		}
-	}//GEN-LAST:event_NextRound
+	}
 
 	/**
 	 * A series of <code>JOptionPane.MessageDialog</code>-s for explaining the game.
@@ -1143,40 +1176,38 @@ final class Game extends JFrame {
 	 */
 	private void fireAI() {
 		int[] xy = this.AI.fire();
+		for (int shot = 0; shot < (this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2])); shot++) {
+			System.out.println("AI fires at: " + xy[0] + " " + xy[1]);
 
-		if (xy[1] == -1 || xy[0] == -1) { // Method overriding in AI class didn't work properly.
-			System.out.println("ERROR!! TODO: Figure out what's wrong. Method overriding in AI class didn't work properly.");
-		} else {                          // Everything's fine.
-			for (int i = 0; i < (this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2])); i++) {
-				System.out.println("AI fires at: " + xy[0] + " " + xy[1]);
+			this.PlayerGridL[xy[1]][xy[0]].markShot();
+			this.AIStats[0]++;
 
-				this.PlayerGridL[xy[1]][xy[0]].markShot();
-				this.AIStats[0]++;
+			if (this.PlayerGridL[xy[1]][xy[0]].isHit()) {           // Checks if a Ship was hit.
+				this.AIStats[1]++;
 
-				if (this.PlayerGridL[xy[1]][xy[0]].isHit()) {       // Checks if a Ship was hit.
-					this.AIStats[1]++;
+				shipChecker:
+				for (int ship = 0; ship < this.shipNos; ship++) {     // Used for finding which ship was hit.
+					if (this.PlayerShips[ship].getPosition(xy) > -1) {
+						this.PlayerShips[ship].sectionHit(xy);            // Marks the section as hit.
 
-					shipChecker:
-					for (int ship = 0; ship < this.shipNos; ship++) { // Used for finding which ship was hit.
-						if (this.PlayerShips[ship].getPosition(xy) > -1) {
-							this.PlayerShips[ship].sectionHit(xy);        // Marks the section as hit.
-
-							if (this.PlayerShips[ship].isSunk()) {        // Checks if the ship was sunk.
-								this.PlayerStats[2]++;
+						if (this.PlayerShips[ship].isSunk()) {            // Checks if the ship was sunk.
+							this.PlayerStats[2]++;
+							if (this.shipNos == this.PlayerStats[2]) {      // Checks if the AI won.
+								return;
 							}
-
-							break shipChecker;
 						}
+
+						break shipChecker;
 					}
 				}
-
-				this.AI.updateGridOpp(this.PlayerGridL);            // Updates the AI's hostile grid.
-				if (this.AIDiff == 1) {                             // Updates the Brutal AI's Player's ship list
-					this.AI.updateShipsOpp(PlayerShips);
-				}
-
-				xy = this.AI.fire();
 			}
+
+			this.AI.updateGridOpp(this.PlayerGridL); // Updates the AI's hostile grid.
+			if (this.AIDiff == 1) {                  // Updates the Brutal AI's Player's ship list
+				this.AI.updateShipsOpp(PlayerShips);
+			}
+
+			xy = this.AI.fire();
 		}
 	}
 

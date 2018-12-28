@@ -37,12 +37,12 @@ public final class Sandbox extends AI {
 		Random rand = new Random(); // Random data type generator (built-in class).
 
 		for (int i = 0; i < 2; i++) {
-			xy[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
+			xy[i] = rand.nextInt(this.gridSize);
 		}
 
 		while (!this.gridOpp[xy[1]][xy[0]].isUnguessed()) { // If xy refers to a guessed coordinate, regenerate it.
 			for (int i = 0; i < 2; i++) {
-				temp[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
+				temp[i] = rand.nextInt(this.gridSize);
 			}
 
 			xy = temp;

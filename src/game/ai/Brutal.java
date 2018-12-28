@@ -14,6 +14,12 @@ import java.util.Random;
 public final class Brutal extends AI {
 
 	/**
+	 * Stores whether or not one of its ships was hit yet.
+	 * If not hit (i.e., false), the AI is not suppose to hit the Player (unless no other "empty" tiles are present).
+	 */
+	private boolean hit = false;
+
+	/**
 	 * Constructor for the Brutal AI
 	 *
 	 * @param initVars Initialization Variables
@@ -22,6 +28,25 @@ public final class Brutal extends AI {
 	 */
 	public Brutal(boolean[] initVars, Location[][] gridOpp, Ship[] shipsOpp) {
 		super(initVars, gridOpp, shipsOpp);
+	}
+
+	/**
+	 * A setter for gridSelf.
+	 * Also updates <code>this.hit</code>.
+	 *
+	 * @param gridSelf Location Grid of the AI
+	 */
+	@Override
+	public void updateGridSelf(Location[][] gridSelf) {
+		this.gridSelf = gridSelf;
+
+		for (int y = 0; y < gridSelf.length; y++) {
+			for (int x = 0; x < gridSelf.length; x++) {
+				if (gridSelf[y][x].isHit()) { // Checks if this location has a ship and was hit.
+					this.hit = true;
+				}
+			}
+		}
 	}
 
 	/**
@@ -39,12 +64,12 @@ public final class Brutal extends AI {
 	 *
 	 * The AI always "knows" where the opponents ships are located.
 	 *
-	 * The AI fires at random coordinates where no ships are located, until one of it's ship is hit, or no more
-	 * coordinates remain.
+	 * The AI fires at random coordinates where no ships are located, until one of it's ship is hit,
+	 * or no more coordinates remain.
 	 * Then, the AI is guaranteed to hit a ship (however, these coordinates are selected randomly again).
 	 *
-	 * TODO: Make it slightly easier (later, after implementing the above version) by randomizing whether the shot
-	 * lands or not by weighing in how many of it's ships aren't sunk.
+	 * TODO: Make it slightly easier by randomizing whether the shot lands or not by weighing in
+	 * how many of it's ships aren't sunk.
 	 *
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
@@ -64,16 +89,17 @@ public final class Brutal extends AI {
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
 	private int[] randomFire() {
-		int[] xy = new int[2], temp = new int[2];
-		Random rand = new Random();
+		int[] xy = new int[2];      // Firing coordinates.
+		int[] temp = new int[2];    // Temporary variable to store coordinates if xy refers to a guessed position.
+		Random rand = new Random(); // Random data type generator (built-in class).
 
 		for (int i = 0; i < 2; i++) {
-			xy[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
+			xy[i] = rand.nextInt(this.gridSize);
 		}
 
-		while (!this.gridSelf[xy[0]][xy[1]].isUnguessed()) {
+		while (!this.gridOpp[xy[1]][xy[0]].isUnguessed()) { // If xy refers to a guessed coordinate, regenerate it.
 			for (int i = 0; i < 2; i++) {
-				temp[i] = rand.nextInt(this.initVars[0] ? 15 : 10);
+				temp[i] = rand.nextInt(this.gridSize);
 			}
 
 			xy = temp;

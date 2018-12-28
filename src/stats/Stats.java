@@ -45,17 +45,17 @@ public class Stats {
 	 * I     7     I Ships Lost    (SL)   I
 	 * I-----------I----------------------I
 	 *
-	 * Index value = 0 + x, where x depends on the following:
+	 * Index value = 0 + x, where x +=
 	 *     Mode:
-	 *          +0 - Classic
-	 *          +3 - Salvo
+	 *          0 - Classic
+	 *          3 - Salvo
 	 *     AIDiff:
-	 *          +0 - Sandbox
-	 *          +1 - Regular
-	 *          +2 - Brutal
+	 *          0 - Sandbox
+	 *          1 - Regular
+	 *          2 - Brutal
 	 * </pre>
 	 */
-	private int[][] statsLists = new int[6][10];
+	private int[][] statsLists = new int[6][8];
 
 	/**
 	 * <pre>
@@ -81,7 +81,7 @@ public class Stats {
 	 *      2 - Brutal
 	 * </pre>
 	 */
-	private float[] Acc = new float[6];
+	private float[] acc = new float[6];
 
 	/**
 	 * Constructor for the Stats class.
@@ -98,10 +98,10 @@ public class Stats {
 	}
 
 	/**
-	 * @return the Acc
+	 * @return the acc
 	 */
 	public final float[] getAcc() {
-		return Acc;
+		return acc;
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class Stats {
 	 * &emsp; {-1, -2, -3} imply an error.<br>
 	 * &emsp; {0} implies a successful retrieval.
 	 */
-	public final int getStats() {
+	final int getStats() {
 		int ret = 0; // Return code
 
 		try {
@@ -127,18 +127,17 @@ public class Stats {
 
 			while (rs.next()) {
 				String mode = rs.getString(2), diff = rs.getString(3);
-				int i = mode.equals("S") ? 3 : 0;
-				i += diff.equals("B") ? 2 : (diff.equals("R") ? 1 : 0);
+				int index = (mode.equals("S") ? 3 : 0) + (diff.equals("B") ? 2 : (diff.equals("R") ? 1 : 0));
 
-				this.statsLists[i][0] = rs.getInt(4);  // GP value
-				this.statsLists[i][1] = rs.getInt(5);  // GW value
-				this.statsLists[i][2] = rs.getInt(6);  // GL value
-				this.statsLists[i][3] = rs.getInt(7);  // SF value
-				this.statsLists[i][4] = rs.getInt(8);  // Hits value
-				this.Acc[i] = rs.getFloat(9);          // Acc value
-				this.statsLists[i][5] = rs.getInt(10); // TH value
-				this.statsLists[i][6] = rs.getInt(11); // SS value
-				this.statsLists[i][7] = rs.getInt(12); // SL value
+				this.statsLists[index][0] = rs.getInt(4);  // Games Played
+				this.statsLists[index][1] = rs.getInt(5);  // Games Won
+				this.statsLists[index][2] = rs.getInt(6);  // Games Lost
+				this.statsLists[index][3] = rs.getInt(7);  // Shots Fired
+				this.statsLists[index][4] = rs.getInt(8);  // Hits
+				this.acc[index] = rs.getFloat(9);          // Accuracy
+				this.statsLists[index][5] = rs.getInt(10); // Times Hit
+				this.statsLists[index][6] = rs.getInt(11); // Ships Sunk
+				this.statsLists[index][7] = rs.getInt(12); // Ships Lost
 			}
 
 			rs.close();
@@ -164,23 +163,33 @@ public class Stats {
 	 *
 	 * @param index     Index number of the statistics record
 	 * @param statsList the statsLists to set
+	 * @param acc       the accuracy value to add
 	 */
 	final void setStatsLists(int index, int[] statsList) {
-		this.statsLists[index][0] += 1;                         // Games PLayed += 1
-		this.statsLists[index][1] += statsList[0] == 1 ? 1 : 0; // Games Won += 1 if Round Status is true
-		this.statsLists[index][2] += statsList[0] == 0 ? 1 : 0; // Games Lost += 1 if Round Status is false
-		for (int i = 0; i < statsList.length - 1; i++) {        // All other stats
-			this.statsLists[index][i + 3] = statsList[i + 1];
+		this.statsLists[index][0] += 1;                                                          // Games PLayed += 1
+		if (statsList[0] == 1) {                                                                 // Checks if the match was won
+			this.statsLists[index][1] += 1;
+		} else {                                                                                 // The match was lost
+			this.statsLists[index][2] += 1;
+		}
+		this.acc[index] = (float) (Math.round((statsList[2] * 10000.0) / statsList[1]) / 100.0); // Accuracy
+		for (int stat = 1; stat < statsList.length; stat++) {                                    // All other stats
+			this.statsLists[index][stat + 2] = statsList[stat];
 		}
 	}
 
 	/**
-	 * Setter for Acc
+	 * Setter for <code>this.statsLists</code> to "blanks".
+	 * Used only for resetting statistics.
 	 *
 	 * @param index Index number of the statistics record
-	 * @param Acc   the Acc to set
 	 */
-	final void setAcc(int index, float Acc) {
-		this.Acc[index] = Acc;
+	final void resetStatsLists(int index) {
+		for (int stat = 0; stat < this.statsLists[index].length; stat++) {
+			this.statsLists[index][stat] = 0;
+		}
+
+		this.acc[index] = 0;
 	}
+
 }

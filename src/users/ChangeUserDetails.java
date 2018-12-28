@@ -122,10 +122,10 @@ public final class ChangeUserDetails extends CurrentUser {
 			Connection con = DriverManager.getConnection(DBDetails.DB_URL + DBDetails.DB_NAME, DBDetails.DB_UNAME, DBDetails.DB_PASS); // Creates a connection to the MySQL Database
 
 			StringBuffer[] deletes = {new StringBuffer(135), new StringBuffer(135)};
-			deletes[0].append("DELETE FROM users WHERE UNo = (SELECT UNo FROM users WHERE UName = '"); // Base Statement for users
+			deletes[0].append("DELETE FROM stats WHERE UNo = (SELECT UNo FROM users WHERE UName = '"); // Base Statement for stats
 			deletes[0].append(CurrentUser.getCurrentUser()).append("');");                             // Name
-			deletes[1].append("DELETE FROM stats WHERE UNo = (SELECT UNo FROM users WHERE UName = '"); // Base Statement for stats
-			deletes[1].append(CurrentUser.getCurrentUser()).append("');");                             // Name
+			deletes[1].append("DELETE FROM users WHERE UName = '");                                    // Base Statement for users
+			deletes[1].append(CurrentUser.getCurrentUser()).append("';");                              // Name
 
 			Statement stmnt = con.createStatement();    // Creates the SQL statement object
 			System.out.println(deletes[0].toString());  // 1st Statement (users)

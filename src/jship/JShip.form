@@ -134,9 +134,9 @@
             <Property name="verticalGap" type="int" value="10"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="ChangeB">
+            <Component class="javax.swing.JButton" name="UserB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Register/ Login / Logout"/>
+                <Property name="text" type="java.lang.String" value="User Management"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChangeUser"/>

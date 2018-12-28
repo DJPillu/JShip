@@ -37,7 +37,7 @@ public final class JShip extends JFrame {
     UserL = new JLabel();
     UserTF = new JTextField();
     ButtonP = new JPanel();
-    ChangeB = new JButton();
+    UserB = new JButton();
     Spacer1L = new JLabel();
     StatsB = new JButton();
     Spacer2L = new JLabel();
@@ -85,13 +85,13 @@ public final class JShip extends JFrame {
 
     ButtonP.setLayout(new GridLayout(3, 3, 10, 10));
 
-    ChangeB.setText("Register/ Login / Logout");
-    ChangeB.addActionListener(new ActionListener() {
+    UserB.setText("User Management");
+    UserB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         ChangeUser(evt);
       }
     });
-    ButtonP.add(ChangeB);
+    ButtonP.add(UserB);
     ButtonP.add(Spacer1L);
 
     StatsB.setText("Statistics");
@@ -266,7 +266,6 @@ public final class JShip extends JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private JPanel ButtonP;
-  private JButton ChangeB;
   private JButton ExitB;
   private JButton HelpB;
   private JPanel HomeP;
@@ -278,6 +277,7 @@ public final class JShip extends JFrame {
   private JButton StatsB;
   private JLabel TitleL;
   private JPanel TitleP;
+  private JButton UserB;
   private JLabel UserL;
   private JTextField UserTF;
   // End of variables declaration//GEN-END:variables

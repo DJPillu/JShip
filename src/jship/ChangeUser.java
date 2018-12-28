@@ -22,14 +22,7 @@ final class ChangeUser extends JFrame {
 	 */
 	ChangeUser() {
 		this.initComponents();
-		this.updateCurrentUser();
-		if (CurrentUser.getCurrentUser().equals("guest")) {
-			this.ChangeB.setEnabled(false);
-			this.DeleteB.setEnabled(false);
-		}
-		if (CurrentUser.getCurrentUser().equals("admin")) {
-			this.DeleteB.setEnabled(false);
-		}
+		this.updateAndReset();
 		this.setLocationRelativeTo(null);
 	}
 
@@ -67,7 +60,7 @@ final class ChangeUser extends JFrame {
     DeleteB = new JButton();
     RegisterB = new JButton();
     Spacer3L = new JLabel();
-    CancelB = new JButton();
+    BackB = new JButton();
 
     ConfirmL.setLabelFor(ConfirmPF);
     ConfirmL.setText("Please confirm your password:");
@@ -77,11 +70,9 @@ final class ChangeUser extends JFrame {
     ConfirmPLayout.setHorizontalGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(ConfirmPLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-          .addGroup(ConfirmPLayout.createSequentialGroup()
-            .addComponent(ConfirmL)
-            .addGap(218, 218, 218))
-          .addComponent(ConfirmPF))
+        .addGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+          .addComponent(ConfirmPF, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
+          .addComponent(ConfirmL))
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     ConfirmPLayout.setVerticalGroup(ConfirmPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -102,10 +93,10 @@ final class ChangeUser extends JFrame {
       .addGroup(ChangePassPLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(ChangePassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+          .addComponent(ChangePassPF)
           .addGroup(ChangePassPLayout.createSequentialGroup()
             .addComponent(ChangePassL)
-            .addGap(0, 200, Short.MAX_VALUE))
-          .addComponent(ChangePassPF))
+            .addGap(0, 200, Short.MAX_VALUE)))
         .addContainerGap())
     );
     ChangePassPLayout.setVerticalGroup(ChangePassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -120,17 +111,17 @@ final class ChangeUser extends JFrame {
     VerifyPassL.setLabelFor(VerifyPassPF);
     VerifyPassL.setText("Verify the new password:");
 
-    VerifyPassPF.setText("jPasswordField1");
-
     GroupLayout VerifyPassPLayout = new GroupLayout(VerifyPassP);
     VerifyPassP.setLayout(VerifyPassPLayout);
     VerifyPassPLayout.setHorizontalGroup(VerifyPassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(VerifyPassPLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(VerifyPassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-          .addComponent(VerifyPassL)
-          .addComponent(VerifyPassPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(208, Short.MAX_VALUE))
+          .addGroup(VerifyPassPLayout.createSequentialGroup()
+            .addComponent(VerifyPassL)
+            .addGap(0, 198, Short.MAX_VALUE))
+          .addComponent(VerifyPassPF))
+        .addContainerGap())
     );
     VerifyPassPLayout.setVerticalGroup(VerifyPassPLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(VerifyPassPLayout.createSequentialGroup()
@@ -141,7 +132,7 @@ final class ChangeUser extends JFrame {
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     setTitle("User Management");
     setResizable(false);
 
@@ -242,13 +233,13 @@ final class ChangeUser extends JFrame {
     ButtonsP.add(RegisterB);
     ButtonsP.add(Spacer3L);
 
-    CancelB.setText("Cancel");
-    CancelB.addActionListener(new ActionListener() {
+    BackB.setText("Go Back");
+    BackB.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         GoBack(evt);
       }
     });
-    ButtonsP.add(CancelB);
+    ButtonsP.add(BackB);
 
     GroupLayout layout = new GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -273,10 +264,23 @@ final class ChangeUser extends JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Updates the current user. Called after every button.
+	 * Updates the current user.
+	 * Resets all input fields.
 	 */
-	private void updateCurrentUser() {
+	private void updateAndReset() {
+		boolean guest = CurrentUser.getCurrentUser().equals("guest");
+		boolean admin = CurrentUser.getCurrentUser().equals("admin");
+
 		this.CurrentUserTF.setText(CurrentUser.getCurrentUser());
+		this.UserTF.setText("");
+		this.PassPF.setText("");
+
+		this.ChangeB.setEnabled(!guest);
+		this.DeleteB.setEnabled(!guest && !admin);
+
+		this.ConfirmPF.setText("");
+		this.ChangePassPF.setText("");
+		this.VerifyPassPF.setText("");
 	}
 
 	/**
@@ -298,7 +302,7 @@ final class ChangeUser extends JFrame {
 			LoginUser lu = new LoginUser(user, pass); // Created the LoginUser object
 			int res = lu.login();
 
-			this.updateCurrentUser();
+			this.updateAndReset();
 			if (res == -3) {                     // Unknown Exception
 				System.out.println("Fatal Error Occured! Contact Developer!");
 				JOptionPane.showMessageDialog(null, "Fatal Error Occured! Contact Developer!");
@@ -329,10 +333,9 @@ final class ChangeUser extends JFrame {
 			JOptionPane.showMessageDialog(null, "No User is logged in!");
 		} else {                                            // A User is logged in. Logging out.
 			CurrentUser.logout();
-			this.updateCurrentUser();
+			this.updateAndReset();
 			System.out.println("User logged out!");
 			JOptionPane.showMessageDialog(null, "User logged out!");
-			this.CancelB.doClick();
 		}
 	}//GEN-LAST:event_Logout
 
@@ -355,7 +358,7 @@ final class ChangeUser extends JFrame {
 			CreateUser cu = new CreateUser(user, pass); // Created the CreateUser object
 			int res = cu.create();
 
-			this.updateCurrentUser();
+			this.updateAndReset();
 			if (res == -4) {                     // User Already Registered Exception
 				System.out.println("This Username is not available!");
 				JOptionPane.showMessageDialog(null, "This Username is not available!");
@@ -429,6 +432,8 @@ final class ChangeUser extends JFrame {
 							Arrays.fill(newPassword, '0');    // Security measure
 							Arrays.fill(verifyPassword, '0'); // Security measure
 							JOptionPane.showMessageDialog(null, "Your password has been changed.", "Password Changed", JOptionPane.ERROR_MESSAGE);
+							this.updateAndReset();
+							return;
 						} else {             // New and the verification of the new password don't match.
 							JOptionPane.showMessageDialog(null, "The Passwords entered don't match!", "Passwords don't Match!", JOptionPane.ERROR_MESSAGE);
 						}
@@ -461,16 +466,17 @@ final class ChangeUser extends JFrame {
 					JOptionPane.showMessageDialog(null, "An Error Occurred!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(null, "User Deleted!", "Delete Performed", JOptionPane.INFORMATION_MESSAGE);
+					this.updateAndReset();
 				}
-			} else {           // Incorrect current password entered.
+			} else { // Incorrect current password entered.
 				JOptionPane.showMessageDialog(null, "Incorrect Password entered!", "Password Incorrect", JOptionPane.ERROR_MESSAGE);
 			}
 		}
   }//GEN-LAST:event_Delete
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private JButton BackB;
   private JPanel ButtonsP;
-  private JButton CancelB;
   private JButton ChangeB;
   private JLabel ChangePassL;
   private JPanel ChangePassP;

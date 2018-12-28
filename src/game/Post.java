@@ -35,8 +35,26 @@ final class Post extends JFrame {
 	/**
 	 * Accuracy = (Hits Landed / Shots Fired) * 100 = (statsList[2] / statsList[1]) * 100
 	 */
-	private final float Acc;
+	private final float acc;
+
+	/**
+	 * Game Mode:
+	 * <pre>
+	 * C - Classic
+	 * S - Salvo
+	 * </pre>
+	 */
 	private final String mode;
+
+	/**
+	 * AI Difficulty:
+	 *
+	 * <pre>
+	 * -1 - Sandbox   (Easy)
+	 *  0 - Realistic (Medium)
+	 *  1 - Brutal    (Hard)
+	 * </pre>
+	 */
 	private final int AIDiff;
 
 	/**
@@ -48,7 +66,7 @@ final class Post extends JFrame {
 	 */
 	Post(int[] statsList, String mode, int AIDiff) {
 		this.statsList = statsList;
-		this.Acc = (float) (Math.round((this.statsList[2] * 10000.0) / this.statsList[1]) / 100.0);
+		this.acc = (float) (Math.round((this.statsList[2] * 10000.0) / this.statsList[1]) / 100.0);
 
 		this.mode = mode;
 		this.AIDiff = AIDiff;
@@ -89,7 +107,7 @@ final class Post extends JFrame {
     SSTF = new JTextField();
     SLTF = new JTextField();
 
-    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     setTitle("Match Ended!");
     setResizable(false);
 
@@ -255,7 +273,7 @@ final class Post extends JFrame {
 	 */
 	private void playMusic() {
 		//TODO: Play ze epic music.
-		System.out.println("NOW PLAYING ZE YEPIC MUSIC!");
+		System.out.println("NOW PLAYING ZE EPIC MUSIC!");
 		System.out.println("jk, we still need to finish the actual project part still. But may be done if we complete quickly.");
 	}
 
@@ -285,12 +303,12 @@ final class Post extends JFrame {
 	private void userStatsSetter() {
 		this.SFTF.setText("" + statsList[1]);
 		this.HitsTF.setText("" + statsList[2]);
-		this.AccTF.setText("" + Acc + " %");
+		this.AccTF.setText("" + acc + " %");
 		this.THTF.setText("" + statsList[3]);
 		this.SSTF.setText("" + statsList[4]);
 		this.SLTF.setText("" + statsList[5]);
 
-		UpdateStats stats = new UpdateStats(this.mode, this.AIDiff, this.statsList, this.Acc);
+		UpdateStats stats = new UpdateStats(this.mode, this.AIDiff + 1, this.statsList);
 		stats.update();
 	}
 

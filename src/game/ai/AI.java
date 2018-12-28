@@ -45,6 +45,11 @@ public class AI {
 	final int gridSize;
 
 	/**
+	 * Total number of ships available in this match.
+	 */
+	final int shipNos;
+
+	/**
 	 * Round Initialization Variables:
 	 *
 	 * <pre>
@@ -82,9 +87,9 @@ public class AI {
 			}
 		}
 
-		int shipNos = (initVars[1] ? 1 : 0) + (initVars[2] ? 2 : 0) + (initVars[3] ? 2 : 0) + (initVars[4] ? 4 : 0);
+		this.shipNos = (initVars[1] ? 1 : 0) + (initVars[2] ? 2 : 0) + (initVars[3] ? 2 : 0) + (initVars[4] ? 4 : 0);
 		int shipNo = 0;    // Temporary variable storing the ship number being initialized.
-		this.shipsSelf = new Ship[shipNos];
+		this.shipsSelf = new Ship[this.shipNos];
 		if (initVars[1]) { // Battleships
 			for (int i = shipNo; i < shipNo + 1; i++) {
 				this.shipsSelf[i] = new Ship(5);
@@ -112,7 +117,7 @@ public class AI {
 		shipNo = 0;
 		System.gc();
 
-		this.place(shipNos);
+		this.place();
 	}
 
 	/**
@@ -181,14 +186,12 @@ public class AI {
 
 	/**
 	 * Places ships in gridSelf.
-	 *
-	 * @param shipNos the number of ships present
 	 */
-	private void place(int shipNos) {
+	private void place() {
 		int shipLength;
 		boolean direction;
 		Random random = new Random();
-		for (int i = 0; i < shipNos; i++) {
+		for (int i = 0; i < this.shipNos; i++) {
 			shipLength = this.shipsSelf[i].length;
 			direction = random.nextBoolean();
 			System.out.println("AI Ship no. " + i + ": " + shipLength + (direction ? " Vertical" : " Horizontal"));
