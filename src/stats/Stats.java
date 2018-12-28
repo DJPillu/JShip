@@ -163,7 +163,6 @@ public class Stats {
 	 *
 	 * @param index     Index number of the statistics record
 	 * @param statsList the statsLists to set
-	 * @param acc       the accuracy value to add
 	 */
 	final void setStatsLists(int index, int[] statsList) {
 		this.statsLists[index][0] += 1;                                                          // Games PLayed += 1
