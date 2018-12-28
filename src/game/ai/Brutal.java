@@ -76,7 +76,40 @@ public final class Brutal extends AI {
 	@Override
 	public int[] fire() {
 		int[] xy = this.randomFire();
-		// TODO: Do something.
+
+		int left = 0;
+		int occupied = 0;
+		for (int ship = 0; ship < this.shipNos; ship++) {
+			occupied += this.shipsOpp[ship].length;
+		}
+		for (int y = 0; y < this.gridSize; y++) {
+			for (int x = 0; x < this.gridSize; x++) {
+				if (this.gridOpp[y][x].isUnguessed()) {
+					left++;
+				}
+			}
+		}
+
+		if (left == occupied || this.hit) {          // Checks if there aren't anymore "black" tiles, or if any AI ship has been hit.
+			for (int s = 0; s < this.shipNos; s++) {   // Starts from the smallest ships so that the Player gets less shots in Salvo.
+				Ship ship = this.shipsOpp[s];            // The current ship.
+				boolean direction = ship.getDirection(); // Direction
+				int length = ship.length;                // Length
+
+				if (!ship.isSunk()) {                    // Checks if the ship wasn't sunk.
+					for (int l = 0; l < length; l++) {
+						if (!ship.isHit(l)) {                // Checks if the current position wasn't already hit.
+							xy = new int[] {ship.getStart()[0] + (direction ? 0 : l), ship.getStart()[1] + (direction ? l : 0)};
+						}
+					}
+				}
+			}
+		} else {
+			while (this.gridOpp[xy[1]][xy[0]].hasShip()) { // Checks if xy isn't a ship part.
+				xy = this.randomFire();
+			}
+		}
+
 		return xy;
 	}
 
