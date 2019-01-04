@@ -118,7 +118,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="CurrentUserL" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="UserTF" pref="301" max="32767" attributes="0"/>
+                          <Component id="UserTF" pref="361" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -330,7 +330,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="GWTF" alignment="1" max="32767" attributes="0"/>
-                      <Component id="GPTF" pref="311" max="32767" attributes="0"/>
+                      <Component id="GPTF" pref="371" max="32767" attributes="0"/>
                       <Component id="HitsTF" alignment="0" max="32767" attributes="0"/>
                       <Component id="AccTF" alignment="0" max="32767" attributes="0"/>
                       <Component id="THTF" alignment="0" max="32767" attributes="0"/>

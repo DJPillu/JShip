@@ -134,7 +134,7 @@ public final class JShip extends JFrame {
     HomePLayout.setHorizontalGroup(HomePLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(GroupLayout.Alignment.TRAILING, HomePLayout.createSequentialGroup()
         .addGroup(HomePLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-          .addComponent(ButtonP, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(ButtonP, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
           .addComponent(TitleP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );

@@ -257,7 +257,7 @@ final class ChangeUser extends JFrame {
         .addComponent(InputP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
         .addComponent(ButtonsP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGap(11, 11, 11))
     );
 
     pack();
