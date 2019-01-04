@@ -185,4 +185,5 @@ public final class Regular extends AI {
 
 		return xy;
 	}
+
 }

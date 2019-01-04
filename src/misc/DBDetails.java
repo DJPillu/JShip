@@ -26,4 +26,5 @@ public class DBDetails {
 	 * String storing the Database Password.
 	 */
 	public static final String DB_PASS = "root";                        // DBMS Password
+
 }

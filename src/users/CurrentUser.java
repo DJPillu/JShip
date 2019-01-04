@@ -35,4 +35,5 @@ public class CurrentUser {
 	public static void logout() {
 		CurrentUser.setCurrentUser("guest");
 	}
+
 }

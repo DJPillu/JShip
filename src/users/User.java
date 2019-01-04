@@ -74,4 +74,5 @@ abstract class User {
 
 		return hash;
 	}
+
 }

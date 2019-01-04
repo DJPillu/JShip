@@ -186,4 +186,5 @@ public final class Brutal extends AI {
 
 		return xy;
 	}
+
 }

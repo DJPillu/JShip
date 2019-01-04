@@ -110,4 +110,5 @@ public final class CreateUser extends User {
 
 		return ret;
 	}
+
 }
