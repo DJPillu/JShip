@@ -69,7 +69,7 @@ public final class Brutal extends AI {
 	 * Then, the AI is guaranteed to hit a ship (however, these coordinates are selected randomly again).
 	 *
 	 * TODO: Make it slightly easier by randomizing whether the shot lands or not by weighing in
-	 * how many of it's ships aren't sunk.
+	 * how many of the AI's ships aren't sunk.
 	 *
 	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
 	 */
@@ -91,7 +91,7 @@ public final class Brutal extends AI {
 		}
 
 		if (left == occupied || this.hit) {          // Checks if there aren't anymore "black" tiles, or if any AI ship has been hit.
-			for (int s = 0; s < this.shipNos; s++) {   // Starts from the smallest ships so that the Player gets less shots in Salvo.
+			for (int s = this.shipNos; s <= 0; s--) {  // Starts from the largest ships 1st to decrease difficulty in Salvo. Figure out why the order is inverted.
 				Ship ship = this.shipsOpp[s];            // The current ship.
 				boolean direction = ship.getDirection(); // Direction
 				int length = ship.length;                // Length
@@ -126,17 +126,63 @@ public final class Brutal extends AI {
 		int[] temp = new int[2];    // Temporary variable to store coordinates if xy refers to a guessed position.
 		Random rand = new Random(); // Random data type generator (built-in class).
 
-		for (int i = 0; i < 2; i++) {
-			xy[i] = rand.nextInt(this.gridSize);
-		}
-
-		while (!this.gridOpp[xy[1]][xy[0]].isUnguessed()) { // If xy refers to a guessed coordinate, regenerate it.
+		// If xy refers to a guessed coordinate, or a location that borders a ship tile that has been guessed, regenerate it.
+		do { // Do initializes xy.
 			for (int i = 0; i < 2; i++) {
 				temp[i] = rand.nextInt(this.gridSize);
 			}
-
 			xy = temp;
-		}
+
+			if (!this.gridOpp[xy[1]][xy[0]].isUnguessed()) { // Checks if the current location has been guessed.
+				continue;
+			} else {                                         // Checks if the current location borders any known ship.
+				if ((xy[0] > 0) && (xy[0] < this.gridSize - 1) && (xy[1] > 0) && (xy[1] < this.gridSize - 1)) { // Not at edges
+					if (this.gridOpp[xy[1] - 1][xy[0]].isHit() || this.gridOpp[xy[1] + 1][xy[0]].isHit() || this.gridOpp[xy[1]][xy[0] - 1].isHit() || this.gridOpp[xy[1]][xy[0] + 1].isHit()) {
+						continue;
+					}
+				} else {                                     // At the Edges
+					if (xy[1] == 0) {                          // Top edge
+						if (xy[0] == 0) {                        // Top-Left Corner
+							if (this.gridOpp[xy[1]][xy[0] + 1].isHit() || this.gridOpp[xy[1] + 1][xy[0]].isHit()) {
+								continue;
+							}
+						} else if (xy[0] == this.gridSize - 1) { // Top-Right Corner
+							if (this.gridOpp[xy[1]][xy[0] - 1].isHit() || this.gridOpp[xy[1] + 1][xy[0]].isHit()) {
+								continue;
+							}
+						} else {                                 // Top Edge (excluding Corners)
+							if (this.gridOpp[xy[1]][xy[0] + 1].isHit() || this.gridOpp[xy[1]][xy[0] - 1].isHit() || this.gridOpp[xy[1] + 1][xy[0]].isHit()) {
+								continue;
+							}
+						}
+					} else if (xy[1] == this.gridSize - 1) {   // Bottom Edge
+						if (xy[0] == 0) {                        // Bottom-Left Corner
+							if (this.gridOpp[xy[1]][xy[0] + 1].isHit() || this.gridOpp[xy[1] - 1][xy[0]].isHit()) {
+								continue;
+							}
+						} else if (xy[0] == this.gridSize - 1) { // Bottom-Right Corner
+							if (this.gridOpp[xy[1]][xy[0] - 1].isHit() || this.gridOpp[xy[1] - 1][xy[0]].isHit()) {
+								continue;
+							}
+						} else {                                 // Bottom Edge (excluding Corners)
+							if (this.gridOpp[xy[1]][xy[0] + 1].isHit() || this.gridOpp[xy[1]][xy[0] - 1].isHit() || this.gridOpp[xy[1] - 1][xy[0]].isHit()) {
+								continue;
+							}
+						}
+					} else if (xy[0] == 0) {                   // Left Edge (excluding Corners)
+						if (this.gridOpp[xy[1] + 1][xy[0]].isHit() || this.gridOpp[xy[1] - 1][xy[0]].isHit() || this.gridOpp[xy[1]][xy[0] + 1].isHit()) {
+							continue;
+						}
+					} else {                                   // Rght Edge (ecluding Corners)
+						if (this.gridOpp[xy[1] + 1][xy[0]].isHit() || this.gridOpp[xy[1] - 1][xy[0]].isHit() || this.gridOpp[xy[1]][xy[0] - 1].isHit()) {
+							continue;
+						}
+					}
+				}
+			}
+
+			break;
+		} while (true);
 
 		return xy;
 	}

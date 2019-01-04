@@ -25,7 +25,7 @@ public final class Location {
 
 	/**
 	 * Stores whether or not this location has been guessed.
-	 * Takes the constants UNGUESSED, HIT and MISS
+	 * Takes the constants <code>this.UNGUESSED</code>, <code>this.HIT</code> and <code>this.MISS</code>.
 	 */
 	private int status = Location.UNGUESSED;
 
