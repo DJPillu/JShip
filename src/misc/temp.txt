@@ -12,12 +12,12 @@ Size Occupied by Ships:
 	Cruiser:    ((4 * 3) + 2) * 2 = (12 + 2) * 2 = 14 * 2 = 28
 	Destroyer:  ((3 * 3) + 2) * 3 = (09 + 2) * 3 = 11 * 2 = 22
 	Corvette:   ((2 * 3) + 2) * 4 = (06 + 2) * 4 = 08 * 4 = 32
-	Total Space occupied = 91
+	Maximum space occupied                                = 91
 
 Stretch Goals:
-	1) Add a border to the ships, i.e., no 2 ships can be in contact with each other.
-	2) Add music to the project
+	1) Add music to the project
 			* Menu Song:
 			* In-game Song: Sabaton
 			* Winning Song: ???
 			* Losing Song : Evil Morty Song (For the Damaged Coda - Blonde Redhead)
+	2) Make it beautiful (like bitmaps to use as button background to show actual ships; background imagery, etc.).

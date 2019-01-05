@@ -4,6 +4,8 @@ JShip is a Java based single-player implementation of the board game Battleship,
 
 It is also the investigatory project for 2 high school students (and hence the reason why Java and MySQL are used).
 
+[Javadoc](https://blackk100.github.io/JShip/)
+
 ## Warning
  * This project is currently under active design and development.
  * The author takes no responsibility for any damages, to either software, hardware, yourself or others, caused directly or indirectly by the usage of this application.
@@ -20,7 +22,6 @@ It is also the investigatory project for 2 high school students (and hence the r
 3. Compile the project and run from ```jship.JShip``` (may distribute .jar files later).
 
 ## TODO
-* Make the Regular AI difficulty.
 * Add in-game help text.
 * Add in-game music (if we get time).
 * Make it beautiful (if we get time).
