@@ -196,7 +196,7 @@ public class AI {
 			direction = random.nextBoolean();
 			System.out.println("AI Ship no. " + i + ": " + shipLength + (direction ? " Vertical" : " Horizontal"));
 
-			int[] xy = this.random(shipLength);
+			int[] xy = this.random(shipLength); // Starting Coordinates
 
 			intersect:
 			while (true) {     // Checks for any intersections

@@ -28,18 +28,18 @@ public final class Sandbox extends AI {
 	 * Function for the AI to fire at the player's ships.
 	 * The coordinates are always (psuedo-)randomly generated.
 	 *
-	 * @return an integer array. The 1st value is the x-Coordinate. The 2nd value is the Y-Coordinate.
+	 * @return an integer array. The 1st value is the x-Coordinate, 2nd value is the Y-Coordinate.
 	 */
 	@Override
 	public int[] fire() {
-		int[] xy = new int[2];      // Firing coordinates.
-		int[] temp = new int[2];    // Temporary variable to store coordinates if xy refers to a guessed position.
-		Random rand = new Random(); // Random data type generator (built-in class).
+		int[] xy = new int[2];        // Firing coordinates.
+		int[] temp = new int[2];      // Temporary variable to store coordinates if xy refers to a guessed position.
+		Random random = new Random(); // Random data type generator (built-in class).
 
 		// If xy refers to a guessed coordinate, or a location that borders a ship tile that has been guessed, regenerate it.
 		do { // Do initializes xy.
 			for (int i = 0; i < 2; i++) {
-				temp[i] = rand.nextInt(this.gridSize);
+				temp[i] = random.nextInt(this.gridSize);
 			}
 			xy = temp;
 

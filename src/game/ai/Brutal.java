@@ -115,21 +115,21 @@ public final class Brutal extends AI {
 
 	/**
 	 * Support function 1 for the AI to fire at the player's ships.
-	 * The coordinates are always randomly generated.
+	 * The coordinates are always (psuedo-)randomly generated.
 	 *
-	 * Is identical to Sandbox.fire()
+	 * Is identical to <code>Sandbox.fire()</code>.
 	 *
-	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
+	 * @return an integer array. The 1st value is the X-Coordinate, 2nd value is the Y-Coordinate.
 	 */
 	private int[] randomFire() {
-		int[] xy = new int[2];      // Firing coordinates.
-		int[] temp = new int[2];    // Temporary variable to store coordinates if xy refers to a guessed position.
-		Random rand = new Random(); // Random data type generator (built-in class).
+		int[] xy = new int[2];        // Firing coordinates.
+		int[] temp = new int[2];      // Temporary variable to store coordinates if xy refers to a guessed position.
+		Random random = new Random(); // Random data type generator (built-in class).
 
 		// If xy refers to a guessed coordinate, or a location that borders a ship tile that has been guessed, regenerate it.
 		do { // Do initializes xy.
 			for (int i = 0; i < 2; i++) {
-				temp[i] = rand.nextInt(this.gridSize);
+				temp[i] = random.nextInt(this.gridSize);
 			}
 			xy = temp;
 

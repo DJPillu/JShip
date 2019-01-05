@@ -941,6 +941,7 @@ final class Game extends JFrame {
 					this.PlayerStats[0]++;
 
 					if (this.AIGridL[y][x].isHit()) { // Checks if a Ship was hit.
+						this.AlertsTA.append("Enemy Ship hit!\n");
 						this.PlayerStats[1]++;
 
 						shipChecker:
@@ -980,16 +981,20 @@ final class Game extends JFrame {
 		if (this.shipNos == this.AIStats[2]) {       // Checks if the user won.
 			this.status = Game.WIN;
 			this.end();
-		} else {                                         // User did not win.
-			this.AI.updateGridSelf(this.AIGridL);          // Updates the AI's "self" grid
-			this.fireAI();                                 // AI Shoots.
+		} else {                                     // User did not win.
+			this.AI.updateGridSelf(this.AIGridL);      // Updates the AI's "self" grid
+			this.fireAI();                             // AI Shoots.
+			this.AI.updateGridOpp(this.PlayerGridL);   // Updates the AI's hostile grid.
+			if (this.AIDiff == 1) {                    // Updates the Brutal AI's Player's ship list
+				this.AI.updateShipsOpp(PlayerShips);
+			}
 			this.StatsUpdate();
 			this.setColors();
 
 			if (this.shipNos == this.PlayerStats[2]) { // Checks if the AI won.
 				this.status = Game.LOSE;
 				this.end();
-			} else {                                       // AI did not win. Next round.
+			} else {                                   // AI did not win. Next round.
 				this.roundNo++;
 				this.RoundTF.setText(Integer.toString(this.roundNo));
 			}
@@ -1135,7 +1140,7 @@ final class Game extends JFrame {
 	 */
 	private void fire(String coords) {
 		int[] xy = this.extractCoordinates(coords);
-		System.out.println("Player: " + xy[0] + " " + xy[1]);
+		System.out.println("Player clicked at: " + xy[0] + " " + xy[1]);
 
 		if (coords.charAt(0) == '2') {                    // Checks if the button clicked is from Grid 2.
 			if (this.AIGridL[xy[1]][xy[0]].isUnguessed()) { // Checks if the location is unguessed.
@@ -1175,8 +1180,9 @@ final class Game extends JFrame {
 	 * Function for handling the AI input.
 	 */
 	private void fireAI() {
-		int[] xy = this.AI.fire();
+		int[] xy;
 		for (int shot = 0; shot < (this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2])); shot++) {
+			xy = this.AI.fire();
 			System.out.println("AI fires at: " + xy[0] + " " + xy[1]);
 
 			this.PlayerGridL[xy[1]][xy[0]].markShot();
@@ -1201,13 +1207,6 @@ final class Game extends JFrame {
 					}
 				}
 			}
-
-			this.AI.updateGridOpp(this.PlayerGridL); // Updates the AI's hostile grid.
-			if (this.AIDiff == 1) {                  // Updates the Brutal AI's Player's ship list
-				this.AI.updateShipsOpp(PlayerShips);
-			}
-
-			xy = this.AI.fire();
 		}
 	}
 
