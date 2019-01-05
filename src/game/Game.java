@@ -1180,25 +1180,28 @@ final class Game extends JFrame {
 	 * Function for handling the AI input.
 	 */
 	private void fireAI() {
-		int[] xy;
-		for (int shot = 0; shot < (this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2])); shot++) {
-			xy = this.AI.fire();
-			System.out.println("AI fires at: " + xy[0] + " " + xy[1]);
+		int[][] xy = new int[(this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2]))][2];
 
-			this.PlayerGridL[xy[1]][xy[0]].markShot();
+		for (int shot = 0; shot < xy.length; shot++) {                 // Obtains the firing coordinates. In a separate loop to prevent the regular AI from knowing the hit status of previous shots.
+			xy[shot] = this.AI.fire();
+			System.out.println("AI fires at: " + xy[shot][0] + " " + xy[shot][1]);
+		}
+
+		for (int shot = 0; shot < xy.length; shot++) {                 // Marks the locations and updates statistics.
+			this.PlayerGridL[xy[shot][1]][xy[shot][0]].markShot();
 			this.AIStats[0]++;
 
-			if (this.PlayerGridL[xy[1]][xy[0]].isHit()) {           // Checks if a Ship was hit.
+			if (this.PlayerGridL[xy[shot][1]][xy[shot][0]].isHit()) {    // Checks if a Ship was hit.
 				this.AIStats[1]++;
 
 				shipChecker:
-				for (int ship = 0; ship < this.shipNos; ship++) {     // Used for finding which ship was hit.
-					if (this.PlayerShips[ship].getPosition(xy) > -1) {
-						this.PlayerShips[ship].sectionHit(xy);            // Marks the section as hit.
+				for (int ship = 0; ship < this.shipNos; ship++) {          // Used for finding which ship was hit.
+					if (this.PlayerShips[ship].getPosition(xy[shot]) > -1) {
+						this.PlayerShips[ship].sectionHit(xy[shot]);           // Marks the section as hit.
 
-						if (this.PlayerShips[ship].isSunk()) {            // Checks if the ship was sunk.
+						if (this.PlayerShips[ship].isSunk()) {                 // Checks if the ship was sunk.
 							this.PlayerStats[2]++;
-							if (this.shipNos == this.PlayerStats[2]) {      // Checks if the AI won.
+							if (this.shipNos == this.PlayerStats[2]) {           // Checks if the AI won.
 								return;
 							}
 						}
