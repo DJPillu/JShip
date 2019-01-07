@@ -3,7 +3,6 @@ package game.grid;
 
 /**
  * Class for maintaining the details of each ship.
- * Required for having multi-tile ships.
  *
  * @author blackk100
  */

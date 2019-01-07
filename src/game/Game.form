@@ -315,7 +315,7 @@
               <SubComponents>
                 <Component class="javax.swing.JCheckBox" name="BattleshipCB">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleships&lt;br/&gt;5 Tiles; x1&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleship&lt;br/&gt;5 Tiles; x1&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShipCBClicked"/>

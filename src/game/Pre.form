@@ -6,8 +6,6 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="ModeBG">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="TypeBG">
-    </Component>
     <Component class="javax.swing.ButtonGroup" name="DifficultyBG">
     </Component>
   </NonVisualComponents>
@@ -282,7 +280,7 @@
           <SubComponents>
             <Component class="javax.swing.JCheckBox" name="BattleshipCB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleships&lt;br/&gt;5 Tiles; x1&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Battleship&lt;br/&gt;5 Tiles; x1&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="CruiserCB">

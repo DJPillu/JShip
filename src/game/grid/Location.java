@@ -9,17 +9,17 @@ package game.grid;
 public final class Location {
 
 	/**
-	 * Constant value of '0' indicating that the position is unguessed.
+	 * Constant value of '0' indicating that this position is unguessed.
 	 */
 	public static final int UNGUESSED = 0;
 
 	/**
-	 * Constant value of '-1' indicating that the shot missed.
+	 * Constant value of '-1' indicating that the shot at this position missed.
 	 */
 	public static final int MISS = -1;
 
 	/**
-	 * Constant value of '1' indicating that the shot hit a target.
+	 * Constant value of '1' indicating that the shot at this position hit a target.
 	 */
 	public static final int HIT = 1;
 

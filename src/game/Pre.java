@@ -108,7 +108,6 @@ public final class Pre extends JFrame {
 
     SizeBG = new ButtonGroup();
     ModeBG = new ButtonGroup();
-    TypeBG = new ButtonGroup();
     DifficultyBG = new ButtonGroup();
     PreP = new JPanel();
     TitleL = new JLabel();
@@ -224,7 +223,7 @@ public final class Pre extends JFrame {
 
     ShipsP.setLayout(new GridLayout(2, 3));
 
-    BattleshipCB.setText("<html>Battleships<br/>5 Tiles; x1</html>");
+    BattleshipCB.setText("<html>Battleship<br/>5 Tiles; x1</html>");
     ShipsP.add(BattleshipCB);
 
     CruiserCB.setText("<html>Cruisers<br/>4 Tiles; x2</html>");
@@ -411,6 +410,5 @@ public final class Pre extends JFrame {
   private JPanel ShipsP;
   private ButtonGroup SizeBG;
   private JLabel TitleL;
-  private ButtonGroup TypeBG;
   // End of variables declaration//GEN-END:variables
 }

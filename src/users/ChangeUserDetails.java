@@ -60,7 +60,7 @@ public final class ChangeUserDetails extends CurrentUser {
 		if (hash > 8388607) {         // Max positive limit of MySQL MEDIUMINT is +8388607
 			hash = 8388607;
 		} else if (hash < -8388608) { // Max negative limit of MySQL MEDIUMINT is -8388608
-			hash = -8388607;
+			hash = -8388608;
 		}
 
 		return hash;
@@ -128,10 +128,10 @@ public final class ChangeUserDetails extends CurrentUser {
 			deletes[1].append(CurrentUser.getCurrentUser()).append("';");                              // Name
 
 			Statement stmnt = con.createStatement();    // Creates the SQL statement object
-			System.out.println(deletes[0].toString());  // 1st Statement (users)
-			stmnt.executeUpdate(deletes[0].toString());
-			System.out.println(deletes[0].toString());  // 2nd Statement (stats)
-			stmnt.executeUpdate(deletes[0].toString());
+			for (int i = 0; i < deletes.length; i++) {
+				System.out.println(deletes[i].toString());
+				stmnt.executeUpdate(deletes[i].toString());
+			}
 
 			stmnt.close();
 			con.close();

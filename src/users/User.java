@@ -69,7 +69,7 @@ abstract class User {
 		if (hash > 8388607) {         // Max positive limit of MySQL MEDIUMINT is +8388607
 			hash = 8388607;
 		} else if (hash < -8388608) { // Max negative limit of MySQL MEDIUMINT is -8388608
-			hash = -8388607;
+			hash = -8388608;
 		}
 
 		return hash;

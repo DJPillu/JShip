@@ -9,9 +9,14 @@ package users;
 public class CurrentUser {
 
 	/**
+	 * The default user.
+	 */
+	private static final String DEFAULT = "guest";
+
+	/**
 	 * Current user's username
 	 */
-	private static String UName = "guest";
+	private static String UName = CurrentUser.DEFAULT;
 
 	/**
 	 * @return The current User's Username
@@ -33,7 +38,7 @@ public class CurrentUser {
 	 * Logs the user out.
 	 */
 	public static void logout() {
-		CurrentUser.setCurrentUser("guest");
+		CurrentUser.setCurrentUser(CurrentUser.DEFAULT);
 	}
 
 }
