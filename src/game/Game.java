@@ -392,7 +392,7 @@ final class Game extends JFrame {
     AIHitsTF = new JTextField();
 
     jLabel1.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-    jLabel1.setText("<html> <body>  Between the grids assigned to the two players, there is a number of components that describe the settings selected by the user.<br><br>  Below that there is a textarea which logs the events happening throughout the match such as ship placement and also prompts if the user is doing something that is not allowed.<br><br>  Always keep a check on this to know what's going on at any time.    </body>  </html>");
+    jLabel1.setText("<html> <body> The player is assigned a grid, where they can place their ships.<br><br> Grid Size - Default is 10*10 grid size and 15*15 can also be  selected.<br> Between the grids assigned to the two players, there is a number of components that describe the settings selected by the user.<br><br>  Below that there is a textarea which logs the events happening throughout the match such as ship placement and also prompts if the user is doing something that is not allowed.<br><br>  Always keep a check on this to know what's going on at any time.    </body>  </html>");
 
     GroupLayout Help1Layout = new GroupLayout(Help1);
     Help1.setLayout(Help1Layout);
