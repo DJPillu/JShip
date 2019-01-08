@@ -509,7 +509,7 @@ final class ViewStats extends JFrame {
 	 */
 	private void GoBack(ActionEvent evt) {//GEN-FIRST:event_GoBack
 		JShip JShip = new JShip(); // Creates the JShip Form object
-		JShip.setVisible(true);	   // Makes the JShip Form to be visible
+		JShip.setVisible(true);    // Makes the JShip Form to be visible
 
 		this.dispose();            // Destroys the current form object
 	}//GEN-LAST:event_GoBack

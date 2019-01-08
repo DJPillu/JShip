@@ -14,19 +14,6 @@ import java.util.Random;
 public final class Regular extends AI {
 
 	/**
-	 * If false, the AI 'hunts' for a suitable target by randomly firing at various locations.
-	 * Else, the AI selectively targets the ship.
-	 */
-	private boolean hunt = true;
-
-	/**
-	 * Stores the previous shot.
-	 *
-	 * The 1st element in the 2nd Dimension is the X-Coordinate, the 2nd is the Y-Coordinate.
-	 */
-	private int[] prevShot = new int[] {-1, -1};
-
-	/**
 	 * Constant value of '0' indicating that there isn't any data on the given location.
 	 */
 	private final int NO_DATA = 0;
@@ -83,314 +70,34 @@ public final class Regular extends AI {
 	 */
 	@Override
 	public int[] fire() {
-		int[] xy; // Firing Coordinates
+		int[] xy = this.randomFire(); // Firing Coordinates
 
-		if (!this.hunt) { // This block checks if the previous shot sunk a ship. If yes, it updates the probability map.
-			huntSunk:
-			for (int ship = 0; ship < this.shipNos; ship++) {
-				if ((this.shipsOpp[ship].getPosition(this.prevShot) > -1) && this.shipsOpp[ship].isSunk()) { // Checks if the previous shot was of this ship the ship was sunk.
-					this.hunt = true;
-					this.setProbabilitySunk(this.shipsOpp[ship]);
-					break huntSunk;
-				}
-			}
-		}
-		if (!this.hunt) { // This block checks if there are any valid locations to fire at. Used as a fail-safe in case this.nextShot() doesn't update the probability map correctly.
-			System.out.println("WARNING: AI unable to locate valid targetting location. Reverting to hunt mode.");
-			boolean temp = true;
-			huntNoLikely:
-			for (int y = 0; y < this.gridSize; y++) {
-				for (int x = 0; x < this.gridSize; x++) {
-					if (this.probability[y][x] == this.LIKELY) {
-						temp = false;
-						break huntNoLikely;
-					}
-				}
-			}
-			this.hunt = temp;
-		}
-
-		if (this.hunt) {                              // Checks if the AI is in hunt mode.
-			System.out.println("\nAI Hunting");
-			xy = this.randomFire();
-
-			if (this.gridOpp[xy[1]][xy[0]].hasShip()) { // Checks if a shot laanded.
-				this.hunt = false; // Switch to targetting mode.
-				this.setProbability(xy);
-			} else {                                    // Shot missed.
-				this.probability[xy[1]][xy[0]] = this.MISS;
-			}
-		} else {                                      // In targetting mode.
-			System.out.println("\nAI Targetting");
-			xy = this.nextShot();
-		}
-
-		this.prevShot = xy;
-		return xy;
-	}
-
-	/**
-	 * Sets the probability values depending on the given input (shot location).
-	 * Only used for the 1st shot. Deviations due to Successive shots is handled by <code>this.nextShot()</code>
-	 *
-	 * @param xy the coordinates. 1st element is X-Coordinate, 2nd is Y-Coordinate.
-	 */
-	private void setProbability(int[] xy) {
-		this.setProbabilityHit(xy[1], xy[0]);
-		if ((xy[0] > 0) && (xy[0] < this.gridSize - 1) && (xy[1] > 0) && (xy[1] < this.gridSize - 1)) { // Not at edges
-			this.setProbabilityLikely(xy[1] - 1, xy[0]);
-			this.setProbabilityLikely(xy[1] + 1, xy[0]);
-			this.setProbabilityLikely(xy[1], xy[0] - 1);
-			this.setProbabilityLikely(xy[1], xy[0] + 1);
-		} else {                                     // At the Edges
-			if (xy[1] == 0) {                          // Top edge
-				if (xy[0] == 0) {                        // Top-Left Corner
-					this.setProbabilityLikely(xy[1], xy[0] + 1);
-					this.setProbabilityLikely(xy[1] + 1, xy[0]);
-				} else if (xy[0] == this.gridSize - 1) { // Top-Right Corner
-					this.setProbabilityLikely(xy[1], xy[0] - 1);
-					this.setProbabilityLikely(xy[1] + 1, xy[0]);
-				} else {                                 // Top Edge (excluding Corners)
-					this.setProbabilityLikely(xy[1], xy[0] - 1);
-					this.setProbabilityLikely(xy[1] + 1, xy[0]);
-					this.setProbabilityLikely(xy[1], xy[0] + 1);
-				}
-			} else if (xy[1] == this.gridSize - 1) {   // Bottom Edge
-				if (xy[0] == 0) {                        // Bottom-Left Corner
-					this.setProbabilityLikely(xy[1] - 1, xy[0]);
-					this.setProbabilityLikely(xy[1], xy[0] + 1);
-				} else if (xy[0] == this.gridSize - 1) { // Bottom-Right Corner
-					this.setProbabilityLikely(xy[1] - 1, xy[0]);
-					this.setProbabilityLikely(xy[1], xy[0] - 1);
-				} else {                                 // Bottom Edge (excluding Corners)
-					this.setProbabilityLikely(xy[1], xy[0] - 1);
-					this.setProbabilityLikely(xy[1] - 1, xy[0]);
-					this.setProbabilityLikely(xy[1], xy[0] + 1);
-				}
-			} else if (xy[0] == 0) {                   // Left Edge (excluding Corners)
-				this.setProbabilityLikely(xy[1] - 1, xy[0]);
-				this.setProbabilityLikely(xy[1], xy[0] + 1);
-				this.setProbabilityLikely(xy[1] + 1, xy[0]);
-			} else {                                   // Rght Edge (ecluding Corners)
-				this.setProbabilityLikely(xy[1] - 1, xy[0]);
-				this.setProbabilityLikely(xy[1], xy[0] - 1);
-				this.setProbabilityLikely(xy[1] + 1, xy[0]);
-			}
-		}
-	}
-
-	/**
-	 * Sets <code>this.probability</code> locations to reflect sinking the given enemy ship.
-	 *
-	 * @param ship the ship that was sunk
-	 */
-	private void setProbabilitySunk(Ship ship) {
-		int shipLength = ship.length;
-		boolean direction = ship.getDirection();
-		int[] xy = ship.getStart();
-
-		for (int l = 0; l < shipLength; l++) {
-			this.probability[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)] = this.HIT;
-
-			// At the terminal positions of the ship.
-			if ((l == 0) && (xy[direction ? 1 : 0] != 0)) { // Checks if the 1st tile isn't at the edge of the Board
-				this.probability[xy[1] - (direction ? 1 : 0)][xy[0] - (direction ? 0 : 1)] = this.MISS;
-			} else if ((l == shipLength - 1) && (xy[direction ? 1 : 0] + shipLength - 1 != this.gridSize - 1)) { // Checks if the last tile isn't at the edge of the Board
-				this.probability[xy[1] + (direction ? shipLength : 0)][xy[0] + (direction ? 0 : shipLength)] = this.MISS;
-			}
-			// Along the length of the ship
-			if (xy[direction ? 0 : 1] == 0) { // At the Top/Left edge
-				this.probability[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)] = this.MISS;
-			} else if (xy[direction ? 0 : 1] == this.gridSize - 1) { // At the Bottom/Right edge
-				this.probability[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)] = this.MISS;
-			} else { // Not at the edges
-				this.probability[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)] = this.MISS;
-				this.probability[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)] = this.MISS;
-			}
-		}
-	}
-
-	/**
-	 * Sets the given <code>this.probability</code> location to <code>this.LIKELY</code>, subject to constraints.
-	 *
-	 * @param y Y-Coordinate
-	 * @param x X-Coordinate
-	 */
-	private void setProbabilityLikely(int y, int x) {
-		if (this.probability[y][x] == this.NO_DATA) {
-			this.probability[y][x] = this.LIKELY;
-		}
-	}
-
-	/**
-	 * Sets the given <code>this.probability</code> location to <code>this.HIT</code>, subject to constraints.
-	 *
-	 * @param y Y-Coordinate
-	 * @param x X-Coordinate
-	 */
-	private void setProbabilityHit(int y, int x) {
-		if (this.probability[y][x] == this.NO_DATA || this.probability[y][x] == this.LIKELY) {
-			this.probability[y][x] = this.HIT;
-		}
-	}
-
-	/**
-	 * Sets the given <code>this.probability</code> location to <code>this.MISS</code>, subject to constraints.
-	 *
-	 * @param y Y-Coordinate
-	 * @param x X-Coordinate
-	 */
-	private void setProbabilityMiss(int y, int x) {
-		if (this.probability[y][x] == this.NO_DATA || this.probability[y][x] == this.LIKELY) {
-			this.probability[y][x] = this.MISS;
-		}
-	}
-
-	/**
-	 * Decides where to fire next if a suitable target has been located.
-	 *
-	 * @return an integer array. The 1st value is the X-Coordinate. The 2nd value is the Y-Coordinate
-	 */
-	private int[] nextShot() {
-		int[] xy = this.randomFire();        // Firing Coordinates. Initialized to random values to prevent compiler errors.
-
-		nextLikelyPostion:
+		huntCheck:
 		for (int y = 0; y < this.gridSize; y++) {
 			for (int x = 0; x < this.gridSize; x++) {
 				if (this.probability[y][x] == this.LIKELY) {
 					xy = new int[] {x, y};
-					break nextLikelyPostion;
+					this.probability[y][x] = this.NO_DATA; // Prevents the AI from shooting at the same spot in Salvo.
+					break huntCheck;
 				}
 			}
-		}
-
-		if (this.gridOpp[xy[1]][xy[0]].hasShip()) {      // Checks if a shot hit
-			boolean direction = xy[0] == this.prevShot[0]; // If X-Coordinates align, the ship is Vertical (true); else Horiontal (false).
-			boolean side = direction ? (xy[1] > this.prevShot[1]) : (xy[0] > this.prevShot[0]); // False indicates a trailing location. True indicates a leading location.
-			this.setProbabilityHit(xy[1], xy[0]);
-
-			if ((xy[0] > 0) && (xy[0] < this.gridSize - 1) && (xy[1] > 0) && (xy[1] < this.gridSize - 1)) { // Not at edges
-				if (direction) {
-					this.setProbabilityMiss(xy[1], xy[0] - 1);
-					this.setProbabilityMiss(xy[1], xy[0] + 1);
-					if (side) {
-						this.setProbabilityLikely(xy[1] + 1, xy[0]);
-					} else {
-						this.setProbabilityLikely(xy[1] - 1, xy[0]);
-					}
-				} else {
-					this.setProbabilityMiss(xy[1] - 1, xy[0]);
-					this.setProbabilityMiss(xy[1] + 1, xy[0]);
-					if (side) {
-						this.setProbabilityLikely(xy[1], xy[0] + 1);
-					} else {
-						this.setProbabilityLikely(xy[1], xy[0] - 1);
-					}
-				}
-			} else {                                     // At the Edges
-				if (xy[1] == 0) {                          // Top edge
-					if (xy[0] == 0) {                        // Top-Left Corner
-						if (direction) {
-							this.setProbabilityMiss(xy[1], xy[0] + 1);
-							this.setProbabilityLikely(xy[1] + 1, xy[0]);
-						} else {
-							this.setProbabilityMiss(xy[1] + 1, xy[0]);
-							this.setProbabilityLikely(xy[1], xy[0] + 1);
-						}
-					} else if (xy[0] == this.gridSize - 1) { // Top-Right Corner
-						if (direction) {
-							this.setProbabilityMiss(xy[1], xy[0] - 1);
-							this.setProbabilityLikely(xy[1] + 1, xy[0]);
-						} else {
-							this.setProbabilityMiss(xy[1] + 1, xy[0]);
-							this.setProbabilityLikely(xy[1], xy[0] - 1);
-						}
-					} else {                                 // Top Edge (excluding Corners)
-						if (direction) {
-							this.setProbabilityMiss(xy[1], xy[0] - 1);
-							this.setProbabilityMiss(xy[1], xy[0] + 1);
-							if (side) {
-								this.setProbabilityLikely(xy[1] + 1, xy[0]);
-							}
-						} else {
-							this.setProbabilityMiss(xy[1] + 1, xy[0]);
-							if (side) {
-								this.setProbabilityLikely(xy[1], xy[0] - 1);
-							} else {
-								this.setProbabilityLikely(xy[1], xy[0] + 1);
-							}
-						}
-					}
-				} else if (xy[1] == this.gridSize - 1) {   // Bottom Edge
-					if (xy[0] == 0) {                        // Bottom-Left Corner
-						if (direction) {
-							this.setProbabilityMiss(xy[1], xy[0] + 1);
-							this.setProbabilityLikely(xy[1] - 1, xy[0]);
-						} else {
-							this.setProbabilityMiss(xy[1] - 1, xy[0]);
-							this.setProbabilityLikely(xy[1], xy[0] + 1);
-						}
-					} else if (xy[0] == this.gridSize - 1) { // Bottom-Right Corner
-						if (direction) {
-							this.setProbabilityMiss(xy[1], xy[0] - 1);
-							this.setProbabilityLikely(xy[1] - 1, xy[0]);
-						} else {
-							this.setProbabilityMiss(xy[1] - 1, xy[0]);
-							this.setProbabilityLikely(xy[1], xy[0] - 1);
-						}
-					} else {                                 // Bottom Edge (excluding Corners)
-						if (direction) {
-							this.setProbabilityMiss(xy[1], xy[0] - 1);
-							this.setProbabilityMiss(xy[1], xy[0] + 1);
-							if (!side) {
-								this.setProbabilityLikely(xy[1] - 1, xy[0]);
-							}
-						} else {
-							this.setProbabilityMiss(xy[1] - 1, xy[0]);
-							if (side) {
-								this.setProbabilityLikely(xy[1], xy[0] + 1);
-							} else {
-								this.setProbabilityLikely(xy[1], xy[0] - 1);
-							}
-						}
-					}
-				} else if (xy[0] == 0) {                   // Left Edge (excluding Corners)
-					if (direction) {
-						this.setProbabilityMiss(xy[1], xy[0] + 1);
-						if (side) {
-							this.setProbabilityLikely(xy[1] + 1, xy[0]);
-						} else {
-							this.setProbabilityLikely(xy[1] - 1, xy[0]);
-						}
-					} else {
-						this.setProbabilityMiss(xy[1] - 1, xy[0]);
-						this.setProbabilityMiss(xy[1] + 1, xy[0]);
-						if (side) {
-							this.setProbabilityLikely(xy[1], xy[0] + 1);
-						}
-					}
-				} else {                                   // Rght Edge (ecluding Corners)
-					if (direction) {
-						this.setProbabilityMiss(xy[1], xy[0] - 1);
-						if (side) {
-							this.setProbabilityLikely(xy[1] + 1, xy[0]);
-						} else {
-							this.setProbabilityLikely(xy[1] - 1, xy[0]);
-						}
-					} else {
-						this.setProbabilityMiss(xy[1] - 1, xy[0]);
-						this.setProbabilityMiss(xy[1] + 1, xy[0]);
-						if (!side) {
-							this.setProbabilityLikely(xy[1], xy[0] - 1);
-						}
-					}
-				}
-			}
-		} else {                                    // Miss
-			this.setProbabilityMiss(xy[1], xy[0]);
 		}
 
 		return xy;
+	}
+
+	/**
+	 * A setter for gridOpp.
+	 * Also updates <code>this.probability</code>.
+	 *
+	 * @param gridOpp Location Grid of the Player
+	 */
+	@Override
+	public void updateGridOpp(Location[][] gridOpp) {
+		this.gridOpp = gridOpp;
+
+		this.setSunk();
+		this.setProbability();
 	}
 
 	/**
@@ -465,6 +172,327 @@ public final class Regular extends AI {
 		} while (true);
 
 		return xy;
+	}
+
+	/**
+	 * Sets the probability values.
+	 */
+	private void setProbability() {
+		for (int y = 0; y < this.gridSize; y++) {
+			for (int x = 0; x < this.gridSize; x++) {
+				if (this.gridOpp[y][x].isHit()) {         // Checks if the location is guessed and the shot hit.
+					this.setHit(x, y);
+
+					int adjacent = this.checkAdjacentHit(x, y);
+					if (adjacent == 0) {   // Checks if this location contains a ship part.
+						this.setAdjacentLikely(x, y);
+					} else {               // Possible start of a ship or the middle of a ship.
+						if (adjacent == 1) { // Checks if this location is the possible start of a ship.
+							this.setAdjacentLikely(x, y, adjacent == 3);
+						}
+						this.setAdjacentMiss(x, y, adjacent == 3);
+					}
+				} else if (this.gridOpp[y][x].isMiss()) { // Checks if the location is guessed but the shot missed.
+					this.setMiss(x, y);
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Returns whether the given coordinate has 0, 1, or 2 adjacent positions with hits.
+	 *
+	 * @param x X-Coordinate
+	 * @param y Y-Coordinate
+	 *
+	 * @return an integer. 0 - No adjacent hits; 1 - 1 adjacent hit; 2 - 2 adjacent hits horizontally;
+	 *         3 - 2 adjacent hits vertically.
+	 */
+	private int checkAdjacentHit(int x, int y) {
+		int ret = 0;
+
+		if ((x > 0) && (x < this.gridSize - 1) && (y > 0) && (y < this.gridSize - 1)) { // Not at edges
+			if (this.checkHit(x, y - 1) || this.checkHit(x, y + 1) || this.checkHit(x - 1, y) || this.checkHit(x + 1, y)) {
+				if (this.checkHit(x - 1, y) && this.checkHit(x + 1, y)) {
+					ret = 2;
+				} else if (this.checkHit(x, y - 1) && this.checkHit(x, y + 1)) {
+					ret = 3;
+				} else {
+					ret = 1;
+				}
+			}
+		} else {                                 // At the Edges
+			if (y == 0) {                          // Top edge
+				if (x == 0) {                        // Top-Left Corner
+					if (this.checkHit(x, y + 1) || this.checkHit(x + 1, y)) {
+						ret = 1;
+					}
+				} else if (x == this.gridSize - 1) { // Top-Right Corner
+					if (this.checkHit(x, y + 1) || this.checkHit(x - 1, y)) {
+						ret = 1;
+					}
+				} else {                             // Top Edge (excluding Corners)
+					if (this.checkHit(x, y + 1)) {
+						ret = 1;
+					} else if (this.checkHit(x - 1, y) || this.checkHit(x + 1, y)) {
+						if (this.checkHit(x - 1, y) && this.checkHit(x + 1, y)) {
+							ret = 2;
+						} else {
+							ret = 1;
+						}
+					}
+				}
+			} else if (y == this.gridSize - 1) {   // Bottom Edge
+				if (x == 0) {                        // Bottom-Left Corner
+					if (this.checkHit(x, y - 1) || this.checkHit(x + 1, y)) {
+						ret = 1;
+					}
+				} else if (x == this.gridSize - 1) { // Bottom-Right Corner
+					if (this.checkHit(x, y - 1) || this.checkHit(x - 1, y)) {
+						ret = 1;
+					}
+				} else {                             // Bottom Edge (excluding Corners)
+					if (this.checkHit(x, y - 1)) {
+						ret = 1;
+					} else if (this.checkHit(x - 1, y) || this.checkHit(x + 1, y)) {
+						if (this.checkHit(x - 1, y) && this.checkHit(x + 1, y)) {
+							ret = 2;
+						} else {
+							ret = 1;
+						}
+					}
+				}
+			} else if (x == 0) {                   // Left Edge (excluding Corners)
+				if (this.checkHit(x + 1, y)) {
+					ret = 1;
+				} else if (this.checkHit(x, y - 1) || this.checkHit(x, y + 1)) {
+					if (this.checkHit(x, y - 1) && this.checkHit(x, y + 1)) {
+						ret = 3;
+					} else {
+						ret = 1;
+					}
+				}
+			} else {                               // Rght Edge (ecluding Corners)
+				if (this.checkHit(x - 1, y)) {
+					ret = 1;
+				} else if (this.checkHit(x, y - 1) || this.checkHit(x, y + 1)) {
+					if (this.checkHit(x, y - 1) && this.checkHit(x, y + 1)) {
+						ret = 3;
+					} else {
+						ret = 1;
+					}
+				}
+			}
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Sets adjacent locations to be <code>this.LIKELY</code>.
+	 * Only to be used if there are no adjacent location having <code>this.HIT</code>.
+	 *
+	 * @param x X-Coordinate
+	 * @param y Y-Coordinate
+	 */
+	private void setAdjacentLikely(int x, int y) {
+		if ((x > 0) && (x < this.gridSize - 1) && (y > 0) && (y < this.gridSize - 1)) { // Not at edges
+			this.setLikely(x, y - 1);
+			this.setLikely(x, y + 1);
+			this.setLikely(x - 1, y);
+			this.setLikely(x + 1, y);
+		} else {                                                                        // At the Edges
+			if (y == 0) {                                                                 // Top edge
+				if (x == 0) {                                                               // Top-Left Corner
+					this.setLikely(x, y + 1);
+					this.setLikely(x + 1, y);
+				} else if (x == this.gridSize - 1) {                                        // Top-Right Corner
+					this.setLikely(x, y + 1);
+					this.setLikely(x - 1, y);
+				} else {                                                                    // Top Edge (excluding Corners)
+					this.setLikely(x, y + 1);
+					this.setLikely(x - 1, y);
+					this.setLikely(x + 1, y);
+				}
+			} else if (y == this.gridSize - 1) {                                          // Bottom Edge
+				if (x == 0) {                                                               // Bottom-Left Corner
+					this.setLikely(x, y - 1);
+					this.setLikely(x + 1, y);
+				} else if (x == this.gridSize - 1) {                                        // Bottom-Right Corner
+					this.setLikely(x, y - 1);
+					this.setLikely(x - 1, y);
+				} else {                                                                    // Bottom Edge (excluding Corners)
+					this.setLikely(x, y - 1);
+					this.setLikely(x - 1, y);
+					this.setLikely(x + 1, y);
+				}
+			} else if (x == 0) {                                                          // Left Edge (excluding Corners)
+				this.setLikely(x, y - 1);
+				this.setLikely(x, y + 1);
+				this.setLikely(x + 1, y);
+			} else {                                                                      // Rght Edge (ecluding Corners)
+				this.setLikely(x, y - 1);
+				this.setLikely(x, y + 1);
+				this.setLikely(x - 1, y);
+			}
+		}
+	}
+
+	/**
+	 * Sets adjacent locations to be <code>this.LIKELY</code>.
+	 * Only to be used if there is a single adjacent location having <code>this.HIT</code>.
+	 *
+	 * @param x         X-Coordinate
+	 * @param y         Y-Coordinate
+	 * @param direction a boolean indicating whether the ship is placed vertically (true) or horizontally (false).
+	 */
+	private void setAdjacentLikely(int x, int y, boolean direction) {
+		if ((x == 0) || (x == this.gridSize - 1)) {         // Checks if the location is at an horizontal edge.
+			if (direction) {                                  // Checks if no ships start here.
+				if (this.checkHit(x, y - 1)) {
+					this.setLikely(x, y + 1);
+				} else {
+					this.setLikely(x, y - 1);
+				}
+			}
+		} else if ((y == 0) || (y == this.gridSize - 1)) { // Checks if the location is at a vertical edge and if no ships start here.
+			if (!direction) {                                // Checks if no ships start here.
+				if (this.checkHit(x - 1, y)) {
+					this.setLikely(x + 1, y);
+				} else {
+					this.setLikely(x - 1, y);
+				}
+			}
+		} else {                                           // Not at an edge.
+			if (direction) {                                 // Checks if the ship is placed vertically.
+				if (this.checkHit(x, y - 1)) {
+					this.setLikely(x, y + 1);
+				} else {
+					this.setLikely(x, y - 1);
+				}
+			} else {                                         // The ship is placed horizontally.
+				if (this.checkHit(x - 1, y)) {
+					this.setLikely(x + 1, y);
+				} else {
+					this.setLikely(x - 1, y);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sets the adjacent locations to the given coordinates as MISS.
+	 *
+	 * @param x         X-Coordinate
+	 * @param y         Y-Coordinate
+	 * @param direction a boolean indicating whether the ship is placed vertically (true) or horizontally (false).
+	 */
+	private void setAdjacentMiss(int x, int y, boolean direction) {
+		if (direction) {                       // Checks if the ship is vertical.
+			if (x == 0) {                        // Checks if the location is on the Left Edge
+				this.setMiss(x + 1, y);
+			} else if (x == this.gridSize - 1) { // Checks if the location is on the Right Edge
+				this.setMiss(x - 1, y);
+			} else {                             // Not on vertical edges.
+				this.setMiss(x - 1, y);
+				this.setMiss(x + 1, y);
+			}
+		} else {                               // Ship is horizontal.
+			if (y == 0) {                        // Checks if the location is on the Top Edge
+				this.setMiss(x, y + 1);
+			} else if (y == this.gridSize - 1) { // Checks if the location is on the Bottom Edge
+				this.setMiss(x, y - 1);
+			} else {                             // Not on horizontal edges.
+				this.setMiss(x, y - 1);
+				this.setMiss(x, y + 1);
+			}
+		}
+	}
+
+	/**
+	 * Sets the given probability location as a <code>this.HIT</code>.
+	 *
+	 * @param x X-Coordinate
+	 * @param y Y-Coordinate
+	 */
+	private void setHit(int x, int y) {
+		if ((this.probability[y][x] == this.NO_DATA) || (this.probability[y][x] == this.LIKELY)) {
+			this.probability[y][x] = this.HIT;
+		}
+	}
+
+	/**
+	 * Returns whether the given probability location equals <code>this.HIT</code>.
+	 *
+	 * @param x X-Coordinate
+	 * @param y Y-Coordinate
+	 */
+	private boolean checkHit(int x, int y) {
+		return this.probability[y][x] == this.HIT;
+	}
+
+	/**
+	 * Sets the given probability location as a <code>this.MISS</code>.
+	 *
+	 * @param x X-Coordinate
+	 * @param y Y-Coordinate
+	 */
+	private void setMiss(int x, int y) {
+		if ((this.probability[y][x] == this.NO_DATA) || (this.probability[y][x] == this.LIKELY)) {
+			this.probability[y][x] = this.MISS;
+		}
+	}
+
+	/**
+	 * Sets the given probability location as a <code>this.LIKELY</code>.
+	 *
+	 * @param x X-Coordinate
+	 * @param y Y-Coordinate
+	 */
+	private void setLikely(int x, int y) {
+		if (this.probability[y][x] == this.NO_DATA) {
+			this.probability[y][x] = this.LIKELY;
+		}
+	}
+
+	/**
+	 * Sets <code>this.probability</code> locations to reflect sinking the given enemy ship.
+	 *
+	 * @param ship the ship that was sunk
+	 */
+	private void setSunk() {
+		for (int shot = 0; shot < this.shotsSunk.length; shot++) {
+			if ((this.shotsSunk[shot][0] > -1) && (this.shotsSunk[shot][1] > -1)) { // Checks if it a valid coordinate.
+				for (int ship = 0; ship < this.shipNos; ship++) {
+					if (this.shipsOpp[ship].getPosition(this.shotsSunk[shot]) > -1) {   // Checks if this ship was sunk with this shot.
+						int shipLength = this.shipsOpp[ship].length;            // Length
+						boolean direction = this.shipsOpp[ship].getDirection(); // Direction
+						int[] xy = this.shipsOpp[ship].getStart();              // Start Coordinates
+
+						for (int l = 0; l < shipLength; l++) {
+							this.probability[xy[1] + (direction ? l : 0)][xy[0] + (direction ? 0 : l)] = this.HIT;
+
+							// At the terminal positions of the ship.
+							if ((l == 0) && (xy[direction ? 1 : 0] != 0)) {          // Checks if the 1st tile isn't at the edge of the Board
+								this.probability[xy[1] - (direction ? 1 : 0)][xy[0] - (direction ? 0 : 1)] = this.MISS;
+							} else if ((l == shipLength - 1) && (xy[direction ? 1 : 0] + shipLength - 1 != this.gridSize - 1)) { // Checks if the last tile isn't at the edge of the Board
+								this.probability[xy[1] + (direction ? shipLength : 0)][xy[0] + (direction ? 0 : shipLength)] = this.MISS;
+							}
+							// Along the length of the ship
+							if (xy[direction ? 0 : 1] == 0) {                        // At the Top/Left edge
+								this.probability[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)] = this.MISS;
+							} else if (xy[direction ? 0 : 1] == this.gridSize - 1) { // At the Bottom/Right edge
+								this.probability[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)] = this.MISS;
+							} else {                                                 // Not at the edges
+								this.probability[xy[1] + (direction ? l : -1)][xy[0] + (direction ? -1 : l)] = this.MISS;
+								this.probability[xy[1] + (direction ? l : 1)][xy[0] + (direction ? 1 : l)] = this.MISS;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 }

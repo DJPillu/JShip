@@ -34,7 +34,7 @@ public class AI {
 
 	/**
 	 * An array storing the ships of the Player.
-	 * Only used by the brutal AI.
+	 * Only used by the Brutal AI.
 	 */
 	Ship[] shipsOpp;
 
@@ -66,6 +66,13 @@ public class AI {
 	 * </pre>
 	 */
 	boolean[] initVars;
+
+	/**
+	 * The coordinates of shots that sunk a ship.
+	 * The maximum number of ships that can be sunk in 1 round when playing with all ships enabled is 4.
+	 * Only used by the Regular AI.
+	 */
+	int[][] shotsSunk = new int[4][2];
 
 	/**
 	 * Constructor for the AI.
@@ -113,15 +120,12 @@ public class AI {
 				this.shipsSelf[i] = new Ship(2);
 			}
 		}
-		// Implicit Garbage Collecting temp (hopefully). Remove if not necessary.
-		shipNo = 0;
-		System.gc();
 
 		this.place();
 	}
 
 	/**
-	 * A setter for gridSelf
+	 * A setter for <code>this.gridSelf</code>.
 	 *
 	 * @param gridSelf Location Grid of the AI
 	 */
@@ -130,7 +134,7 @@ public class AI {
 	}
 
 	/**
-	 * A setter for gridOpp
+	 * A setter for <code>this.gridOpp</code>.
 	 *
 	 * @param gridOpp Location Grid of the Player
 	 */
@@ -139,7 +143,7 @@ public class AI {
 	}
 
 	/**
-	 * A setter for shipsSelf
+	 * A setter for <code>this.shipsSelf</code>.
 	 *
 	 * @param shipsSelf Ships list of the AI
 	 */
@@ -148,12 +152,21 @@ public class AI {
 	}
 
 	/**
-	 * A setter for shipsOpp.
+	 * A setter for <code>this.shipsOpp</code>.
 	 * Blank for now to prevent accidental usage by Sandbox and Regular.
 	 *
 	 * @param shipsOpp Ships list of the Player
 	 */
 	public void updateShipsOpp(Ship[] shipsOpp) {
+	}
+
+	/**
+	 * A setter for <code>this.shotsSunk</code>.
+	 *
+	 * @param shotsSunk the coordinates of the shots that sunk a ship in the previous round
+	 */
+	public void updateShotsSunk(int[][] shotsSunk) {
+		this.shotsSunk = shotsSunk;
 	}
 
 	/**

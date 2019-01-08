@@ -106,6 +106,15 @@ public final class Location {
 	}
 
 	/**
+	 * Checks if the location was a miss
+	 *
+	 * @return true if miss. false if not miss.
+	 */
+	public boolean isMiss() {
+		return this.status == Location.MISS;
+	}
+
+	/**
 	 * Marks the location as a hit or a miss depending on whether this location has a ship.
 	 */
 	public void markShot() {

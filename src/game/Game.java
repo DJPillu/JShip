@@ -251,9 +251,6 @@ final class Game extends JFrame {
 				this.AIGridP.add(this.AIGridB[y][x]);
 			}
 		}
-		// Implicit Garbage Collecting temp (hopefully). Remove if not necessary.
-		temp = null;
-		System.gc();
 
 		this.setLocationRelativeTo(null);
 	}
@@ -836,7 +833,7 @@ final class Game extends JFrame {
 	private void Exit(ActionEvent evt) {//GEN-FIRST:event_Exit
 		if (JOptionPane.showConfirmDialog(null, "Are you sure?", "Abandon Ship?", JOptionPane.YES_NO_OPTION) == 0) {
 			JShip JShip = new JShip(); // Creates the JShip Form object
-			JShip.setVisible(true);	   // Makes the JShip Form to be visible
+			JShip.setVisible(true);    // Makes the JShip Form to be visible
 
 			this.dispose();            // Destroys the current form object
 		}
@@ -981,11 +978,13 @@ final class Game extends JFrame {
 			this.end();
 		} else {                                     // User did not win.
 			this.AI.updateGridSelf(this.AIGridL);      // Updates the AI's "self" grid
-			this.fireAI();                             // AI Shoots.
-			this.AI.updateGridOpp(this.PlayerGridL);   // Updates the AI's hostile grid.
-			if (this.AIDiff == 1) {                    // Updates the Brutal AI's Player's ship list
+			int[][] shotsSunk = this.fireAI();         // AI Shoots.
+			if (this.AIDiff == 0) {                    // Updates the Regular AI's "critical" shots list
+				this.AI.updateShotsSunk(shotsSunk);
+			} else if (this.AIDiff == 1) {             // Updates the Brutal AI's Player's ship list
 				this.AI.updateShipsOpp(PlayerShips);
 			}
+			this.AI.updateGridOpp(this.PlayerGridL);   // Updates the AI's hostile grid. Placed after cause of how the Regular AI works.
 			this.StatsUpdate();
 			this.setColors();
 
@@ -1178,15 +1177,23 @@ final class Game extends JFrame {
 	/**
 	 * Function for handling the AI input.
 	 */
-	private void fireAI() {
-		int[][] xy = new int[(this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2]))][2];
+	private int[][] fireAI() {
+		int[][] shotsSunk = new int[4][2];                             // Coordinates of the shots which sunk a ship.
+		int sunk;
+		for (sunk = 0; sunk < shotsSunk.length; sunk++) {              // Initialises shotsSunk to {-1, -1} values.
+			shotsSunk[sunk] = new int[] {-1, -1};
+		}
+		sunk = 0;
 
-		for (int shot = 0; shot < xy.length; shot++) {                 // Obtains the firing coordinates. In a separate loop to prevent the regular AI from knowing the hit status of previous shots.
+		int numShots = (this.mode.equals("C") ? 1 : (this.shipNos - this.AIStats[2]));
+		int[][] xy = new int[numShots][2];                             // Coordinates of the shots
+
+		for (int shot = 0; shot < numShots; shot++) {                  // Obtains the firing coordinates. In a separate loop to prevent the regular AI from knowing the hit status of previous shots.
 			xy[shot] = this.AI.fire();
 			System.out.println("AI fires at: " + xy[shot][0] + " " + xy[shot][1]);
 		}
 
-		for (int shot = 0; shot < xy.length; shot++) {                 // Marks the locations and updates statistics.
+		for (int shot = 0; shot < numShots; shot++) {                  // Marks the locations and updates statistics.
 			this.PlayerGridL[xy[shot][1]][xy[shot][0]].markShot();
 			this.AIStats[0]++;
 
@@ -1199,9 +1206,12 @@ final class Game extends JFrame {
 						this.PlayerShips[ship].sectionHit(xy[shot]);           // Marks the section as hit.
 
 						if (this.PlayerShips[ship].isSunk()) {                 // Checks if the ship was sunk.
+							shotsSunk[sunk] = xy[shot];
+							sunk++;
+
 							this.PlayerStats[2]++;
 							if (this.shipNos == this.PlayerStats[2]) {           // Checks if the AI won.
-								return;
+								return shotsSunk;
 							}
 						}
 
@@ -1210,6 +1220,8 @@ final class Game extends JFrame {
 				}
 			}
 		}
+
+		return shotsSunk;
 	}
 
 	/**
@@ -1291,23 +1303,21 @@ final class Game extends JFrame {
 				// Player Grid
 				this.PlayerGridB[y][x].setBackground(new Color(5, 218, 255, 255)); // Base Colour
 
-				if (this.PlayerGridL[y][x].hasShip()) {        // Checks if the current location has a ship.
+				if (this.PlayerGridL[y][x].hasShip()) {         // Checks if the current location has a ship.
 					this.PlayerGridB[y][x].setBackground(new Color(67, 70, 75, 255));
 				}
-				if (this.roundNo == Game.PLACE) {              // Checks if the current round is the ship placement round. Border is not to be shown otherwise.
-					if (this.PlayerGridL[y][x].isBorder()) {     // Checks if the current location borders a ship.
+				if (this.roundNo == Game.PLACE) {               // Checks if the current round is the ship placement round. Border is not to be shown otherwise.
+					if (this.PlayerGridL[y][x].isBorder()) {      // Checks if the current location borders a ship.
 						this.PlayerGridB[y][x].setBackground(new Color(176, 196, 222, 255));
 					}
-					if (this.buttonsClicked[y][x]) {             // Checks if the current location has been clicked.
+					if (this.buttonsClicked[y][x]) {              // Checks if the current location has been clicked.
 						this.PlayerGridB[y][x].setBackground(new Color(242, 236, 0, 255));
 					}
-				} else {                                       // Not ship placement round.
-					if (!this.PlayerGridL[y][x].isUnguessed()) { // Checks if the current location has been guessed.
-						if (this.PlayerGridL[y][x].isHit()) {      // Checks if the current location has been hit.
-							this.PlayerGridB[y][x].setBackground(new Color(205, 0, 0, 255));
-						} else {                                   // No ship present, and hence no hit.
-							this.PlayerGridB[y][x].setBackground(new Color(0, 0, 128, 255));
-						}
+				} else {                                        // Not ship placement round.
+					if (this.PlayerGridL[y][x].isHit()) {         // Checks if the current location has been hit.
+						this.PlayerGridB[y][x].setBackground(new Color(205, 0, 0, 255));
+					} else if (this.PlayerGridL[y][x].isMiss()) { // No ship present, and hence no hit.
+						this.PlayerGridB[y][x].setBackground(new Color(0, 0, 128, 255));
 					}
 				}
 
@@ -1319,12 +1329,10 @@ final class Game extends JFrame {
 						this.AIGridB[y][x].setBackground(new Color(67, 70, 75, 255));
 					}
 				}
-				if (!this.AIGridL[y][x].isUnguessed()) {                      // Checks if the current location has been guessed.
-					if (this.AIGridL[y][x].isHit()) {                           // Checks if the current location has been hit.
-						this.AIGridB[y][x].setBackground(new Color(205, 0, 0, 255));
-					} else {                                                    // No ship present, and hence no hit.
-						this.AIGridB[y][x].setBackground(new Color(0, 0, 128, 255));
-					}
+				if (this.AIGridL[y][x].isHit()) {                             // Checks if the current location has been hit.
+					this.AIGridB[y][x].setBackground(new Color(205, 0, 0, 255));
+				} else if (this.AIGridL[y][x].isMiss()) {                     // No ship present, and hence no hit.
+					this.AIGridB[y][x].setBackground(new Color(0, 0, 128, 255));
 				}
 				if (this.roundNo > Game.PLACE && this.buttonsClicked[y][x]) { // Checks if the current location has been clicked.
 					this.AIGridB[y][x].setBackground(new Color(242, 236, 0, 255));
