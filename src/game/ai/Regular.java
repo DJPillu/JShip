@@ -427,6 +427,8 @@ public final class Regular extends AI {
 	 *
 	 * @param x X-Coordinate
 	 * @param y Y-Coordinate
+	 *
+	 * @return true if hit. false if not hit.
 	 */
 	private boolean checkHit(int x, int y) {
 		return this.probability[y][x] == this.HIT;
@@ -458,8 +460,6 @@ public final class Regular extends AI {
 
 	/**
 	 * Sets <code>this.probability</code> locations to reflect sinking the given enemy ship.
-	 *
-	 * @param ship the ship that was sunk
 	 */
 	private void setSunk() {
 		for (int shot = 0; shot < this.shotsSunk.length; shot++) {

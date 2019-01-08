@@ -1176,6 +1176,9 @@ final class Game extends JFrame {
 
 	/**
 	 * Function for handling the AI input.
+	 *
+	 * @return an integer array having the coordinates of the shots which sunk a ship.
+	 *         The 1st value within any element is the X-Coordinate; the 2nd value is the Y-Coordinate.
 	 */
 	private int[][] fireAI() {
 		int[][] shotsSunk = new int[4][2];                             // Coordinates of the shots which sunk a ship.
