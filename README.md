@@ -22,6 +22,5 @@ It is also the investigatory project for 2 high school students (and hence the r
 3. Compile the project and run from ```jship.JShip``` (may distribute .jar files later).
 
 ## TODO
-* Add in-game help text.
 * Add in-game music (if we get time).
 * Make it beautiful (if we get time).

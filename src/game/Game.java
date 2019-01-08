@@ -4,7 +4,6 @@ import game.ai.*;
 import game.grid.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -331,12 +330,10 @@ final class Game extends JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    Help1 = new JPanel();
-    jLabel1 = new JLabel();
-    Help2 = new JPanel();
-    jLabel2 = new JLabel();
-    Help3 = new JPanel();
-    jLabel3 = new JLabel();
+    Help1P = new JPanel();
+    Help1L = new JLabel();
+    Help2P = new JPanel();
+    Help2L = new JLabel();
     TitleP = new JPanel();
     TitleL = new JLabel();
     MainP = new JPanel();
@@ -391,57 +388,38 @@ final class Game extends JFrame {
     AIHitsL = new JLabel();
     AIHitsTF = new JTextField();
 
-    jLabel1.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-    jLabel1.setText("<html> <body> The player is assigned a grid, where they can place their ships.<br><br> Grid Size - Default is 10*10 grid size and 15*15 can also be  selected.<br> Between the grids assigned to the two players, there is a number of components that describe the settings selected by the user.<br><br>  Below that there is a textarea which logs the events happening throughout the match such as ship placement and also prompts if the user is doing something that is not allowed.<br><br>  Always keep a check on this to know what's going on at any time.    </body>  </html>");
+    Help1L.setText("<html>\nEach Player is assigned a Grid located on the left and right sides of the game screen.<br/><br/>\nBetween the Grids, there is are a number of components that describe the match settings selected by the user.<br/>\nAmongst these, a Text Area is present which logs events happening throughout the match such as ship placement and also prompts if the user is doing something that is not allowed.<br/><br/>\nBelow the Text Area are 4 buttons:<br/>\n1. <b>Start/Next Round/End Button</b> - This button can firstly, be used to Start the match after placing ships; Secondly, to enter the Next Round; and finally, to End the match after either player wins.<br/>\n2. <b>Clear Alerts Button</b> - Clears the log in the alerts Text Area.<br/>\n3. <b>Help Button</b> - Shows this in-game help text.<br/>\n4. <b>Exit Button</b> - Quits the match and returns the user to main screen.<br/>\n</html>");
 
-    GroupLayout Help1Layout = new GroupLayout(Help1);
-    Help1.setLayout(Help1Layout);
-    Help1Layout.setHorizontalGroup(Help1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(Help1Layout.createSequentialGroup()
+    GroupLayout Help1PLayout = new GroupLayout(Help1P);
+    Help1P.setLayout(Help1PLayout);
+    Help1PLayout.setHorizontalGroup(Help1PLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(Help1PLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(Help1L, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+        .addContainerGap())
     );
-    Help1Layout.setVerticalGroup(Help1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(Help1Layout.createSequentialGroup()
+    Help1PLayout.setVerticalGroup(Help1PLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(Help1PLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-    );
-
-    jLabel2.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("<html> <body> The ships can placed on the grid by clicking on a tile, by default the ships are placed horizontally towards the right from the selected tile.<br>  If you want to place the ships vertically downwards, then  shift/control + click on the tile you wish to start from.<br>  Check the textarea for which ship is placed.<br>  A placed ship or a shot can be removed by clicking on the tile once again. <br><br>  Tile color indication:<br> Sky/Light blue - Empty water<br> Yellow - Selected tile/tiles<br> Light grey - Ship border(only shown in placement round)<br> Dark grey - Placed ships<br> Dark blue - A missed shot<br> Red - Shot that hit the enemy ship<br><br>  Rules:<br> 1. No two ships can touch each other head on or horizontally but they can touch diagonally(the area is indicated around the ship in light grey border).<br>  2. After you have selected a tiles on the enemy grid, Click next  round to continue to the next round.<br>  3. Game ends when all of the ships of either one of the players are sunk. <br>4. From there, the user can play another match or exit to main menue.  </body> </html>");
-
-    GroupLayout Help2Layout = new GroupLayout(Help2);
-    Help2.setLayout(Help2Layout);
-    Help2Layout.setHorizontalGroup(Help2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(Help2Layout.createSequentialGroup()
-        .addGap(18, 18, 18)
-        .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(26, Short.MAX_VALUE))
-    );
-    Help2Layout.setVerticalGroup(Help2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(GroupLayout.Alignment.TRAILING, Help2Layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
+        .addComponent(Help1L, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+        .addContainerGap())
     );
 
-    jLabel3.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-    jLabel3.setText("<html> <body>  start/next round/end button - This button can firstly, be used to start the match after placing ships, secondly, to enter the next round and lastly, to end the match(when someone wins) and move on to the post game stats screen.<br><br>  Clear Alters button - Clears the log in the alters textarea. <br><br>  Exit button  - quits the match and returns the user to main screen   </body> </html>");
+    Help2L.setText("<html>\nThe ships can placed on the grid by clicking on a tile.<br/>\nBy default the ships are placed horizontally towards the right from the selected tile.<br/>\nTo place the ships vertically downwards, then press the Shift/Control button on your keyboard while clicking on the tile you wish to start from.<br/><br/>\nThe textarea will keep adding alerts for indicating which ship is to be currently placed.<br/>\nA placed ship or a shot can be removed by clicking on any of it's tiles.<br/>\nSee the rules below for the restrictions on ship placement.<br/><br/>\nThe colour of the grid's button indicate the following:<br/>\n<b>Sky/Light Blue</b> - Empty water<br/>\n<b>Yellow</b> - Selected tile/tiles<br/>\n<b>Light Grey</b> - Ship border(only shown in placement round)<br/>\n<b>Dark Grey</b> - Placed ships (only shown after the placement round)<br/>\n<b>Dark Blue</b> - A missed shot<br/>\n<b>Red</b> - Shot that hit a ship<br/><br/>\nRules:<br>\n1. No two ships can be adjacent to each other (i.e., they cannot \"touch\"), but they can touch diagonally (the area where ships cannot be present is indicated around selected location for ship placement in Light Grey).<br>\n2. The match ends when all of the ships of either one of the players are sunk.<br>\n</html>");
 
-    GroupLayout Help3Layout = new GroupLayout(Help3);
-    Help3.setLayout(Help3Layout);
-    Help3Layout.setHorizontalGroup(Help3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(Help3Layout.createSequentialGroup()
+    GroupLayout Help2PLayout = new GroupLayout(Help2P);
+    Help2P.setLayout(Help2PLayout);
+    Help2PLayout.setHorizontalGroup(Help2PLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(Help2PLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 338, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(Help2L, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+        .addContainerGap())
     );
-    Help3Layout.setVerticalGroup(Help3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-      .addGroup(Help3Layout.createSequentialGroup()
+    Help2PLayout.setVerticalGroup(Help2PLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+      .addGroup(Help2PLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(Help2L, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+        .addContainerGap())
     );
 
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -1061,31 +1039,24 @@ final class Game extends JFrame {
 
 	/**
 	 * A series of <code>JOptionPane.MessageDialog</code>-s for explaining the game.
-	 * TODO: Need to write this.
 	 *
 	 * @param evt Button Click
 	 */
 	private void Help(ActionEvent evt) {//GEN-FIRST:event_Help
-		boolean[] responses = {false, false, false};
+		boolean[] responses = {false, false};
 
 		one:
 		while (true) {
-			responses[0] = JOptionPane.showConfirmDialog(null, this.Help1, "Help - 1", JOptionPane.YES_NO_OPTION) == 0;
-			two:
-			while (responses[0]) {   // One   -> Two
-				responses[1] = JOptionPane.showConfirmDialog(null, this.Help2, "Help - 2", JOptionPane.YES_NO_OPTION) == 0;
-				three:
-				while (responses[1]) { // Two   -> Three
-					responses[2] = JOptionPane.showConfirmDialog(null, this.Help3, "Help - 3", JOptionPane.YES_NO_OPTION) == 0;
-					if (responses[2]) {  // Three -> Game
-						return;
-					} else {             // Three -> Two
-						continue two;
-					}
+			responses[0] = JOptionPane.showConfirmDialog(null, this.Help1P, "Help - 1", JOptionPane.YES_NO_OPTION) == 0;
+			while (responses[0]) { // One   -> Two
+				responses[1] = JOptionPane.showConfirmDialog(null, this.Help2P, "Help - 2", JOptionPane.YES_NO_OPTION) == 0;
+				if (responses[1]) {  // Two -> Game
+					return;
+				} else {             // Two -> One
+					continue one;      // Two   -> One
 				}
-				continue one;          // Two   -> One
 			}
-			return;                  // One   -> Game
+			return;                // One   -> Game
 		}
 	}//GEN-LAST:event_Help
 
@@ -1463,9 +1434,10 @@ final class Game extends JFrame {
   private JButton ExitB;
   private JLabel GirdL;
   private JTextField GridTF;
-  private JPanel Help1;
-  private JPanel Help2;
-  private JPanel Help3;
+  private JLabel Help1L;
+  private JPanel Help1P;
+  private JLabel Help2L;
+  private JPanel Help2P;
   private JButton HelpB;
   private JPanel MainP;
   private JLabel ModeL;
@@ -1496,9 +1468,6 @@ final class Game extends JFrame {
   private JPanel StatusP;
   private JLabel TitleL;
   private JPanel TitleP;
-  private JLabel jLabel1;
-  private JLabel jLabel2;
-  private JLabel jLabel3;
   // End of variables declaration//GEN-END:variables
 	// Start of custom GUI variables declaration
 	private JButton[][] PlayerGridB;
