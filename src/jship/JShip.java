@@ -55,7 +55,7 @@ public final class JShip extends JFrame {
     ExitB = new JButton();
 
     jLabel1.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-    jLabel1.setText("<html> <body> The game provides you with multiple options that can be altered including grid size, game mode, difficulty and different types  of ships.<br><br>  1. Grid Size - Default is 10*10 grid size and 15*15 can also be  selected. <br><br>  2. Game Mode - There is classic which allows the players to shoot one shot in each round. <br> While in Salvo, the number of shot a player gets is equal to the number of unsunk ships that they still have.<br><br>  3. Ship Available - There are 4 different ships available and they vary in size and number. <br> (i)Battleship   - Lenght = 5 tiles, Number = 1.<br> (ii)Cruisers    - Lenght = 4 tiles, Number = 2.<br> (iii)Destroyers - Lenght = 3 tiles, Number = 3.<br> (iv)Corvettes   - Lenght = 2 tiles, Number = 4.<br><br>   </body> </html>");
+    jLabel1.setText("<html> <body> The game provides you with multiple options that can be altered including grid size, game mode, difficulty and different types  of ships.<br><br>  1. Grid Size - Default is 10*10 grid size and 15*15 can also be  selected. <br><br>  2. Game Mode - There is classic which allows the players to shoot one shot in each round. <br> While in Salvo, the number of shot a player gets is equal to the number of unsunk ships that they still have.<br><br>  3. Ships Available - There are 4 different ships available and they vary in size and number. <br> (i)Battleship   - Lenght = 5 tiles, Number = 1.<br> (ii)Cruisers    - Lenght = 4 tiles, Number = 2.<br> (iii)Destroyers - Lenght = 3 tiles, Number = 3.<br> (iv)Corvettes   - Lenght = 2 tiles, Number = 4.<br><br>   </body> </html>");
 
     GroupLayout Help1Layout = new GroupLayout(Help1);
     Help1.setLayout(Help1Layout);
@@ -90,7 +90,8 @@ public final class JShip extends JFrame {
         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    jLabel3.setText("<html> <body> The ships can placed on the grid by clicking on a tile, by default the ships are placed horizontally towards the right from the selected tile.<br>  If you want to place the ships vertically downwards, then  shift/control + click on the tile you wish to start from.<br>  Check the textarea for which ship is placed.<br>  A placed ship or a shot can be removed by clicking on the tile once again. <br><br>  Tile color indication:<br> Sky/Light blue - Empty water<br> Yellow - Selected tile/tiles<br> Light grey - Ship border(only shown in placement round)<br> Dark grey - Placed ships<br> Dark blue - A missed shot<br> Red - Shot that hit the enemy ship<br><br>  Rules:<br> 1. No two ships can touch each other head on or horizontally but they can diagonally(the area is indicated around the ship in light grey border).<br>  2. After you have selected a tiles on the enemy grid, Click next  round to continue to the next round.<br>  3. Game ends when all of the ships of either one of the players are sunk.  4. From there, the user can play another match or exit to main menue.  </body> </html>");
+    jLabel3.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+    jLabel3.setText("<html> <body> The ships can placed on the grid by clicking on a tile, by default the ships are placed horizontally towards the right from the selected tile.<br>  If you want to place the ships vertically downwards, then  shift/control + click on the tile you wish to start from.<br>  Check the textarea for which ship is placed.<br>  A placed ship or a shot can be removed by clicking on the tile once again. <br><br>  Tile color indication:<br> Sky/Light blue - Empty water<br> Yellow - Selected tile/tiles<br> Light grey - Ship border(only shown in placement round)<br> Dark grey - Placed ships<br> Dark blue - A missed shot<br> Red - Shot that hit the enemy ship<br><br>  Rules:<br> 1. No two ships can touch each other head on or horizontally but they can touch diagonally(the area is indicated around the ship in light grey border).<br>  2. After you have selected a tiles on the enemy grid, Click next  round to continue to the next round.<br>  3. Game ends when all of the ships of either one of the players are sunk. <br>4. From there, the user can play another match or exit to main menue.  </body> </html>");
 
     GroupLayout Help3Layout = new GroupLayout(Help3);
     Help3.setLayout(Help3Layout);
@@ -98,13 +99,13 @@ public final class JShip extends JFrame {
       .addGroup(Help3Layout.createSequentialGroup()
         .addGap(25, 25, 25)
         .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 343, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(24, Short.MAX_VALUE))
+        .addContainerGap(32, Short.MAX_VALUE))
     );
     Help3Layout.setVerticalGroup(Help3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
       .addGroup(Help3Layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(35, Short.MAX_VALUE))
+        .addGap(20, 20, 20)
+        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 402, GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(26, Short.MAX_VALUE))
     );
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
